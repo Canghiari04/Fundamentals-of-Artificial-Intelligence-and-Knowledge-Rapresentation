@@ -31,7 +31,7 @@ Starting from an example is defined the \textbf{full joint distribution} as the 
 
     e.g. $P(\neg cavity|toothache) = \frac{P(\neg cavity \land toothache)}{P(toothache)} = \frac{0.016 + 0.064}{0.2} = 0.4$ \vspace{3.5pt}
 
-    Notice that in this calculation the term $P(toothache)$ remains constant, no matter which value of \textit{Cavity} is computed. In fact, it can be viewed as a \textbf{normalization constant} for the whole distribution $\mathbf{P}(Cavity|toothache)$, ensuring that the positive and negative case sum up to one, as the second probability axiom requires. \vspace*{7pt}
+    Notice that in this calculation the term $P(toothache)$ remains constant, no matter which value of \textit{Cavity} is computed. In fact, it can be viewed as a \textbf{normalization constant} $(\alpha)$ for the whole distribution $\mathbf{P}(Cavity|toothache)$, ensuring that the positive and negative case sum up to one, as the second probability axiom requires. \vspace*{7pt}
 
     $\mathbf{P}(Cavity|toothache) = \alpha\mathbf{P}(Cavity, toothache)$ \\
     $= \alpha[\mathbf{P}(Cavity, toothache, catch) + \mathbf{P}(Cavity, toothache, \neg catch)]$ \\
@@ -42,5 +42,12 @@ Starting from an example is defined the \textbf{full joint distribution} as the 
     The first probability calculated $P(toothache)$ is called \textbf{marginalization}, or more simply \textbf{summing out}, because it sums up the probabilities for each possible value of the other variables.
 \end{definition}
 \begin{definition}
-    The second one $P(\neg cavity|toothache)$ is named \textbf{conditioning}.
+    The second one $P(\neg cavity|toothache)$ is named \textbf{conditioning}, a variant of marginalization that involves conditional probabilities instead of joint probabilities.
 \end{definition}
+\begin{definition}
+    From the example, it's possible to extract a general inference procedure. Let \textbf{Y} be the query variables. Let \textbf{E} be the list of evidence variables, let \textbf{e} be the list of observed values for them, and let \textbf{H} be the unobserved variables. The \textbf{probability query} $\mathbf{P}(Y|\mathbf{e})$ defines the posterior joint distribution of a set of \textbf{query variables Y} given specific values \textbf{e} for some \textbf{evidence variables E}: \vspace{3.5pt}
+    \begin{center}
+        $\mathbf{P}(Y|e) = \alpha\mathbf{P}(Y, E=e) = \alpha\sum_{h}\mathbf{P}(Y, E=e, H=h)$
+    \end{center}
+\end{definition}
+The full join distribution can answer probabilistic queries for discrete variables, but only for small domains. It does not scale well: for a domain described by \textit{n} Boolean variables, it requires an input table of size \textit{$O(2^n)$} and takes \textit{$O(2^n)$} time to process a question. The full joint distribution in tabular form is just not a practical tool for building reasoning systems.
