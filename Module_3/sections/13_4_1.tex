@@ -1,0 +1,15 @@
+The Section \ref{s_13_1_1} defined the \textbf{product rule}. It can be written in two forms:
+\begin{center}
+    $P(a \wedge b) = P(a|b)P(b)$ and $P(a \wedge b) = P(b|a)P(a)$
+\end{center}
+Combining the left-hand side of each equation and dividing by $P(a)$, we get the \textbf{Bayes' rule}.
+\begin{definition}[title={Bayes' theorem}]
+    \begin{center}
+        $P(b|a) = \frac{P(a|b)P(b)}{P(a)}$ 
+    \end{center} \vspace{3.5pt}
+    or in distribution form:
+    \begin{center}
+        $\mathbf{P}(Y|X) = \frac{\mathbf{P}(X|Y)\mathbf{P}(Y)}{\mathbf{P}(X)}$ 
+    \end{center}
+\end{definition}
+This turns out to be very useful for assessing \textbf{diagnostic} probability from \textbf{causal} probability.

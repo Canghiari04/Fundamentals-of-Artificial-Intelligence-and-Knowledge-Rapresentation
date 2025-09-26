@@ -15,6 +15,8 @@ Starting from an example is defined the \textbf{full joint distribution} as the 
                 \it $\neg$cavity & 0.016 & 0.064 & 0.144 & 0.576 \\
                 \hline
             \end{tabular}
+            \caption{Full joint distribution of Toothache, Cavity and Catch}
+            \label{t_1_2}
         \end{table}
     \end{center}
     The equation 
@@ -50,4 +52,4 @@ Starting from an example is defined the \textbf{full joint distribution} as the 
         $\mathbf{P}(Y|e) = \alpha\mathbf{P}(Y, E=e) = \alpha\sum_{h}\mathbf{P}(Y, E=e, H=h)$
     \end{center}
 \end{definition}
-The full join distribution can answer probabilistic queries for discrete variables, but only for small domains. It does not scale well: for a domain described by \textit{n} Boolean variables, it requires an input table of size \textit{$O(2^n)$} and takes \textit{$O(2^n)$} time to process a question. The full joint distribution in tabular form is just not a practical tool for building reasoning systems.
+The full joint distribution can answer probabilistic queries for discrete variables, but only for small domains. It does not scale well: for a domain described by \textit{n} Boolean variables, it requires an input table of size \textit{$O(2^n)$} and takes \textit{$O(2^n)$} time to process a question. The full joint distribution in tabular form is just not a practical tool for building reasoning systems.

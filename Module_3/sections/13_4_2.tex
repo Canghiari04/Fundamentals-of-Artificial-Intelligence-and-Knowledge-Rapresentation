@@ -1,0 +1,10 @@
+On the surface, Bayes' rule does not seem very useful. It allows to compute the single term $P(b|a)$ in terms of three items: $P(a|b)$, $P(b)$ and $P(a)$. 
+But the Bayes' rule is useful in practice because there are many cases where we have probabilities for these three items and need to compute the fourth.
+Often, we perceive as evidence the effect of some unknown cause and we would like to solve for that cause. In that case, the Bayes' rules becomes:
+\begin{center}
+    $P(cause|effect) = \frac{P(effect|cause)P(cause)}{P(effect)}$ 
+\end{center}
+The conditional probability $P(effect|cause)$ defines the relationship in the \textbf{causal} direction, while $P(cause|effect)$ describes the \textbf{diagnostic} direction. Let see an example.
+\begin{example}
+    Say 1 individual in 50.000 suffers from meningitis, $1\%$ from a stiff neck, and $70\%$ of the times meningitis causes a stiff neck. \textit{What is the probability that an individual with a stiff neck has meningitis?}
+\end{example}
