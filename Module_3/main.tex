@@ -129,6 +129,12 @@
     #1
 }
 
+\newcommand\ownfootnote[1]{%
+  \begin{NoHyper}
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \end{NoHyper}
+}
 
 \begin{document}
 \pagestyle{empty}
@@ -181,10 +187,33 @@ Matteo Canghiari}}
 
 \chapter{Acting under uncertainty}
 \input{sections/13_1.tex}
+\label{c_13_1}
 
 \section{Basic probability notation}
 \input{sections/13_1_1.tex}
+\label{s_13_1_1}
 
-\section{Inference using full join distribution}
+\section{Inference using full joint distribution}
 \input{sections/13_1_2.tex}
+\label{s_13_1_2}
+
+\chapter{Independence}
+\input{sections/13_4.tex}
+\label{c_13_4}
+
+\section{Bayes' rule}
+\input{sections/13_4_1.tex}
+\label{s_13_4_1}
+
+\section{Bayes' rule: a simple case study}
+\input{sections/13_4_2.tex}
+\label{s_13_4_2}
+
+\chapter{Bayesian networks}
+\input{sections/13_5.tex}
+\label{s_13_5}
+
+\section{Reasoning patterns}
+\input{sections/13_5_1.tex}
+\label{s_13_5_1}
 \end{document}
