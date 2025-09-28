@@ -1,10 +1,59 @@
 On the surface, Bayes' rule does not seem very useful. It allows to compute the single term $P(b|a)$ in terms of three items: $P(a|b)$, $P(b)$ and $P(a)$. 
 But the Bayes' rule is useful in practice because there are many cases where we have probabilities for these three items and need to compute the fourth.
-Often, we perceive as evidence the effect of some unknown cause and we would like to solve for that cause. In that case, the Bayes' rules becomes:
+Often, we perceive as evidence the \textbf{effect} of some unknown \textbf{cause} and we would like to solve for that cause. In that case, the Bayes' rules becomes:
 \begin{center}
     $P(cause|effect) = \frac{P(effect|cause)P(cause)}{P(effect)}$ 
 \end{center}
 The conditional probability $P(effect|cause)$ defines the relationship in the \textbf{causal} direction, while $P(cause|effect)$ describes the \textbf{diagnostic} direction. Let see an example.
 \begin{example}
-    Say 1 individual in 50.000 suffers from meningitis, $1\%$ from a stiff neck, and $70\%$ of the times meningitis causes a stiff neck. \textit{What is the probability that an individual with a stiff neck has meningitis?}
+    Say 1 individual in 50.000 suffers from meningitis, $1\%$ from a stiff neck, and $70\%$ of the times meningitis causes a stiff neck. \textit{What is the probability that an individual with a stiff neck has meningitis?} \vspace{3.5pt}
+
+    $P(s|m) = 0.7$
+
+    $P(m) = 1/50.000$
+
+    $P(s) = 0.01$
+
+    $P(m|s) = \frac{P(s|m)P(m)}{P(s)} = \frac{0.7\times(1/50.000)}{0.01} = 0.0014$
 \end{example}
+We have seen that the Bayes' rule seems useful for answering probabilistic queries conditionated on one piece of evidence. But, what happens when we have two or more pieces of evidence? For instance, what a dentist conclude if her steel probe cathes in the tooth of a patient?
+\begin{example}
+    i.e. If we know the full joint distribution \ref{t_1_2}, we can define the answer as: \vspace{3.5pt}
+    
+    $\mathbf{P}(Cavity|toothache \wedge catch) = \alpha \langle0.108, 0.016\rangle = \langle0.871, 0.129\rangle$ \vspace{3.5pt}
+
+    However, this approach does not scale up to larger number of variables. We can try using the Bayes' rule to reformulate the problem: \vspace{3.5pt}
+
+    $\mathbf{P}(Cavity|toothache \wedge catch) = \alpha\mathbf{P}(toothache \wedge catch|Cavity)\mathbf{P}(Cavity)$ \vspace{3.5pt}
+
+    For this reformulation, we must know the conditional probabilities of the conjuction for each value of Cavity. That might be simple for just two variables, but again it does not scale up.
+    Thus, we need to find some assertions about the domain that will enable us to simplify the expressions. \vspace{3.5pt}
+
+    The notion of \textbf{independence} provides a clue. It would be nice if Toothache and Catch were independent, but they aren't: if the probe catches in the tooth, then it is likely that the tooth has a cavity and that cavity causes the tootchache. By this last assertion, we can allude that these variables are independent, given the presence or the abscence of a cavity. Each effects is directly caused by the cavity, but neither has a direct effect on the other. Mathematically, this property is written as follows: \vspace{3.5pt}
+    \begin{center}
+        $\mathbf{P}(toothache \wedge catch | Cavity) = \mathbf{P}(toothache|Cavity)\mathbf{P}(catch|Cavity)$
+    \end{center} \vspace{3.5pt}
+    This equation introduces the meaning of \textbf{conditional independence}: \textit{toothache} is conditionally independent from \textit{catch} given \textit{Cavity}. Now the information requirements are the same as for inference, using each piece of evidence separately: the prior probability $\mathbf{P}(Cavity)$ for the query variable and the conditional probability for each effect, given its cause. \vspace{3.5pt}
+    \begin{center}
+        $\mathbf{P}(toothache \wedge catch | Cavity) = \alpha \mathbf{P}(toothache|Cavity)\mathbf{P}(catch|Cavity)\mathbf{P}(Cavity)$
+    \end{center} \vspace{3.5pt}
+\end{example}
+\begin{definition}
+    The \textbf{conditional independence} of two variables X and Y, given a third variable Z, is:
+    \begin{center}
+        $\mathbf{P}(X,Y|Z)=\mathbf{P}(X|Z)\mathbf{P}(Y|Z)$
+    \end{center}
+\end{definition}
+In this way, the original table is decomposed into three small tables. The table \ref{t_1_2} has seven independent entries. The smaller tables contain five indipendent numbers, 2 for the conditional probability distributions and 1 for the prior distribution $\mathbf{P}(Cavity)$. Right now the size of the representation grows as $O(n)$ instead of $O(2^n)$, it grows by a \textbf{linear} pace not anymore by a \textbf{exponential} pace. Finally, we can say that conditional independence and absolute independence can allow probabilistic systems to scale up.
+\begin{example}
+    i.e. Conceptually, Cavity \textbf{separates} Toothache and Catch because it is a direct cause of both of them.
+\end{example}
+\begin{definition}
+    The full joint distribution can be written as: \vspace{3.5pt}
+
+    \begin{center}
+        $\mathbf{P}(Cause, Effect_1, Effect_2, ..., Effect_n) = \mathbf{P}(Cause)\prod_i\mathbf{P}(Effect_i|Cause)$
+    \end{center} \vspace{3.5pt}
+
+    This probability distribution is called \textbf{Naive Bayes} \ownfootnote{The naive Bayes model is the most common way to solve labeling tasks, such as classification. The total number of parameters grows \textbf{linearly}.}.
+\end{definition}
