@@ -1,0 +1,17 @@
+We begin the discussion with a simple toy example, the \textit{student network}.
+\begin{example}
+    i.e. A student's grade depends on intelligence and on the difficulty of the course.
+    SAT scores are correlated with intelligence. A professor writes recommendation letters by only looking at grades. \vspace{3.5pt}
+
+    In this case, our probability space is composed by five relevant random variables \textit{Difficulty (D)}, \textit{Intelligence (I)}, \textit{SAT score (S)}, \textit{Grade (G)} and \textit{Letter (L)}.
+    \begin{center}
+        % \includegraphics{20/50}
+    \end{center}
+    Consider a particular student, George, that he would like to reason using the student network. We might ask how likely George is to get a strong recommandation from his professor in Analysis.
+    Knowing nothing else about George and his grade, this probability is around the $50$ percent. \vspace{3.5pt}
+
+    We now find out that George is not so intelligent. The probability that he gets a strong letter from the professor goes down to 39. We now further discover that Analysis is an easy class.
+    The probability that George receive a strong letter is now about 51 percent. \vspace{3.5pt}
+
+    Queries and answers such as these, where we predict the behavior of numerous factors, is called \textbf{causal reasoning} or \textbf{prediction} \ownfootnote{It reflects the causal direction, from the parent nodes we are just defining which is the influence on their children.}.
+\end{example}
