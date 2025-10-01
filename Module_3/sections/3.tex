@@ -42,12 +42,12 @@ semantics:
 
     $P(H|G) \neq P(H|G, P)$
 \end{example}
-We can get a quite compact network only if we choose the node ordering well. What happens if we choose a strange order? Consider the burglary example again.
+We can get a quite compact network only if we choose the node ordering well. What happens if we choose a strange order? Consider the Burglary example again.
 \begin{example}
     Suppose we decide to
     order the nodes as follows:
     \begin{center}
-        $MaryCalls, JohnCalls, Alarm, Burglar, Earthquake$
+        $MaryCalls, JohnCalls, Alarm, Burglary, Earthquake$
     \end{center}
     We then get a more complicated network shown as below.
     \begin{center}
@@ -58,16 +58,16 @@ We can get a quite compact network only if we choose the node ordering well. Wha
         \item \textit{MaryCalls}: first node, no parents, it is like a \textit{prior probability}.
         \item \textit{JohnCalls}: if Mary calls, probably the alarm has gone off, which would make it more likely John calls. \textit{JohnCalls} needs \textit{MaryCalls} as parent.
         \item \textit{Alarm}: clearly, if both call, it is more likely that the alarm has gone off. \textit{Alarm} needs \textit{MaryCalls} and \textit{JohnCalls} as parents nodes.
-        \item \textit{Burglar}: if we know the alarm state, then the call from Mary or John doesn't tell us anything about the burglar: 
+        \item \textit{Burglary}: if we know the alarm state, then the call from Mary or John doesn't tell us anything about the Burglary: 
         \begin{center}
-            $\mathbf{P}(Burglar|Alarm, JohnCalls, MaryCalls) = \mathbf{P}(Burglar|Alarm)$    
+            $\mathbf{P}(Burglary|Alarm, JohnCalls, MaryCalls) = \mathbf{P}(Burglary|Alarm)$    
         \end{center}
         Hence we need just \textit{Alarm} as parent.
-        \item \textit{Earthquake}: if the alarm is on, it is more likely that there has been an earthquake. But if we know that there has been a burglary, then that explain the alarm, so the probability of an earthquake would decrease. Hence, we need both \textit{Alarm} and \textit{Burglar} as parent.
+        \item \textit{Earthquake}: if the alarm is on, it is more likely that there has been an earthquake. But if we know that there has been a Burglary, then that explain the alarm, so the probability of an earthquake would decrease. Hence, we need both \textit{Alarm} and \textit{Burglary} as parent.
     \end{enumerate} \vspace{3.5pt}
 
     The resulting network has two more links than the original one and requires three more probabilities to be specified. What's worse, some of the links represent strange relationships
     that require difficult probability judgments. 
 \end{example}
 If we try to build a Bayesian network by the \textbf{diagnostic direction}, from effects to causes, we end up having to specify additional dependencies between independent causes. If we use the \textbf{causal direction}, we end up having to 
-specify fewer numbers, and the network seems to be more easier to handle. 
+specify fewer numbers, and the network seems to be more easier to handle.
