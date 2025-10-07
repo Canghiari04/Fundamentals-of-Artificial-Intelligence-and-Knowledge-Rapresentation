@@ -1,0 +1,90 @@
+Even if the number of parents k is smallish, fill any CPT requires $O(2^k)$ numbers and it grows exponentially with number of parents. Instead, if we assume a 
+continuous-valued parent or child, CPT becomes \textbf{infinite} \footnote{One of the nicest thing of Bayesian network is the capability to combine together
+different types of variables, sush as descrete, continuos, deterministic, not-deterministic and so on.}. Usually, a solution to solve these types of
+problem consists of \textbf{canonical distributions}. \vspace{3.5pt}
+
+The simplest case is provided by \textbf{deterministic nodes}:
+\begin{center}
+    $X = f(Parents(X))$
+\end{center}
+A deterministic node has its values specified exactly by the values of its parents, with no uncertainty.
+\begin{example}
+    i.e. Logical relationship, so there is no stochasticity. \vspace{3.5pt}
+
+    The relationship between the parent nodes $(Canadian, US, Mexico)$ and the child node $(NorthAmerican)$ is simply that the child is the disjunction, or the logical OR,
+    of the parents. \vspace{3.5pt}
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \bf Canadian & \bf US & \bf Mexico & \bf NorthAmerican  \\
+            \hline
+            F & F & F & F \\
+            T & F & F & T \\
+            F & T & F & T \\
+            F & F & T & T \\
+            T & T & F & T \\
+            T & F & T & T \\
+            F & T & T & T \\
+            T & T & T & T \\
+            \hline
+        \end{tabular}
+    \end{center} \vspace{7pt}
+
+    i.e. Numerical relationship. \vspace{3.5pt}
+    
+    If the parent nodes are a lake's inflows $(Rivers, Runoff, Precipitation)$ and the outflows $(Rivers, Evaporation, Seepage)$ and the child node is the
+    change in the water level of the lake, then the value of the child is the sum of the inflow parents minus the sum of the outflow parents. \vspace{3.5pt}
+
+    \begin{center}
+        $\frac{Level}{t}=inflow+precipitation-outflow-evaporation$
+    \end{center}
+\end{example}
+
+Another interesting example is the \textbf{Noisy-OR distribution}, which is very useful representation. Now, we will describe an example to understand the intuition
+of Noisy-OR distribution given a medical domain.
+\begin{example}
+    i.e. Medical representation. \vspace{7pt}
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \bf Cold & \bf Flu & \bf Malaria & \bf P(Fever) & \bf P($\mathbf{\neg Fever}$) \\
+            \hline
+            F & F & F & 0.0 & \dots \\
+            \hline
+        \end{tabular}
+    \end{center} \vspace{7pt}
+
+    Imagine that you are looking to the symptom, which is the $(Fever)$, and the symptom can be caused by different deseases, such as $(Cold, Flu, Malaria)$.
+    So, the network is defined by three different causes parent of the same effect. \vspace{3.5pt}
+    
+    As we can suppose, it is very common in medical domain, where from the 
+    symptom, $(Fever)$, we have to diagnose the cause. Furthermore, as written before, the size of this representation is exponential, it requires $2^3$ parameters,
+    and it encreases with the number of the parents. \vspace{3.5pt}
+
+    We can make some simplified assumptions, that let us to reduce the size of the representation from exponential to linear with the number of parents. For instance,
+    $Malaria$ in the $90\%$ of the cases will cause $Fever$, in the last $10\%$ fails to cause $Fever$. This is called the \textbf{failure probability}. \vspace{3.5pt}
+
+    The second row of the table shows what we are talking about: we got $Malaria$ but not the other symptoms and the probability of not having $(Fever)$ is 0.1. \vspace{3.5pt}
+
+    The main idea about failure probabilities is that each of them is independent from other failure probabilities. So, if we got $(Flu, Malaria)$ but not $(Cold)$ then the 
+    failure probability will be $0.1 \times 0.2=0.2$, mixed failure probabilities are solved by the product of each single failure probability.
+\end{example}
+Generally, Noisy-OR distributions by failure probabilities let to reduce the size of representations from exponential to linear. The failure probabilities let us
+to solve every question about the domain analyzed. Despite Noisy-OR distribution is a powerful tool, this works only if all the causes are already listed there and all the variables
+are Boolean.
+\begin{definition}
+    \textbf{Noisy-OR distributions} model multiple causes for the same effect if and only if:
+    \begin{itemize}
+        \renewcommand{\labelitemi}{-}
+        \item Parents $U_1, \dots, U_k$ include all causes\ownfootnote{If missing, we can add the \textbf{leak node}.}.
+        \item Each failure probability is independent from other failure probabilities.
+    \end{itemize} \vspace{7pt}
+
+    \begin{center}
+        $P(X|U_1 \dots U_k, \neg U_{j+1} \dots \neg U_k) = 1 - \prod_{i=1}^{j} q_i$
+    \end{center} \vspace{3.5pt}
+
+    Where $q_i$ stands for \textbf{failure probability} of \textbf{i cause}.
+\end{definition}
