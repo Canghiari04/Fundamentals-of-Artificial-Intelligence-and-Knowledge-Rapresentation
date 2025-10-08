@@ -57,11 +57,10 @@ of Noisy-OR distribution given a medical domain.
     \end{center} \vspace{7pt}
 
     Imagine that you are looking to the symptom, which is the $(Fever)$, and the symptom can be caused by different deseases, such as $(Cold, Flu, Malaria)$.
-    So, the network is defined by three different causes parent of the same effect. \vspace{3.5pt}
+    However, the network is defined by three different causes parent of the same effect. \vspace{3.5pt}
     
-    As we can suppose, it is very common in medical domain, where from the 
-    symptom, $(Fever)$, we have to diagnose the cause. Furthermore, as written before, the size of this representation is exponential, it requires $2^3$ parameters,
-    and it encreases with the number of the parents. \vspace{3.5pt}
+    As we can suppose, it is very common in medical domain to diagnose the cause given the symptom, $(Fever)$. Furthermore, as written before,
+    the size of this representation is exponential, it requires $2^3$ parameters, and it encreases with the number of the parents. \vspace{3.5pt}
 
     We can make some simplified assumptions, that let us to reduce the size of the representation from exponential to linear with the number of parents. For instance,
     $Malaria$ in the $90\%$ of the cases will cause $Fever$, in the last $10\%$ fails to cause $Fever$. This is called the \textbf{failure probability}. \vspace{3.5pt}
@@ -71,8 +70,9 @@ of Noisy-OR distribution given a medical domain.
     The main idea about failure probabilities is that each of them is independent from other failure probabilities. So, if we got $(Flu, Malaria)$ but not $(Cold)$ then the 
     failure probability will be $0.1 \times 0.2=0.2$, mixed failure probabilities are solved by the product of each single failure probability.
 \end{example}
-Generally, Noisy-OR distributions by failure probabilities let to reduce the size of representations from exponential to linear. The failure probabilities let us
-to solve every question about the domain analyzed. Despite Noisy-OR distribution is a powerful tool, this works only if all the causes are already listed there and all the variables
+Generally, Noisy-OR distributions by failure probabilities let to reduce the size of representations from exponential to linear, the initial table has the same number of 
+parameters such as the number of parents present. The failure probabilities let us to solve every question about the domain analyzed.
+Despite Noisy-OR distribution is a powerful tool, this works only if all the causes are already listed there and all the variables
 are Boolean.
 \begin{definition}
     \textbf{Noisy-OR distributions} model multiple causes for the same effect if and only if:
@@ -88,3 +88,63 @@ are Boolean.
 
     Where $q_i$ stands for \textbf{failure probability} of \textbf{i cause}.
 \end{definition}
+\textbf{Hybrid networks} \vspace{3.5pt}
+
+Many real-world problems involve continuos quantities, such as money, temperature, height and mass; in fact, much of statistics deals with random variables
+whose domains are continuos. By definition, continuos variables have an infinite number of possible values, so it is impossible to specify conditional
+probabilities for each value. There are many different ways to handle continuos variables:
+\begin{itemize}
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Discretization}: dividing up the possible values into a set of intervals. Discretization is sometimes an adequate solution, but often results in 
+    large errors and the CPTs could be quite huge.
+    \item \textbf{Finitely parameterized canonical families}: the most common way is to define standard families of probability density functions that are specified
+    by a finite number of parameters. 
+\end{itemize}
+A network with both discrete and continuos variables is called \textbf{hybrid Bayesian network}. To design a hybrid network, we have to specify two new kinds of 
+distributions:
+\begin{itemize}
+    \renewcommand{\labelitemi}{-}
+    \item the conditional distribution for a continuos variable given discrete or continuos parents;
+    \item the conditional distribution for a discrete variable given continuos parents.
+\end{itemize}
+Let's set a new example for better understanding.
+\begin{example}
+    i.e. Harvest hybrid network.
+
+    \begin{center}
+        % \includegraphics{37/46}
+    \end{center}
+    Consider the network shown previously, in which a customer buys some fruit depending on its cost, which depends in turn on the size of the harvest and from the 
+    government's subsidy. The variable $(Cost)$ is continuos and has continuos and descrete parents $(Harvest, Subsidy)$, the variable $(Buys)$ is descrete and it has
+    a continuos parent. \vspace{3.5pt}
+
+    One standard way to represent the first type of relationship is the \textbf{Linear Gaussian Model}, where the distribution of $Cost$ is the Gaussian distribution 
+    with fixed \textbf{variance} and variable \textbf{mean}. The mean depends on the value of the \textbf{continuos parent} $(Harvest)$, and it can be represented
+    as a linear function of $(Harvest)$. Moreover, the parameters $(a, b)$ of the mean change based on presence or absence of $(Subsidy)$. \vspace{3.5pt}
+
+    \begin{center}
+        $P(Cost = c|Harvest = h, Subsidy ?= true) =$
+        $N(a_th+b_t, \sigma_t)(c) = \frac{1}{\sigma_t\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{c - (a_th+b_t)}{\sigma_t})^2}$
+    \end{center} \vspace{7pt}
+    Before moving on, we focus on some aspects of the equation:
+    \begin{itemize}
+        \renewcommand{\labelitemi}{-}
+        \item $(a_*h+b_*)$ defines the mean of the distribution, if $h$ changes also the mean will change\ownfootnote{The star $(*)$ symbols stand for the enumeration of $(Subsidy)$.}.
+        \item $(\sigma_*)$ is the standard deviation, which is fixed, never change.
+        \item Presence or abscence of $(Subsidy)$ determines the choice of $(a, b)$ parameters, but it hasn't any influence on $(Harvest)$ behavior, again,
+        if it encreased the cost could decrease and vice versa.
+    \end{itemize} \vspace{7pt}
+
+    Now we turn to the distributions for descrete variables with continuos parents. We now consider the $Buys$ node. It seems reasonable to assume that the customer will buy if the cost is low 
+    and will not buy if it is high and the probability of buying varies smoothly in some intermediate region. In other words, the conditional distribution is like a soft threshold function. \vspace{3.5pt}
+
+    There are two ways to make soft threshold, as:
+    \begin{itemize}
+        \renewcommand{\labelitemi}{-}
+        \item \textbf{Probit distribution}, uses the integral of the standard normal distribution to compute a threshold.
+        \item \textbf{Sigmoid distribution}, uses the \textit{logistic function} to produce a soft threshold\ownfootnote{The sigmoid or logit distribution is widely used in neural networks, more than the probit one.}.
+        \begin{center}
+            $P(Buys? = true | Cost = c) = \frac{1}{1+e^{(-2^{(\frac{-c+\mu}{\sigma})})}}$
+        \end{center}
+    \end{itemize}
+\end{example}
