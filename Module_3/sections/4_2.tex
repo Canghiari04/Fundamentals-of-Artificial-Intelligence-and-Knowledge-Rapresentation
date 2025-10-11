@@ -3,11 +3,12 @@ There are several versions of this approach; we define the \textbf{variable elim
 
 Variable elimination works by evaluating expressions in \textbf{right-to-left} order. Intermediate results are stored, and summations over each variable are done only for 
 those portions of the expression that depend on the variable. By this algorithm the equation becomes:
-\begin{center}
-    $\mathbf{P}(B|j, m) = \alpha P(B) \sum_{e} P(e) \sum_{a} P(a|B, e) P(j, a) P(m, a)$
-
-    $=\alpha f_B(B) \sum_{e} f_E(e) \sum_{a} f_A(b, e) f_J(a) f_M(a)$
-\end{center}
+\begin{itemize}
+    \renewcommand{\labelitemi}{}
+    \item $\mathbf{P}(B|j, m)$
+    \item $= \alpha P(B) \sum_{e} P(e) \sum_{a} P(a|B, e) P(j, a) P(m, a)$
+    \item $= \alpha f_B(B) \sum_{e} f_E(e) \sum_{a} f_A(b, e) f_J(a) f_M(a)$
+\end{itemize}
 Each part of the expression was annotated with the name of the corresponding \textbf{factor}; a factor is a matrix containing values of its argument variables.
 For instance, the factor $f_J(a)$ correspond to $P(j|a)$, and it's a two-element vector containing the same values of the CPT.
 \begin{center}
@@ -71,8 +72,39 @@ there are some theorems that can help us achieve our goal.
     Y is \textbf{irrelevant} unless $Y \in Ancestors({X} \cup \mathbf{E})$
 \end{definition}
 \begin{definition}[title={Theorem}]
-    Y is \textbf{irrelevant} if \textit{d-separated} from $X$ by $\mathbf{E}$
+    Y is \textbf{irrelevant} if \textit{d-separated} from $\{X\}$ by $\mathbf{E}$
 \end{definition}
 \begin{example}
-    
+    i.e. Application of previous theorems.
+    % \includegraphics{16/29}
+
+    Let's consider the following simple query: \vspace{3.5pt}
+    \begin{center}
+        $P(JohnCalls|Burglary = true)$
+    \end{center} \vspace{3.5pt}
+    So, which is the probability of $JohnCalls$ given $Burglary$ true? The solution of this kind of query can be written as products of conditional probabilities, such as: \vspace{7pt}
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item $P(JohnCalls|Burglary = true)$
+        \item $= \alpha P(b) \sum_{e}P(e) \sum_{a}P(a) P(a|b,e) P(j|a) P(m|a)$
+    \end{itemize} \vspace{3.5pt}
+    As you can assume, we have already moved out probabilities ($P(b)$, $P(e)$) that do not belong in the summations. By the way, also another observation we can do: node $MaryCalls$
+    does not belong to $JohnCalls$'s Ancestors. Therefore, $MaryCalls$ conditional probability should not be considered inside the equation; Ancestors' theorem help us to simplify the
+    final expression. In probabilistic terms these assertions are defined as: \vspace{3.5pt}
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item $X = JohnCalls$ , $\mathbf{E}=\{Burglary\}$
+        \item $Ancestors(\{X\} \cup \mathbf{E}) = \{Alarm, Earthquake\}$ so $MaryCalls$ is \textbf{irrelevant}.
+    \end{itemize} \vspace{3.5pt}
+    % \includegraphics{17/29}
+    Now we switch to the student network, the new simple query is:
+    \begin{center}
+        $P(Job|Grade, SAT) = ?$
+    \end{center} \vspace{3.5pt}
+    The second theorem uses the notion of \textit{d-separation}. It could be convenient to pick up on its main concept: \vspace{3.5pt}
+    \begin{center}
+        The nodes $X$ and $Y$ are \textit{d-separated} given $Z$ if there is no \textit{active trail} between $X$ and $Y$ given $Z$. $Z$ cannot be part of the active trail.
+    \end{center} \vspace{3.5pt}
+    For $P(Job|Grade, SAT)$, not only $Happy$ is irrelevant, it does not belong to $Ancestors(\{Job\} \cup Grade, SAT)$, but also $Difficulty$ and $Intelligence$ are \textit{d-separated}
+    from $Job$, given $Grade$ and $SAT$. Accordingly, $Happy$, $Difficulty$ and $Intelligence$ should not be considered in the simple query.
 \end{example}
