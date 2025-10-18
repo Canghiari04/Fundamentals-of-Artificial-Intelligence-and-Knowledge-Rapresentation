@@ -1,0 +1,28 @@
+\textbf{Markov chain Monte Carlo} (\textit{MCMC}) algorithms work quite differently from rejection sampling or likelihood weighting. Instead of creating each time a 
+new sample, MCMC algorithms generate each sample by making a random change to the preceding sample. It can be helpful to think of an MCMC algorithm as a set of worlds\footnote{All the several worlds are not \textit{atomic event} but only \textit{states}.},
+where we are in \textit{current state} specifying a value for every variable and generate a \textit{new state} by making random changes to the current state. \vspace{3.5pt}
+
+Every sample defined in that way is meaningful, but how to do design them? To answer this query, we need to change something seen so far, and in this case we have to redefine
+the way for drawing samples. \vspace{3.5pt}
+
+Until now, every method studied suffers from one main problem: estimated distributions never converge to true distributions in the long run, expecially when many samples 
+are generated. This last observation can be an useful hint for understanding the \textbf{Gibbs sampling}. \vspace{3.5pt}
+
+Given the image shown below, the main idea of Gibbs sampling consists of drawing all the states which represent every single change for any non-evidence variable. As likelihood
+sampling, evidence variables are fixed. \vspace{3.5pt}
+
+Moving on, we suppose that our current state is:
+\begin{center} \vspace{3.5pt}
+    $\langle Cloudy=True, Sprinkler=True, Rain=False, WetGrass=True \rangle$.
+\end{center} \vspace{3.5pt}
+To make a new sample, the algorithm focuses on one non-evidence variable, in this case $Rain$, and it generates a new related value. The next state will be the same if $Rain$
+is again \textit{false}, or it would be 
+\begin{center} \vspace{3.5pt}
+    $\langle Cloudy=True, Sprinkler=True, Rain=True, WetGrass=True \rangle$
+\end{center} \vspace{3.5pt}
+if the sampled value is \textit{true}. 
+\begin{center}
+    % \includegraphics{35/49}
+\end{center} \vspace{3.5pt}
+The sampling for the non-evidence variable $X_i$ is done by looking its \textit{Markov blanket}\footnote{Given a random variable $X_i$ its \textbf{Markov blanket}, $X_i$ is conditionally independent of all other nodes in the network.}.
+Therefore, Gibbs method samples only the Markov blanket associated, without any time recompute all the random variables that composed the network.

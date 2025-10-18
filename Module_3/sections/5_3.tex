@@ -1,0 +1,60 @@
+\textbf{Likelihood weighting} avoids the inefficiency of rejection sampling by generating only events that are consistent with the evidence \textbf{e}. We begin by describing
+how the algorithm is designed, then we show a simple example to pratically understand how it works. \vspace{3.5pt}
+
+The algorithm, shown below, fixes the values for the evidence variables \textbf{E} and samples only the non-evidence variables. This guarantees that each event generated 
+is consistent with the evidence, avoiding the rejection of all them that cannot be associated with it. However, not all the events are equal. In fact, before start counting
+how many times an evidence variable occurs in the set of samples, each event is \textbf{weighted} by the \textbf{likelihood} that the event accords to the evidence.
+Generally it is computed by the product of the conditional probabilities for each evidence variable, given its parents.
+\begin{example}
+    i.e. Sprinkler network. \vspace{3.5pt}
+
+    The query variable, following the topological order, is: \vspace{3.5pt}
+    \begin{center}
+        $\mathbf{P}(Rain|Cloudy=True, WetGrass=True) =$ ?
+    \end{center} \vspace{3.5pt}
+    The process goes as follows: first of all, the weight is set to 1 and then an event is generated:
+    \begin{enumerate}
+        \item $Cloudy$ is an evidence variable with value \textit{true}. Therefore, the \textit{weight} value becomes: \vspace{3.5pt}
+        \begin{center}
+            $w \leftarrow w \times P(Cloudy=True) = 1.0 \times 0.5 = 0.5$
+        \end{center} \vspace{3.5pt}
+        \item $Sprinkler$ is not an evidence variable, we must sample it. Looking to the CPT, we have that $\mathbf{P}(Sprinkler|Cloudy=True) = \langle0.1, 0.9\rangle$. Suppose the algorithm returns \textit{true}.
+        \item $Rain$ is not an evidence variable, we have to sample it from $\mathbf{P}(Rain|Cloudy=True) = \langle0.8, 0.2\rangle$. Suppose the algorithm returns \textit{false}.
+        \item $WetGrass$ is an evidence variable with value \textit{true}. Therefore, we set: \vspace{3.5pt}
+        \begin{itemize}
+            \renewcommand{\labelitemi}{}
+            \item $w \leftarrow w \times P(WetGrass=True|Sprinkler=True,Rain=False)$
+            \item $= 0.5 \times 0.90 = 0.45$
+        \end{itemize}
+    \end{enumerate} \vspace{3.5pt}
+    Finally, the \textit{likelihood weighting} algorithm returns the event $[t,f,f,t]$ with weight $0.45$.
+\end{example}
+From the sprinkler example, we derive the general form of \textit{likelihood weighting}. Remember that the evidence variables $\mathbf{E}$ are fixed with values $\mathbf{e}$,
+and all the non-evidence variables, including the query one $X$, are named $\mathbf{Z}$. \vspace{3.5pt}
+
+Likelihood weighting algorithm samples each non-evidence variable $\mathbf{Z}$ given its parents, as follows:
+\begin{center}
+    $S_{WS}(\mathbf{z}, \mathbf{e})=\prod_{i=1}^{l}P(z_i|parents(Z_i))$\footnote{$Parents(Z_i)$ can include both non-evidence variables and evidence variables.}.
+\end{center} \vspace{3.5pt}
+
+Unlike the first prior distributions $P(\mathbf{z})$\footnote{$\mathbf{P}(Cloudy)$ is a prior distribution, no evidence influences its behavior.}, the distribution 
+$S_{WS}$ pays some attention to the evidence: the value sampled for each non-evidence variable $Z_i$ will be influenced by evidence variables included in $Z_i$'s ancestors.
+For instance, when sampling $Sprinkler$ the algorithm pays attention to the evidence $Cloudy = True$, since that $Cloudy$ is its parent node. By the way, when sampling
+$Sprinkler$ and $Rain$ the algorithm ignores the evidence in the child node $WetGrass = True$; this means will be generated many samples with $Sprinkler = False$ and $Rain = False$
+despite they are against the $WetGrass$ evidence\footnote{This is one of the main problem of \textbf{likelihood weighting} algorithm, it does care about the evidences included only in the ancerstors sets.}. \vspace{3.5pt}
+
+But, which is the role of $w$ in the likelihood weighting algorithm? The weight $w$ makes up for the difference between the true probability and the estimated one.
+Without $w$ term, the estimated probability would be flawed. Moving on, the weight for a given sample $(\mathbf{z}, \mathbf{e})$ is: \vspace{3.5pt}
+\begin{center}
+    $w(\mathbf{z}, \mathbf{e}) = \prod_{i=1}^{m}P(e_i|parents(E_i))$ 
+\end{center} \vspace{3.5pt}
+Finally, mixing the two equations we get \textbf{consistent} probabilities from likelihood sampling:
+\begin{itemize}
+    \renewcommand{\labelitemi}{}
+    \item $S_{WS}(\mathbf{z}, \mathbf{e})w(\mathbf{z}, \mathbf{e})$
+    \item $= \prod_{i=1}^{l}P(z_i|parents(Z_i))\prod_{i=1}^{m}P(e_i|parents(E_i))$
+    \item $\approx P(\mathbf{z}, \mathbf{e})$
+\end{itemize}
+
+Despite likelihood weighting is more efficient than rejection sampling, also this algorithm suffers the growth of evidence variables. As more evidence variables are given 
+the algorithm's performance decrease, only few samples can reach the total weight.
