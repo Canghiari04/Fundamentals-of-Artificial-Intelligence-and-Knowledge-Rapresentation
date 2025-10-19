@@ -1,0 +1,55 @@
+This paragraph describes a new method to retrieve informations from data, named \textbf{probabilistic inference}.
+It allows the computation of conditional probabilities for query propositions by given evidence.
+Starting from an example is defined the \textbf{full joint distribution} as the knowledge base from which answers to all questions.
+\begin{example}
+  e.g. (\textit{Toothache, Cavity, Catch}) is just a domain consisting of three Boolean variables. \textit{Catch} condition occurs when the dentist's steel probe catches in the tooth. Based on the domain, the \textbf{full joint distribution} seems like this:
+  \begin{center}
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{|c|c|c|c|c|}
+                \hline
+                \multicolumn{1}{|c|}{} & \multicolumn{2}{|c|}{\it toothache} & \multicolumn{2}{|c|}{\it $\neg$toothache} \\
+                \hline
+                \it & \it catch & \it $\neg$catch & \it catch & \it $\neg$catch \\
+                \it cavity & 0.108 & 0.012 & 0.072 & 0.008 \\
+                \it $\neg$cavity & 0.016 & 0.064 & 0.144 & 0.576 \\
+                \hline
+            \end{tabular}
+            \caption{Full joint distribution of Toothache, Cavity and Catch}
+            \label{t_1_2}
+        \end{table}
+    \end{center}
+    The equation 
+    \begin{center}
+        $P(\phi) = \sum_{\omega:\omega\models\phi}P(\omega)$
+    \end{center}
+    gives a direct way to calculate probabilities of any assertions, summing up all the possible worlds that satisfy the original proposition. \vspace{3.5pt}
+
+    e.g. $P(toothache) = 0.108 + 0.012 + 0.016 + 0.064 = 0.2$ 
+
+    e.g. $P(cavity \vee toothache) = 0.108 + 0.012 + 0.072 + 0.008 + 0.016 + 0.064 = 0.28$
+
+    It's also possible compute conditional probabilities: \vspace*{3.5pt}
+
+    e.g. $P(\neg cavity|toothache) = \frac{P(\neg cavity \land toothache)}{P(toothache)} = \frac{0.016 + 0.064}{0.2} = 0.4$ \vspace{3.5pt}
+
+    Notice that in this calculation the term $P(toothache)$ remains constant, no matter which value of \textit{Cavity} is computed. In fact, it can be viewed as a \textbf{normalization constant} $(\alpha)$ for the whole distribution $\mathbf{P}(Cavity|toothache)$, ensuring that the positive and negative case sum up to one, as the second probability axiom requires. \vspace*{7pt}
+
+    $\mathbf{P}(Cavity|toothache) = \alpha\mathbf{P}(Cavity, toothache)$ \\
+    $= \alpha[\mathbf{P}(Cavity, toothache, catch) + \mathbf{P}(Cavity, toothache, \neg catch)]$ \\
+    $= \alpha[\langle0.108, 0.016\rangle + \langle0.012, 0.064\rangle]$ \\
+    $= \alpha\langle0.12, 0.08\rangle = \langle0.6, 0.4\rangle$
+\end{example}
+\begin{definition}
+    The first probability calculated $P(toothache)$ is called \textbf{marginalization}, or more simply \textbf{summing out}, because it sums up the probabilities for each possible value of the other variables.
+\end{definition}
+\begin{definition}
+    The second one $P(\neg cavity|toothache)$ is named \textbf{conditioning}, a variant of marginalization that involves conditional probabilities instead of joint probabilities.
+\end{definition}
+\begin{definition}
+    From the example, it's possible to extract a general inference procedure. Let \textbf{Y} be the query variables. Let \textbf{E} be the list of evidence variables, let \textbf{e} be the list of observed values for them, and let \textbf{H} be the unobserved variables. The \textbf{probability query} $\mathbf{P}(Y|\mathbf{e})$ defines the posterior joint distribution of a set of \textbf{query variables Y} given specific values \textbf{e} for some \textbf{evidence variables E}: \vspace{3.5pt}
+    \begin{center}
+        $\mathbf{P}(Y|e) = \alpha\mathbf{P}(Y, E=e) = \alpha\sum_{h}\mathbf{P}(Y, E=e, H=h)$
+    \end{center}
+\end{definition}
+The full joint distribution can answer probabilistic queries for discrete variables, but only for small domains. It does not scale well: for a domain described by \textit{n} Boolean variables, it requires an input table of size \textit{$O(2^n)$} and takes \textit{$O(2^n)$} time to process a question. The full joint distribution in tabular form is just not a practical tool for building reasoning systems.

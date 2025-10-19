@@ -1,0 +1,15 @@
+Until now, we have used \textbf{exact inference} to compute any kind of probability. However, exact inference seems to lose accuracy and efficiency when the Bayesian network
+analyzed is too huge, especially if it is composed by several continuos variables. So, exact inference is not always the best choice, we could lose some crucial informations. \vspace{3.5pt}
+
+Therefore it's essential to consider \textbf{approximate inference} methods. This section describes some randomized sampling algorithms, that provide approximate answers to
+our probability query. \vspace{3.5pt}
+
+The main idea about sampling algorithms can be summarize in three steps, as follows:
+\begin{itemize}
+    \renewcommand{\labelitemi}{-}
+    \item Draw $\mathbf{N}$ samples from a sampling distribution $S$.
+    \item Compute an approximate posterior probability $P$.
+    \item Show this converges to the true probability $P$.
+\end{itemize}
+Moving on, the next paragraphs will describe four sampling algorithms: \textbf{Sampling from an empty network}, \textbf{Rejection sampling}, \textbf{Likelihood weighting} and 
+\textbf{Markov chain Monte Carlo}. Each of them guarantee the generation of samples from a well-known probability distribution.
