@@ -24,7 +24,7 @@ First of all are introduced some basic definitions and examples to understand th
 \end{definition}
 When they are available, independence assertions can help in reducing the size of the domain representation and the complexity of the inference problem. Unfortunately, clean separation of entire sets of variables by independence are quite rare. Moreover, even the independence subset can be quite large, for instance, dentistry might involve dozens of diseases and symptoms, all of which are associated. To handle such problems, we need more specific methods than the general concept of independence, one of them is named \textbf{conditional independence}. Let see an example of conditional independence.
 \begin{example}
-    i.e. given $\mathbf{P}(Toothache, Cavity, Catch)$ has $2^3 - 1 = 7$ independent entries \ownfootnote{\it Why 7 independent entries and not 8 as before? Simply, if we know 7 of them the 8th is automatically determined, must be the last value remaining.}. If I have a cavity, the probability that the probe catches in it does not depend on whether I have toothache: \vspace{3.5pt}
+    i.e. given $\mathbf{P}(Toothache, Cavity, Catch)$ has $2^3 - 1 = 7$ independent entries \ownfootnote{Why 7 independent entries and not 8 as before? Simply, if we know 7 of them the 8th is automatically determined, must be the last value remaining.}. If I have a cavity, the probability that the probe catches in it does not depend on whether I have toothache: \vspace{3.5pt}
     \begin{center}
         $P(catch|toothache, cavity) = P(catch|cavity)$
     \end{center} \vspace{3.5pt}
@@ -32,7 +32,7 @@ When they are available, independence assertions can help in reducing the size o
     \begin{center}
         $P(catch|toothache, \neg cavity) = P(catch|\neg cavity)$
     \end{center} \vspace{3.5pt}
-    Catch is \textbf{conditional indipendent} of Toothache given Cavity \ownfootnote{\it This introduces the meaning of the flow of influence.}. \vspace{3.5pt}
+    Catch is \textbf{conditional indipendent} of Toothache given Cavity \ownfootnote{This introduces the meaning of the flow of influence.}. \vspace{3.5pt}
     \begin{center}
         $\mathbf{P}(Catch|Toothache, Cavity) = \mathbf{P}(Catch|Cavity)$ \vspace{3.5pt} \\
         $\mathbf{P} \models (Toothache \perp Catch|Cavity)$
