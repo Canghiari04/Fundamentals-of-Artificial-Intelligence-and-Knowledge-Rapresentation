@@ -1,0 +1,19 @@
+Every search strategy uses different kind of data structures to keep in mind how the search tree was built. Each node of the tree corresponds to a data structure, containing:
+\begin{itemize}
+    \renewcommand{\labelitemi}{-}
+    \item State: the state in the state space.
+    \item Parent: the node that generated this node.
+    \item Action: the action taken by the parent to generate the node.
+    \item Depth: defining how deep is the node, in which level it belongs to.
+    \item Path-Cost: the cost of the path from the initial state to this node, usually denoted by $g(n)$.
+\end{itemize}
+Now that we have nodes, we need somewhere to put them. The fringe needs to be stored in such a way that the search algorithm can easily choose the next node to expand. The 
+appropriate data structure is a \textbf{queue}. It can be a \textbf{FIFO}, \textbf{LIFO} or a \textbf{priority queue}\footnote{We remember that: 
+    \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \renewcommand{\labelitemi}{-}
+        \item LIFO queues pop the newest element.
+        \item FIFO queues pop the oldest element.
+        \item Priority queues pop the element with the highest priority.
+    \end{itemize}
+}.

@@ -1,0 +1,17 @@
+\textbf{Breadth-first search} is a simple strategy in which the root node is expanded first, then all the successors of the root node are expanded next, and so on; until it is
+found the goal-state or the goal-node. \vspace{3.5pt}
+
+At algorithmic level, this is achieved very simply using a FIFO queue for the fringe, so the oldest node will be the first expanded. Before generating, so creating new states,
+the goal-test is applied to the \textbf{shallowest} node. \vspace{3.5pt}
+
+This strategy ensures \textbf{completeness}, but the \textbf{shallowest} goal node is not necessary the \textbf{optimal} one. BFS can be optimal if all the actions have the same 
+path-cost. In addition, breadth-first search seems to take a quite huge of time and memory. Suppose a search tree where every node has $b$ successors. The root node generates
+$b$ nodes at the first level, each of which generates $b$ more successors, for a total of $b^2$ nodes. Now if we consider that the goal-node has $d$ depth, in the worst case 
+the total number of nodes generated is \vspace{3.5pt}
+\begin{center}
+    $b + b^2 + b^3 + \dots = O(b^d)$.
+\end{center} \vspace{3.5pt}
+This complexity is the same for both time and memory. As the time complexity, the memory takes into account every node expanded inside the \textbf{explored set} to avoid
+\textbf{loopy path}; the space complexity grows exponentially with the number of $b$ successors and the depth $d$ of the goal node. The problem of memory seems to be the most serious. \vspace{3.5pt}
+
+In general, any exponential complexity seems to be scary, and in this case uninformed strategies cannot solve massive problems.

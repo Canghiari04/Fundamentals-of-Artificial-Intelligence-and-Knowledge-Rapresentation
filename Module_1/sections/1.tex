@@ -1,0 +1,18 @@
+Many AI problems can be solved by exploring the \textbf{solution space}. A solution space is a set of all the sequences of actions that an agent can apply. The agent examines all
+the possible sequences of actions and chooses the best one. The goal is to reach the solution starting from a \textbf{initial state}. The process of trying different sequences
+is called \textbf{search}. \vspace{3.5pt}
+
+Usually, it's useful to think about the \textbf{search} process as a \textbf{search tree}, where:
+\begin{itemize}
+    \renewcommand{\labelitemi}{-}
+    \item The initial state corresponds to the \textbf{root} of the tree.
+    \item Each branch that makes up the tree defines the \textbf{action} that can performed by the current node.
+    \item The nodes represent the subsequent reachable states. However, a certain node can be a \textbf{leaf node}. A leaf node is a new state to expand, a solution or a dead-end.
+\end{itemize}
+Previously, we said that a solution is a sequence of actions, so we need to define two main operations that allow us to build a sequence. We do this by \textbf{expanding}
+the current state, applying each possible action to the current node, \textbf{generating} a new set of states\footnote{Every time we expand the current node, new state are generated.}.
+Generally, the set of all leaf nodes available for expansion at any given point is called \textbf{frontier} or \textbf{fringe}. The process of expanding nods continues until
+either a solution is found or there are no more states to expand. \vspace{3.5pt}
+
+Finally, concluding this first introduction, we say that all the search algorithms are named \textbf{search strategies}, and typically they all share the same structure, varying
+by the way they choose which state needs to be expand.

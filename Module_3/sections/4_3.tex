@@ -1,7 +1,0 @@
-The complexity of exact inference depends strictly on the structure of the network. The burglary network belongs to the family of networks in which there is at most one path
-between any couple of nodes. These are called \textbf{polytrees}, and they have a particularly nice property: the complexity of exact inference in polytrees is linear in the size
-of the network.
-\begin{definition}[title={Theorem}]
-    The complexity of variable elimination is $O(d^kn)$ if the network is a \textbf{polytrees} one, in other words any couple of nodes are connected by at most one path.
-\end{definition}
-If the network is not a polytrees one, variable elimination can have exponential complexity in the worst case; generally named as \textbf{NP-hard} problem.
