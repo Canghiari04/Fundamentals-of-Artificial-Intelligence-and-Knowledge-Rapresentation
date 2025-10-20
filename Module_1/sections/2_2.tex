@@ -1,0 +1,20 @@
+BFS algorithm can be a complete and optimal search strategy if and only if all the step costs are equal; generally this type of strategy is called \textbf{uniform-cost search}.
+Instead of expanding the shallowest node, so taking the \textit{oldest} node inserted inside the fringe, uniform-cost search expands the node with the \textit{lowest}
+path cost $g(n)$. Therefore, the fringe is not anymore a LIFO queue, but it becomes a \textit{priority queue} ordered by $g$, so by the path cost made from the initial state 
+to the current one. \vspace{3.5pt}
+
+In addition to the ordering of the queue, there is another significant difference from BFS. If in BFS algorithm the \textit{goal test} is applied when each node is generated,
+in the uniform-cost search strategy the \textit{test} is applied to a node when it is selected for expansion. \vspace{3.5pt}
+
+Let's consider an example for better understanding. 
+\begin{example}
+    i.e. Reach Bucharest from Sibiu.
+    \begin{center}
+        % \includegraphics{103/1152}
+    \end{center}
+    The successors of Sibiu are Rimnicu Vilcea and Fagaras, with costs 80 and 99, respectively. Rimnicu Vilcea is the node selected for the expansion, the cost of which is lower than Faragas.
+    Therefore, the fringe now contains Faragas and Pitesti, costing $80 + 97 = 177$. The least-cost node is now Fagaras, so it is expanded, adding Bucharest at a cost of $99 + 211 = 310$.
+    Now a goal node has been generated, but uniform-cost search keeps going\footnote{We remember that uniform-cost search applies the goal test only when a node is selected, not generated.},
+    selecting Pitesti and adding a second path to Bucharest with a cost of $80 + 97 + 101 = 278$. Finally, the algorithm chooses the second path generated, the cost of which is less than 
+    the first; then it applies the \textit{test goal} and finds out that Bucharest is the \textit{goal-node}, and the solution is returned.
+\end{example}

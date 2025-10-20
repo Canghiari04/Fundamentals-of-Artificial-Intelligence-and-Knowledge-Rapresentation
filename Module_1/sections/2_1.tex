@@ -1,8 +1,8 @@
 \textbf{Breadth-first search} is a simple strategy in which the root node is expanded first, then all the successors of the root node are expanded next, and so on; until it is
 found the goal-state or the goal-node. \vspace{3.5pt}
 
-At algorithmic level, this is achieved very simply using a FIFO queue for the fringe, so the oldest node will be the first expanded. Before generating, so creating new states,
-the goal-test is applied to the \textbf{shallowest} node. \vspace{3.5pt}
+At algorithmic level, this is achieved very simply using a FIFO queue for the fringe, so the oldest node will be the first expanded. Before selecting the next node to 
+expand, the goal-test is applied to each node when it is generated.
 
 This strategy ensures \textbf{completeness}, but the \textbf{shallowest} goal node is not necessary the \textbf{optimal} one. BFS can be optimal if all the actions have the same 
 path-cost. In addition, breadth-first search seems to take a quite huge of time and memory. Suppose a search tree where every node has $b$ successors. The root node generates

@@ -1,0 +1,15 @@
+\textbf{Depth-first search} always expands the \textit{deepest} node in the current fringe. The search proceeds immediately to the deepest level of the the search tree, where
+the nodes have no successors. As those nodes are expanded, they are dropped from the fringe, so the search \textbf{goes back} to the next deepest node,
+which is located at $m - 1$ depth of the current nodes deleted from the frontier. \vspace{3.5pt}
+
+While BFS uses a FIFO queue, DFS uses a LIFO queue, the most recently generated node is chosen for expansion. This search strategy ensures \textbf{optimality} but not 
+\textbf{completeness}, for instance, in the figure shown below the algorithm will follow $Arad-Sibiu-Arad-Sibiu$ loop forever. However, the search tree can be modified at no-extra
+memory cost: DFS checks new generated states against those on the path from the root to the current node. This avoids infinite loops, but does not guarantees the proliferation
+of redudant paths. \vspace{3.5pt}
+\begin{center}
+    % \includegraphics{95/1152}
+\end{center}
+
+Compared to BFS, depth-first search has one major advantage, the space complexity; for any search tree, it needs to store only a single path from the root to a leaf node. Given 
+a branch factor $b$ and a maximum depth $m$, DFS requires storage of only $O(bm)$ nodes. Even if the space complexity seems to be linear, in the worst case the time complexity
+reaches the exponential order\footnote{We remind you that the maximum depth $m$ can be bigger than the shallowest depth $d$, introduced in the breadth-first search strategy.}.
