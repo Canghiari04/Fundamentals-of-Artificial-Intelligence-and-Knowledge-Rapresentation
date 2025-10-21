@@ -10,25 +10,22 @@ The Bayesian network's syntax is composed by:
     \item Each node $X_i$ has a conditional probability distribution $\mathbf{P}(X_i|Parents(X_i))$, that quantifies the effect of the parents on the node.
 \end{enumerate}
 \begin{example}
-    i.e. Topology of network encodes conditional independence assertions:
+    i.e. Topology of network encodes conditional independence assertions: \vspace{3.5pt}
     \begin{center}
-        % \includegraphics{16/50}
-    \end{center}
+        \includegraphics[width=0.6\textwidth]{img/img2.png}
+    \end{center} \vspace{3.5pt}
     \begin{itemize}
         \renewcommand{\labelitemi}{-}
-        \item Weather is independent of the other variables \ownfootnote{Formally, the absolute or conditional independence is indicated by the absence of a link between nodes.}.
-        \item Toothache and Catch are conditionally independent given Cavity \ownfootnote{The intuitive meaning of an arrow is typically that X has a direct influnce on Y, which suggests that causes should be parents of effects.}.
+        \item Weather is independent of the other variables\footnote{Formally, the absolute or conditional independence is indicated by the absence of a link between nodes.}.
+        \item Toothache and Catch are conditionally independent given Cavity\footnote{The intuitive meaning of an arrow is typically that X has a direct influnce on Y, which suggests that causes should be parents of effects.}.
     \end{itemize}
 \end{example}
 \begin{example}
     i.e. I'm at work, neighbor John calls to say my alarm is ringing, but neighbor Mary doesn't call. Sometimes it's set off by minor earthquakes. Is there a burglar? \vspace{3.5pt}
 
-    The random variables are: \it Burglar, Earthquake, Alarm, MaryCalls, JohnCalls.
+    The random variables are: \it Burglar, Earthquake, Alarm, MaryCalls, JohnCalls \footnote{The network topology reflects \textbf{causal} knowledge, from the causes nodes we define the effects nodes.}\footnote{For each node the conditional distribution are shown as a \textbf{conditional probability table}, or simply CPT.}\footnote{Let's take a look at the tables. In this network we are talking about joint distribution, not full joint distribution. Simply, the full joint distribution about boolean random variables can be computed by $1-P(a)$.}. \vspace{3.5pt}
     \begin{center}
-        % \includegraphics{18/50}
-        \ownfootnote{The network topology reflects \textbf{causal} knowledge, from the causes nodes we define the effects nodes.}
-        \ownfootnote{For each node the conditional distribution are shown as a \textbf{conditional probability table}, or simply CPT.}
-        \ownfootnote{Let's take a look at the tables. In this network we are talking about joint distribution, not full joint distribution. Simply, the full joint distribution about boolean random variables can be computed by $1-P(a)$.}
+        \includegraphics[width=0.75\textwidth]{img/img3.png} \vspace{3.5pt}
     \end{center}
 \end{example}
 
@@ -37,17 +34,17 @@ We begin the discussion with a simple toy example, the \textit{student network}.
     i.e. A student's grade depends on intelligence and on the difficulty of the course.
     SAT scores are correlated with intelligence. A professor writes recommendation letters by only looking at grades. \vspace{3.5pt}
 
-    In this case, our probability space is composed by five relevant random variables: \textit{Difficulty (D)}, \textit{Intelligence (I)}, \textit{SAT score (S)}, \textit{Grade (G)} and \textit{Letter (L)}.
+    In this case, our probability space is composed by five relevant random variables: \textit{Difficulty (D)}, \textit{Intelligence (I)}, \textit{SAT score (S)}, \textit{Grade (G)} and \textit{Letter (L)}. \vspace{3.5pt}
     \begin{center}
-        % \includegraphics{20/50}
-    \end{center}
+        \includegraphics[width=0.5\textwidth]{img/img4.png}
+    \end{center} \vspace{3.5pt}
     Consider a particular student, George, that he would like to reason using the student network. We might ask how likely George is to get a strong recommendation from his professor in Analysis.
     Knowing nothing else about George and his grade, this probability is around the $50$ percent. \vspace{3.5pt}
 
     We now find out that George is not so intelligent. The probability that he gets a strong letter from the professor goes down to 39. We now further discover that Analysis is an easy class.
     The probability that George receive a strong letter is now about 51 percent. \vspace{3.5pt}
 
-    Queries and answers such as this, where we predict the behaviors from causes to effects, are called \textbf{causal reasoning} or \textbf{prediction} \ownfootnote{It reflects the causal direction, from the parent nodes we are just defining which is their influence on their children.}. \vspace{3.5pt}
+    Queries and answers such as this, where we predict the behaviors from causes to effects, are called \textbf{causal reasoning} or \textbf{prediction}\footnote{It reflects the causal direction, from the parent nodes we are just defining which is their influence on their children.}. \vspace{3.5pt}
 
     Now, assume a recruiter, trying to hire George based on our previous model. By a prior probability, the recruiter believes that George is 30 percent likely to be intelligent. 
     He obtains George's grade record for the class Analysis and sees that George received a low score in that class. His probability that George has high intelligence goes down,
@@ -55,7 +52,7 @@ We begin the discussion with a simple toy example, the \textit{student network}.
     The probability that George has high intelligence still goes down, but only to 14 percent. Note that if the recruiter has both the grade and the letter, we have the same probability
     as if he had only the grade. \vspace{3.5pt}
 
-    Queries such as this, where we reason from effects to causes, are named \textbf{evidential reasoning} or \textbf{explanation} \ownfootnote{In this case, we are not reasoning from top to bottom, but instead from bottom to top.}. \vspace{3.5pt}
+    Queries such as this, where we reason from effects to causes, are named \textbf{evidential reasoning} or \textbf{explanation}\footnote{In this case, we are not reasoning from top to bottom, but instead from bottom to top.}. \vspace{3.5pt}
 
     Finally, George submits his high SAT score to the recruiter. The probability that George has high intelligence goes up dramatically, from 7.9 percent to 57.8 percent. Intuitively, the reason that the SAT score 
     outweights the poor grade is that a student with low intelligence are unlikely to get good scores on their SAT, whereas students with high intelligence can still get C grades in hard class.
@@ -88,7 +85,7 @@ A Bayesian network can often be more \textit{compact} than the full joint distri
 domain with many random variables. \vspace{3.5pt}
 
 At the same time, a Bayesian network grows \textit{linearly}, instead of an \textit{exponential} growth by full joint distribution. Assuming a domain composed by $\mathbf{n}$ Boolean
-variables, where each of them is associated with a CPT \textit{(Conditional Probability Table)} \footnote{A CPT for a Boolean variable $\mathbf{X_i}$ with $\mathbf{k}$ parents, has $\mathbf{2^k}$
+variables, where each of them is associated with a CPT \textit{(Conditional Probability Table)}\footnote{A CPT for a Boolean variable $\mathbf{X_i}$ with $\mathbf{k}$ parents, has $\mathbf{2^k}$
 rows for the combinations of parents values and usually is defined only the True case; the negative case, however $X_i = False$, can be simply computed by the third probability axiom $\mathbf{1 - p}$.}.
 If each variable has no more then $\mathbf{k}$ parents, the complete network requires $O(n \times 2^k)$ numbers, as we already know to complete the full joint distribution are necessary
 $O(2^n)$.
@@ -132,7 +129,7 @@ influence each other, regardless of \textbf{Z}. \vspace{3.5pt}
 \textbf{Indirect connection}. Now  we are considering the more complicated case when X and Y are not directly connected, but there is a trail between them. There are four cases
 where X and Y are connected via Z.
 \begin{center}
-    % \includegraphics{image of the four cases for indirect connection}
+    % \includegraphics{image of the four cases for indirect connection in the book}
 \end{center}
 The first two correspond to causal chains, the third to a common cause, and the last one to a common effect.
 
@@ -157,7 +154,7 @@ This will be true if and only if every two-edge trail $X_{i-1} \longleftrightarr
     Let \textbf{Z} be a subset of observed variables. The trail $X_{i-1} \longleftrightarrow X_i \longleftrightarrow X_{i+1}$ is \textbf{active given} Z if
     \begin{itemize}
         \renewcommand{\labelitemi}{-}
-        \item $\forall X_{i-1} \rightarrow X_i \leftarrow X_{i+1}$, $X_i$ or one of its descendants are in Z \ownfootnote{The trail reported is the common effect case.}
+        \item $\forall X_{i-1} \rightarrow X_i \leftarrow X_{i+1}$, $X_i$ or one of its descendants are in Z\footnote{The trail reported is the common effect case.}
         \item no other node along the trail is in Z
     \end{itemize}
 \end{definition}
@@ -168,12 +165,12 @@ However, inside the Bayesian network literacy there is another important notion,
 It's possible to summarize few steps to follow to determine if X and Y are independent given Z:
 \begin{enumerate}
     \item Mark all nodes in Z or having descendants in Z.
-    \item Traverse the graph from X to Y, stopping if we get to a \textbf{blocked} node \footnote{A node is blocked if that node is the middle of an unmarked v-structure \textit{(common effect case)}, or belongs to Z \textit{(cannot be both).}}.
+    \item Traverse the graph from X to Y, stopping if we get to a \textbf{blocked} node\footnote{A node is blocked if that node is the middle of an unmarked v-structure \textit{(common effect case)}, or belongs to Z \textit{(cannot be both).}}.
     \item If we can't reach Y, then X and Y are independent.
 \end{enumerate}
 Another aspects about independence are introduces by the meaning of \textbf{local semantics} and \textbf{Markov blanket}.
 \begin{definition}
-    \textbf{Local semantics} define that each node is conditionally independent of its \textbf{non-descendants} given its parents\ownfootnote{Here, we are considering the parents of the first node, not the parents of non-descendants.}. 
+    \textbf{Local semantics} define that each node is conditionally independent of its \textbf{non-descendants} given its parents\footnote{Here, we are considering the parents of the first node, not the parents of non-descendants.}. 
 \end{definition}
 \begin{definition}
     Each node is conditionlly independent of all the others nodes given its \textbf{Markov blanket}: so its parents, children and children's parents.

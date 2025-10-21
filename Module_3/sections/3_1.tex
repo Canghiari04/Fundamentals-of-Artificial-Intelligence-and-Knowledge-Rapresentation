@@ -8,10 +8,10 @@ causality knowledge, the network seems to be easier to handle.
 \end{definition}
 Let's clarify this concept with an example.
 \begin{example}
-    i.e. Assume this simple network, composed by two nodes. 
+    i.e. Assume this simple network, composed by two nodes. \vspace{3.5pt}
     \begin{center}
-        % \includegraphics{19/46}
-    \end{center}
+        \includegraphics[width=0.65\textwidth]{img/img7.png}
+    \end{center} \vspace{3.5pt}
     A and B represent the same domain and they are equally good distributions. Each of them produce the same full joint distribution, whatever the ordering of nodes chosen. 
     But these representation are not equivalent. Intuitively, the main difference is that the first graph follows \textbf{casuality}, instead the second one describes the
     diagnostic direction.
@@ -32,10 +32,10 @@ We can define a recurrent method to answer the first question, as follows:
 \end{enumerate}
 The last point might be a misunderstanding, it's simply defining which variables would be linked to $X_i$.
 \begin{example}
-    i.e. Lawn network.
+    i.e. Lawn network. \vspace{3.5pt}
     \begin{center}
-        % \includegraphics{21/46}
-    \end{center}
+        \includegraphics[width=0.4\textwidth]{img/img8.png}
+    \end{center} \vspace{3.5pt}
     As written before, the data structure represents a Lawn network. It's possible to describe the same network by \textbf{structural equations}, as: \vspace{3.5pt}
 
     $C = f_C(U_C)$
@@ -52,10 +52,10 @@ The last point might be a misunderstanding, it's simply defining which variables
     Upper case letters, as $C$, $R$, $S$, $W$, $G$, define the nodes. Finally, $f_*(\dots)$ functions symbolise which random variables assign sample points to their child node; this is translated via a direct connection between nodes. \vspace{3.5pt}
 
     Furthermore, structural equations are capable to describe the same domain even if are made local changes in the environment. We assume that the sprinkler has been turned off. 
-    The resulting representations via Bayesian network and structural equations change as:
+    The resulting representations via Bayesian network and structural equations change as: \vspace{3.5pt}
     \begin{center}
-        % \includegraphics{22/46}
-    \end{center}
+        \includegraphics[width=0.4\textwidth]{img/img9.png}
+    \end{center} \vspace{3.5pt}
     $C = f_C(U_C)$
 
     $R = f_R(C, U_R)$
@@ -66,10 +66,10 @@ The last point might be a misunderstanding, it's simply defining which variables
 
     $G = f_G(W, U_G)$ \vspace{3.5pt}
 
-    Again, if we cover the lawn such as Rain has not any effect, the representations are like:
-        \begin{center}
-        % \includegraphics{22/46}
-    \end{center}
+    Again, if we cover the lawn such as Rain has not any effect, the representations are like: \vspace{3.5pt}
+    \begin{center} 
+        \includegraphics[width=0.4\textwidth]{img/img10.png}
+    \end{center} \vspace{3.5pt}
     $C = f_C(U_C)$
 
     $R = f_R(C, U_R)$
@@ -82,7 +82,7 @@ The last point might be a misunderstanding, it's simply defining which variables
 
     What happens if we set off Sprinkler? In probabilistic terms, it might be described as follows:
     \begin{center}
-        $P(GreenerGrass|Sprinkler=True)$ = ?\ownfootnote{Here, we are observing that Sprinkler is on.}
+        $P(GreenerGrass|Sprinkler=True)$ = ?\footnote{Here, we are observing that Sprinkler is on.}
     \end{center} \vspace{3.5pt}
 
     This tricky question has two means: 
@@ -95,7 +95,7 @@ The last point might be a misunderstanding, it's simply defining which variables
     These assertions gives a clue: we are expressing the same things as we might do with \textit{prior probabilities} and \textit{conditional probabilities}. However,
     the same changes are solved via Bayes nets semantics:
     \begin{center}
-        $P(c, r, w, g|do(S = true))$\ownfootnote{Instead, we are turning Sprinkler on to see what happens.}
+        $P(c, r, w, g|do(S = true))$\footnote{Instead, we are turning Sprinkler on to see what happens.}
     \end{center} \vspace{3.5pt}
 
     The right hand side of the argument is named \textbf{do-operator}. It allows to represent interventions and predict their observable consequences, without changing the domain.

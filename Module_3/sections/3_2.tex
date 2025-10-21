@@ -1,5 +1,5 @@
 Even if the number of parents k is smallish, fill any CPT requires $O(2^k)$ numbers and it grows exponentially with number of parents. Instead, if we assume a 
-continuous-valued parent or child, CPT becomes \textbf{infinite} \footnote{One of the nicest thing of Bayesian network is the capability to combine together
+continuous-valued parent or child, CPT becomes \textbf{infinite}\footnote{One of the nicest thing of Bayesian network is the capability to combine together
 different types of variables, sush as descrete, continuos, deterministic, not-deterministic and so on.}. Usually, a solution to solve these types of
 problem consists of \textbf{canonical distributions}. \vspace{3.5pt}
 
@@ -78,7 +78,7 @@ are Boolean.
     \textbf{Noisy-OR distributions} model multiple causes for the same effect if and only if:
     \begin{itemize}
         \renewcommand{\labelitemi}{-}
-        \item Parents $U_1, \dots, U_k$ include all causes\ownfootnote{If missing, we can add the \textbf{leak node}.}.
+        \item Parents $U_1, \dots, U_k$ include all causes\footnote{If missing, we can add the \textbf{leak node}.}.
         \item Each failure probability is independent from other failure probabilities.
     \end{itemize} \vspace{7pt}
 
@@ -109,11 +109,11 @@ distributions:
 \end{itemize}
 Let's set a new example for better understanding.
 \begin{example}
-    i.e. Harvest hybrid network.
+    i.e. Harvest hybrid network. \vspace{3.5pt}
 
     \begin{center}
-        % \includegraphics{37/46}
-    \end{center}
+        \includegraphics[width=0.4\textwidth]{img/img11.png}
+    \end{center} \vspace{3.5pt}
     Consider the network shown previously, in which a customer buys some fruit depending on its cost, which depends in turn on the size of the harvest and from the 
     government's subsidy. The variable $(Cost)$ is continuos and has continuos and descrete parents $(Harvest, Subsidy)$, the variable $(Buys)$ is descrete and it has
     a continuos parent. \vspace{3.5pt}
@@ -129,7 +129,7 @@ Let's set a new example for better understanding.
     Before moving on, we focus on some aspects of the equation:
     \begin{itemize}
         \renewcommand{\labelitemi}{-}
-        \item $(a_*h+b_*)$ defines the mean of the distribution, if $h$ changes also the mean will change\ownfootnote{The star $(*)$ symbols stand for the enumeration of $(Subsidy)$.}.
+        \item $(a_*h+b_*)$ defines the mean of the distribution, if $h$ changes also the mean will change\footnote{The star $(*)$ symbols stand for the enumeration of $(Subsidy)$.}.
         \item $(\sigma_*)$ is the standard deviation, which is fixed, never change.
         \item Presence or abscence of $(Subsidy)$ determines the choice of $(a, b)$ parameters, but it hasn't any influence on $(Harvest)$ behavior, again,
         if it encreased the cost could decrease and vice versa.
@@ -142,7 +142,7 @@ Let's set a new example for better understanding.
     \begin{itemize}
         \renewcommand{\labelitemi}{-}
         \item \textbf{Probit distribution}, uses the integral of the standard normal distribution to compute a threshold.
-        \item \textbf{Sigmoid distribution}, uses the \textit{logistic function} to produce a soft threshold\ownfootnote{The sigmoid or logit distribution is widely used in neural networks, more than the probit one.}.
+        \item \textbf{Sigmoid distribution}, uses the \textit{logistic function} to produce a soft threshold\footnote{The sigmoid or logit distribution is widely used in neural networks, more than the probit one.}.
         \begin{center}
             $P(Buys? = true | Cost = c) = \frac{1}{1+e^{(-2^{(\frac{-c+\mu}{\sigma})})}}$
         \end{center}

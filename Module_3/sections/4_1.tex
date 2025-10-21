@@ -23,8 +23,9 @@ Compared to the previous expression, we added four new terms. In the worst case,
 An improvement can be obtained moving the prior probability $P(b)$ outside the summations over $a$ and $e$, and the prior probability $P(e)$ outside the summation $a$.
 Hence, we have:
 \begin{center}
-    $\mathbf{P}(B|j, m) = \alpha \mathbf{P}(B|j, m) = \alpha P(b)\sum_{e}P(e)\sum_{a}P(e)P(a|e, b)P(j|a)P(m|a)$
-    % \includegraphics{9/29}
-\end{center}
+    $\mathbf{P}(B|j, m) = \alpha \mathbf{P}(B|j, m) = \alpha P(b)\sum_{e}P(e)\sum_{a}P(e)P(a|e, b)P(j|a)P(m|a)$ \vspace{3.5pt}
+    
+    \includegraphics[width=0.75\textwidth]{img/img12.png}
+\end{center} \vspace{3.5pt}
 Despite these changes, the complexity of the expression is exponential, $O(2^n)$ - better than $O(n2^n)$, but still quite huge. The main reason complexity is still exponential
 is attributable to the presence of repeated computation, or better, the products $P(j|a)P(m|a)$ and $P(j|\neg a)P(m|\neg a)$ are computed twice, once for each value of $e$.
