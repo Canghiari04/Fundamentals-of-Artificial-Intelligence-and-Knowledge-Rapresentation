@@ -3,4 +3,4 @@ a predetermined depth limit $l$. All the nodes at depth $l$ are treated as leave
 Unfortunately, even though it solves the problem of infinite cycles, it introduces another source of \textbf{no-completeness}; if we choose a limit $l < d$, the shallowest goal-node
 may not be achieved. Depth-limited search will also be \textbf{non-optimal} if we choose $l > d$. \vspace{3.5pt}
 
-It's time complexity is exponential, $O(b^l)$, and its space complexity is linear, $O(bl)$\footnote{Depth-first search can be viewed as a special case of depth-limit search with $l=\infty$}.
+It's time complexity is exponential, $O(b^l)$, and its space complexity is linear, $O(bl)$\footnote{Depth-first search can be viewed as a special case of depth-limit search with $l=\infty$.}.
