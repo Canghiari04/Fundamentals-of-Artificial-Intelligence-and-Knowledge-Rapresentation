@@ -127,19 +127,19 @@ when a variable \textbf{X} can influence \textbf{Y} given \textbf{Z}. \vspace{3.
 influence each other, regardless of \textbf{Z}. \vspace{3.5pt}
 
 \textbf{Indirect connection}. Now  we are considering the more complicated case when X and Y are not directly connected, but there is a trail between them. There are four cases
-where X and Y are connected via Z.
+where X and Y are connected via Z. \vspace{3.5pt}
 \begin{center}
-    % \includegraphics{image of the four cases for indirect connection in the book}
-\end{center}
+    \includegraphics[width=0.6\textwidth]{img/img5.png}
+\end{center} \vspace{3.5pt}
 The first two correspond to causal chains, the third to a common cause, and the last one to a common effect.
 
-\textbf{Causal trail}. We have a chain like $X \rightarrow Z \rightarrow Y$. X cannot influence Y via Z if Z is observed.
+\textbf{(a) Causal trail}. We have a chain like $X \rightarrow Z \rightarrow Y$. X cannot influence Y via Z if Z is observed.
 
-\textbf{Effect trail}. Now we have the same trail but in the opposite direction, so  $Y \rightarrow Z \rightarrow X$. Another time, Y cannot influence X via Z if Z is observed.
+\textbf{(b) Effect trail}. Now we have the same trail but in the opposite direction, so  $Y \rightarrow Z \rightarrow X$. Another time, Y cannot influence X via Z if Z is observed.
 
-\textbf{Common cause}. This type of trail defines the same grade of independence as before. If Z is observed then neither X or Y can influence each other. 
+\textbf{(c) Common cause}. This type of trail defines the same grade of independence as before. If Z is observed then neither X or Y can influence each other. 
 
-\textbf{Common effect}. In the previously cases, we see a common pattern: if Z is observed then neither X or Y can influence each other. By the way, this kind of trail, 
+\textbf{(d) Common effect}. In the previously cases, we see a common pattern: if Z is observed then neither X or Y can influence each other. By the way, this kind of trail, 
 $X \rightarrow Z \leftarrow Y$, has a new behavior. If Z is not observed influence cannot flow along the trail. So if Z is observed X and Y are independent. In the student example
 we analyzed this case, which we called \textit{intercausal reasoning}; we showed that the probability that student has high intelligence goes down when we observe that his grade is 
 a poor score, but then goes up when we observe that the class is a hard one. Let us consider a variant of the same case. Assume that we do not observe the student's grade, but we observed
