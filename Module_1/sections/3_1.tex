@@ -1,0 +1,57 @@
+\textbf{Greedy best-first search} tries always to expand the node closest to the goal state, in a such a way it wanted to build the path that leads to the quickest solution. Thus,
+it evaluates nodes by using just the \textit{heuristic function}, $h(n)$. In this case, the \textit{evaluation function} is equal to the \textit{heuristic function}, $f(n) = h(n)$. \vspace{3.5pt}
+
+Let's see how this works for the Romania graph example\footnote{Remember that is always possible to make a tree from a graph, and vice versa.}.
+\begin{example}
+    i.e. Romania graph, starting from Arad and arriving in Bucharest.
+    \begin{center}
+        % \includegraphics{Romania graph or tree}
+    \end{center}
+    We use the \textbf{straight-line distance} heuristic, which we will briefly call $h_{SLD}$. Given Bucharest as the goal state, we must know the straight-line 
+    distances to Bucharest. For instance,
+    $h_{LSD}(Arad) = 366$. The table below shows each straght-line distance from any given node to Bucharest. \vspace{3.5pt}
+
+    \begin{center}
+        \begin{tabular}{|l|p{2cm}|l|p{2cm}|}
+            \hline
+            \bf Arad & 366 & \bf Mehadia & 241 \\
+            \hline
+            \bf Bucharest & 0 & \bf Neamt & 234 \\
+            \hline
+            \bf Craiova & 160 & \bf Oradea & 380 \\
+            \hline
+            \bf Drobeta & 242 & \bf Pitesti & 100 \\
+            \hline
+            \bf Eforie & 161 & \bf Rimnicu Vilcea & 193 \\
+            \hline
+            \bf Fagaras & 176 & \bf Sibiu & 253 \\
+            \hline
+            \bf Giurgiu & 77 & \bf Timisoara & 329 \\
+            \hline
+            \bf Hirsova & 151 & \bf Urziceni & 80 \\
+            \hline
+            \bf Iasi & 226 & \bf Vaslui & 199 \\
+            \hline
+            \bf Lugoj & 244 & \bf Zerind & 374 \\
+            \hline
+        \end{tabular}
+    \end{center} \vspace{3.5pt}
+
+    Given the table, the first node to be expanded from Arad will be Sibiu, because it is closer to Bucharest than either Zerind or Timisoara. The next node to be expanded
+    will be Fagaras because it is closest. Fagaras generated Bucharest, which is the goal. For this problem, greedy best-first search, using the heuristic $h_{LSD}$, finds 
+    a solution without ever expanding a node that is not on the solution path. \vspace{3.5pt} 
+
+    \begin{center}
+        $\langle Arad, Sibiu, Fagaras, Bucarest\rangle = 450$
+    \end{center} \vspace{3.5pt}
+
+    However, the proposed solution is not optimal: the path via Sibiu, Rimnicu Vilcea, Pitesti and Bucharest is lower than the first one. \vspace{3.5pt}
+
+    \begin{center}
+        $\langle Arad, Sibiu, Rimnicu Vilcea, Pitesti, Bucharest\rangle = 418$
+    \end{center} \vspace{3.5pt}
+\end{example}
+This example shows why the algorithm is called \textbf{greedy}, at each step it tries to get as close to the goal as it can. By the way, this search strategy is \textbf{non-optimal}
+and may be \textbf{incomplete}, if the data structure presents loopy path. \vspace{3.5pt}
+
+In the worst case, if the depth of the shallowest node is $d$ and the branching factor is $b$, either the time and space complexity will be exponential, $O(b^d)$.

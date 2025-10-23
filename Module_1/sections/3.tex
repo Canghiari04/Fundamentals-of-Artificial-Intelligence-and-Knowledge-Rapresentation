@@ -1,0 +1,18 @@
+This paragraph shows how \textbf{informed search strategies} can find solutions more efficiently than \textbf{non-informed search strategies}.
+
+The general approach about informed search strategies is defined by \textbf{best-first search strategy}. Best-first algorithm select a node for the expansion based on an 
+\textbf{evaluation function}, briefly written as $f(n)$. Generally, this type of search strategy uses evaluation function as an estimation of the effort required to reach the 
+final state; the node with the lowest evaluation is expanded first. \vspace{3.5pt}
+
+The choice of the evaluation function $f(n)$ determines the search strategy. Most best-first algorithms include as a component of $f(n)$ a \textbf{heuristic function}, denoted
+$h(n)$. \vspace{3.5pt}
+\begin{center}
+    $h(n) =$ estimated cost of the path from the current node $n$ to the final state\footnote{Until now, we saw the $g(n)$ function as the path cost from the root node to the
+    current state; selecting the node for the expansion with the lowest $g(n)$. Instead the heuristic function $h(n)$ defines the distance from the current node to the final state!}.
+\end{center}
+We will examine two main applications of the best-first search strategy, which are:
+\begin{itemize}
+    \renewcommand{\labelitemi}{-}
+    \item Greedy best-first search.
+    \item A* search.
+\end{itemize} 
