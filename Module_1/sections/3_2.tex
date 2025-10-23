@@ -1,0 +1,13 @@
+\textbf{A* search} is the most known case of best-first search algorithm\footnote{Basically, A* search try to combine the benefits of DFS, efficiency, with the ones of
+uniform-cost search, optimality and completeness.}. It evaluates nodes for the expansion combining $g(n)$, the cost to reach the node $n$, and 
+$h(n)$, the cost to get from the node $n$ to the goal state. \vspace{3.5pt}
+
+\begin{center}
+    $f(n) = g(n) + h(n)$
+\end{center} \vspace{3.5pt}
+
+In this case, the evaluation function $f(n)$ give us the estimated cost of the cheapest solution through $n$. The algorithm is very similar to uniform-cost search, but instead
+of using only $g(n)$, it associates each node with the sum $g(n) + h(n)$. The next node selected for the expansion will be the state with the lowest value of $g(n) + h(n)$. \vspace{3.5pt}
+
+Provided the heuristic function $h(n)$ that satisfies certain conditions, A* search is both \textbf{complete} and \textbf{optimal}; if the heuristic function does not meet 
+certain criteria, A* search does not guarantee to find the optimal solution.
