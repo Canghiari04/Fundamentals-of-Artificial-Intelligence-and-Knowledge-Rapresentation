@@ -9,7 +9,7 @@ Let's see how this works for the Romania graph example\footnote{Remember that is
     \end{center}
     We use the \textbf{straight-line distance} heuristic, which we will briefly call $h_{SLD}$. Given Bucharest as the goal state, we must know the straight-line 
     distances to Bucharest. For instance,
-    $h_{LSD}(Arad) = 366$. The table below shows each straght-line distance from any given node to Bucharest. \vspace{3.5pt}
+    $h_{LSD}(Arad) = 366$. The table below shows each straight-line distance from any given node to Bucharest. \vspace{3.5pt}
 
     \begin{center}
         \begin{tabular}{|l|p{2cm}|l|p{2cm}|}
@@ -48,7 +48,7 @@ Let's see how this works for the Romania graph example\footnote{Remember that is
     However, the proposed solution is not optimal: the path via Sibiu, Rimnicu Vilcea, Pitesti and Bucharest is lower than the first one. \vspace{3.5pt}
 
     \begin{center}
-        $\langle Arad, Sibiu, Rimnicu Vilcea, Pitesti, Bucharest\rangle = 418$
+        $\langle Arad, Sibiu, Rimnicu, Pitesti, Bucharest\rangle = 418$
     \end{center} \vspace{3.5pt}
 \end{example}
 This example shows why the algorithm is called \textbf{greedy}, at each step it tries to get as close to the goal as it can. By the way, this search strategy is \textbf{non-optimal}

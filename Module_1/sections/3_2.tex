@@ -10,4 +10,137 @@ In this case, the evaluation function $f(n)$ give us the estimated cost of the c
 of using only $g(n)$, it associates each node with the sum $g(n) + h(n)$. The next node selected for the expansion will be the state with the lowest value of $g(n) + h(n)$. \vspace{3.5pt}
 
 Provided the heuristic function $h(n)$ that satisfies certain conditions, A* search is both \textbf{complete} and \textbf{optimal}; if the heuristic function does not meet 
-certain criteria, A* search does not guarantee to find the optimal solution.
+certain criteria, A* search does not guarantee to find the optimal solution. Which are these conditions? \vspace{3.5pt}
+
+\textbf{Feasibility} \vspace{3.5pt}
+
+The first condition required for optimality is that the heuristic function $h(n)$ is a \textbf{feasible} heuristic. A feasible heuristic is one that \textit{never 
+overstimates} the real cost to reach the goal state. \vspace{3.5pt}
+
+We suppose that with $h^*(n)$ we indicate the true distance between the current node and the goal state. The heuristic function $h(n)$ is feasible if we always have, for any
+node $n$ of the search tree, that: \vspace{3.5pt}
+
+\begin{center}
+    $h(n) \le h^*(n)$.
+\end{center} \vspace{3.5pt}
+
+Ensured this condition, the heuristic $h(n)$ is feasible.
+\begin{definition}[title={Optimality theorem}]
+    If $h(n) \le h^*(n)$ for each node, then the A* search algorithm always finds the optimal path to the goal state.
+\end{definition}
+
+Let's see an example for better understanding.
+\begin{example}
+    i.e. Optimality proof. \vspace{3.5pt}
+    \begin{center}
+        % \includegraphics{22/41 5.}
+    \end{center} \vspace{3.5pt}
+
+    Given this search tree, we have:
+    \begin{itemize}
+        \renewcommand{\labelitemi}{-}
+        \item \textbf{G}: the goal node or the goal state.
+        \item \textbf{Start}: the state representing the root node.
+        \item \textbf{n}: which is the unexpanded node already present in the priority queue, such that \textbf{n} is on the optimal path.
+        \item \textbf{$\mathbf{G_2}$}: which defines the \textbf{sub-optimal} path. In this data structure, we are reaching the same goal node \textbf{G} from different trails.
+    \end{itemize} \vspace{7pt}
+
+    We need to show that, if the A* algorithm has inside its queue a sub-optimal goal $\mathbf{G_2}$ and a node $\mathbf{n}$ which is on the optimal path to the goal node 
+    $\mathbf{G}$, the evaluation function $f(n)$ will be less or equal to the evaluation function $f(G_2)$, denyng to A* algorithm to expand the node $\mathbf{G_2}$ first. \vspace{3.5pt}
+
+    \textbf{1. Evaluation of the optimal goal.} 
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item \vspace{3.5pt}
+        The evaluation function of \textbf{G} is: \vspace{3.5pt}
+        \begin{center}
+            $f(G) = g(G) + h(G)$
+        \end{center} \vspace{3.5pt}
+
+        $h(G)$ is equal to $0$, because the cost to reach the goal node itself cannot be greater than $0$. \vspace{3.5pt}
+        \begin{center}
+            $f(G) = g(G) + h(G) = g(G) + 0 = g(G)$ \\
+            $f(G) = g(G)$.
+        \end{center}
+    \end{itemize}
+
+    \textbf{2. Evaluation of the sub-optimal goal.} 
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item \vspace{3.5pt}
+        The evaluation function of $\mathbf{G_2}$ is: \vspace{3.5pt}
+        \begin{center}
+            $f(G_2) = g(G_2) + h(G_2)$
+        \end{center} \vspace{3.5pt}
+
+        from the same reasons described in the first point, the evaluation function is equal to the real-cost function: \vspace{3.5pt}
+        \begin{center}
+            $f(G_2) = g(G_2)$.
+        \end{center}
+    \end{itemize}
+
+    \textbf{3. Comparison of G and $\mathbf{G_2}$.} 
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item \vspace{3.5pt}
+        Knowing that $\mathbf{G_2}$ is the sub-optimal path, the total cost to reach the goal node via $\mathbf{G_2}$ must be strictly greater than the total cost to reach the
+        goal node via $\textbf{G}$, so: \vspace{3.5pt}
+        \begin{center}
+            $g(G_2) > g(G)$
+        \end{center} \vspace{3.5pt}
+        
+        the same condition can be expressed as follows:  \vspace{3.5pt}
+        \begin{center}
+            $f(G_2) > f(G)$.
+        \end{center} \vspace{3.5pt}
+    \end{itemize}
+
+    \textbf{3. Evaluation of node n.} 
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item \vspace{3.5pt}
+        Given \textbf{n} a node not expanded, but already present in the priority queue, the evaluation function $f(n)$ is: \vspace{3.5pt}
+        \begin{center}
+            $f(n) = g(n) + h(n)$
+        \end{center} \vspace{3.5pt}
+
+        from the \textbf{optimality theorem}, the estimated cost of \textbf{n} must be less or equal to the real cost of \textbf{n}: \vspace{3.5pt}
+        \begin{center}
+            $g(n) + h(n) \le g(n) + h^*(n)$
+        \end{center} \vspace{3.5pt}
+
+        where the function $h^*(n)$ defines the real cost to reach the goal from \textbf{n}. Therefore, knowing that \textbf{n} is on the optimal path, the sum of the cost 
+        to reach \textbf{n} and the real-cost between \textbf{n} and \textbf{G}, is exactly the same effort to achieve \textbf{G}. \vspace{3.5pt}
+        \begin{center}
+            $f(n) = g(n) + h^*(n) = g(G)$
+        \end{center} \vspace{3.5pt}
+
+        Replacing $g(G)$ with $f(G)$, from the first point, we have: \vspace{3.5pt}
+        \begin{center}
+            $f(G) = g(n) + h^*(n)$
+        \end{center} \vspace{3.5pt}
+
+        finally: \vspace{3.5pt}
+        \begin{center}
+            $f(n) \le g(n) + h^*(n) = f(G)$ \\
+            $f(n) \le f(G)$.
+        \end{center} \vspace{3.5pt}
+    \end{itemize}
+
+    \textbf{4. Conclusion.} 
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item \vspace{3.5pt}
+        Combining the results:\vspace{3.5pt}
+        \begin{center}
+            $f(n) \le f(G)$ and $f(G) < f(G_2)$
+        \end{center} \vspace{3.5pt}
+
+        the final conclusion is:\vspace{3.5pt}
+        \begin{center}
+            $f(n) < f(G_2)$.
+        \end{center} 
+    \end{itemize} \vspace{7pt}
+
+    We can conclude saying that the heuristic function $h(n)$ is \textbf{feasible}, the A* algorithm will define always \textbf{optimal} solutions.  
+\end{example}
