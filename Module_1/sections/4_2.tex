@@ -1,0 +1,5 @@
+A hill-climbing algorithm that never does \textit{downhill} is definitely incomplete, because it will get stuck in the first local optimum reached. Therefore, it seems
+reasonable to combine hill-climbing search with a random walk in some way, like changing the rules while searching the goal state. \vspace{3.5pt}
+
+An algorithm that follows this idea is the \textbf{simulated annealing}. Simulated annealing search allows moves resulting in solutions of worse quality than the current one.
+Instead of picking the best move, it picks a random move; if the move improves the situation, it is always accepted.

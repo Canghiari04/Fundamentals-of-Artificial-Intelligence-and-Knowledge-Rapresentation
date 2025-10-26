@@ -1,0 +1,22 @@
+\textbf{Hill-climbing search} is a very basic local search algorithm. It is simply a loop that continually moves in the direction of the increasing value, choosing always
+the highest solution inside the neighborhood. It terminates when it reaches a \textbf{peak}, that might be a local or global maximum, and there isn't a higher value 
+inside the set of neighbors of the current solution. \vspace{3.5pt}
+
+Despite its simplicity, this method often gets stuck for the following reasons:
+\begin{itemize}
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Local maxima}: a local maximum is a peak that is higher than each of its neighboring states but lower than the global maximum. So, given $s^*$ a local peak
+    and $f$ an evaluation function, such that for any state $s$ that belongs to the neighborhood $N(s^*)$, we have: \vspace{3.5pt}
+    \begin{center}
+        $f(s^*) \ge f(s)$ $\forall s \in N(s^*)$.
+    \end{center}
+    \item \textbf{Ridges}: a ridge is a sequence of local maxima, that are very difficult for hill-climbing to reach. When we sample such a function, the sampling points
+    will not fall exactly on the ridge line and will float nearby.
+    \item \textbf{Plateaux}: a plateau is flat area of the landscape, where the neighboring states have the same value of the current solution.
+\end{itemize}
+
+Moreover, hill-climbing search cannot be used for complex problems; first of all, it has a very local view and, in the other hand, forgets about the solution already visited.
+It's like: \vspace{3.5pt}
+\begin{center}
+    \textit{Climbing Everest in thick fog with amnesia}.
+\end{center}\vspace{3.5pt}

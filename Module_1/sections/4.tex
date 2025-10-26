@@ -1,0 +1,33 @@
+Until now, we have saw a precise category of algorithms, known as \textbf{constructive algorithms}: the final solution is achieved by a sequence of actions. Anyway, when we
+are solving problems focusing on the goal state and we don't matter about the steps necessary to reach that goal, we are considering \textbf{local search algorithms}. \vspace{3.5pt}
+
+Local search algorithms start from an initial solution and iteratively try to improve it through \textbf{local moves}. Every time a local move is performed, it generates a 
+\textbf{neighborhood}. \vspace{3.5pt}
+
+In many problems, the path to the goal is irrelevant. Let's consider an example about it.
+\begin{example}
+    i.e. 4-queens problem. \vspace{3.5pt}
+    \begin{center}
+        % \includegraphics{2/42 7}
+    \end{center} \vspace{3.5pt}
+
+    The purpose of this problem is to put the four queens on the chessboard so that they do not attack each other. In this example, what really matters is the final
+    configuration of queens, not the order in which they are added.
+\end{example}
+
+\textbf{Local search algorithms} operate using a single \textbf{current node} and generally move only to neighbors of that node. But, what is a neighbor?
+\begin{definition}
+    The function \vspace{3.5pt}
+    \begin{center}
+        $N: S \rightarrow 2^S$
+    \end{center} \vspace{3.5pt}
+
+    assigns to each state $s$ of the search space $S$, $s \in S$, a set of neighbors $N(s) \subseteq S$. $\mathbf{N(s)}$ is called the neighborhood of $s$.
+\end{definition}
+
+Usually, to understand local search, the search space is considered as a \textbf{landscape}. A landscape has both \textbf{location}, defined by the current state, 
+and \textbf{elevation}, defined by the value assigned by the \textbf{heuristic function}. The aim of local search is to find the lowest value, global minimum, or the peak
+value, global maximum, of the landscape. \vspace{3.5pt}
+\begin{center}
+    % \includegraphics{140/1152}
+\end{center} \vspace{3.5pt}
