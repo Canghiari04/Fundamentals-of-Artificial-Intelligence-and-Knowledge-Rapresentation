@@ -18,5 +18,23 @@ It's important to note that the specific terminology for genetic algorithms diff
     \item The domain of values of a gene is composed of \textbf{alleles}.
 \end{itemize} \vspace{3.5pt}
 
-Described genetic algorithms' terminology, let's examine how they work. Genetic algorithms begin with a set of $k$ randomly generated states, which represents the
-\textbf{population}. \dots
+Having described the terminology of genetic algorithms, let's examine how they work. Genetic algorithms begin with a set of $k$ randomly generated states, representing the
+\textbf{population}. Each state, or \textbf{genotype}, is represented as a string over a finite alphabet, most commonly, a string of 0s and 1s. For example, in the image
+below, which shows the 8-queens problem, each state can be specified as the positions of the 8 queens. Therefore, each genotype is an array of eight elements and the current 
+position assumed by the queen will be inserted within each cell. \vspace{3.5pt}
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{img/img6.png}
+\end{center} \vspace{3.5pt}
+
+Defined the representation of states, each of them is rated by a \textbf{fitness function}, such that the algorithm will take some genotypes for the production of the next 
+generation of states. A fitness function should return higher values for better states, so, for the 8-queens problem we use the number of non-attacking pairs of queens. In 
+this case, the probability of being choosen for reproducing is directly proportional to the \textbf{fitness score}. \vspace{3.5pt}
+
+According to the fitness probabilities, pairs of genotypes are taken from the population and then combined for the reproduction. For each pair, a \textbf{crossover point} is 
+chosen randomly from the position in the string. As in the example introduced, portions of the array representation are swapped. \vspace{3.5pt}
+
+Finally, the offspring generated is subject to a random \textbf{mutation}, one of the digit that composed the array representation is changed; this corresponds to choosing a 
+queen randomly and moving it to a random cell. A visual summary on the main steps of genetic algorithms is shown below. \vspace{3.5pt}
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{img/img7.png}
+\end{center} \vspace{3.5pt}
