@@ -1,0 +1,31 @@
+From observing the \textbf{ants}, such that real-world metaphor can be extrapolated, we discover that:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item Ants deposit \textbf{pheromone} trails while walking from the \textbf{nest} to the \textbf{food} and vice versa.
+    \item Ants tend to choose the paths marked with \textbf{higher pheromone}, as described by the fitness function.
+    \item A cooperative interaction leads to the \textbf{emergent behavior} to find the \textbf{shortest path}.
+\end{itemize} \vspace{3.5pt}
+\begin{center}
+    % \includegraphics{9/39}
+    \footnote{The orange line defines a major concentration of pheromone. As we can see from the example, some ants are not following the same trail, so the algorithm is \textbf{not deterministic}.}
+\end{center} \vspace{3.5pt}
+
+Found out that this algorithm is \textbf{not deterministic}, ant colony optimization uses a \textbf{probabilistic parametrized model}, briefly named as \textit{pheromone model},
+necessary to handle pheromone trails. \vspace{3.5pt}
+
+In a pratic way, ants traverse a graph, which is called \textbf{constructed graph}, composed by vertices and edges, as usual. Every time an ant follows a new part of the graph
+it is defining an \textbf{incremental solution}. \vspace{3.5pt}
+
+Now we want to examine how each ant decides. For better understanding we do this with a simple example.
+\begin{example}
+    i.e. Given a constructed graph define the shortest path to the solution. \vspace{3.5pt}
+    \begin{center}
+        % \includegraphics{from notes}
+    \end{center} \vspace{3.5pt}
+
+    Starting from a root node, each ant has two main informations to decide its path:
+    \begin{enumerate}[nosep]
+        \item \textbf{Pheromone}, defined as: $\tau_{i,j}$. It represents the pheromone from node $i$ to node $j$, also coming from the other ants.
+        \item  \textbf{Inverse of the length}, defined as: $\eta = \frac{1}{d_{i, j}}$. A heuristic value, a sort of parameter to define the distance\footnote{The algorithm is inspired by the ants behavior is not an exact replica.}.
+    \end{enumerate} \vspace{3.5pt}
+\end{example}

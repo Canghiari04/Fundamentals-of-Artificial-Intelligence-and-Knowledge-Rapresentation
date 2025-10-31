@@ -1,0 +1,26 @@
+Concerning population based methods, now we explore another type of algorithms known as \textbf{Swarm Intelligence} algorithms.
+\begin{definition}
+    \textbf{Swarm Intelligence}, briefly SI, is an artificial intelligence technique based around the study of collective behavior in decentralized and self-organized systems.
+\end{definition}
+
+A simpler definition expresses Swarm Intelligence algorithms as a set of artificial intelligence methods that rely on \textbf{AI agents}, where each of them is totally autonomus
+and independent. So, any agent has its own goals and decision algorithm. \vspace{3.5pt}
+
+The entire swarm, in any kind of algorithm, has this nice feature: we can always examine an emerging behavior that comes from the interactions taken by any single agent\footnote{The \textbf{emerging behavior} does not come from the planning established by the algorithm!}.
+Therefore, the key idea about Swarm Intelligence is to take some individuals, that are soo simple, and put them all together, thus defining a quite complex self-organization. \vspace{3.5pt}
+
+Each type of self-organization is based on three major ingredients, as follows:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Multiple interactions among agents}. \\ As we said, the organization is composed by some simple agent, and each of them has its own goals and decision algotithm. Putting them together, we are defining a \textbf{multi-agent system}: from the taken interactions we can retrieve an emerging behavior.
+    \item \textbf{Positive feedback}. \\ Imitating, with positive feedback, successfull behaviors. 
+    \item \textbf{Negative feedback}. \\ Suppose we have a \textit{food source}, for us means a solution with a higher fitness score. If the food is already exhausted, so in the neighborhood of the current solution $N(s)$ nothing is left, we move to somewhere else.
+\end{itemize}
+
+We will consider three main algorithms, based on the last intuition defined, which are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item Ant Colony Optimization.
+    \item Particle Swarm Optimization.
+    \item Artificial Bee Colony Algorithm.
+\end{itemize}
