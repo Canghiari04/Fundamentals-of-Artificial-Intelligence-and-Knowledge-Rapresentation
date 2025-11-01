@@ -23,9 +23,48 @@ Now we want to examine how each ant decides. For better understanding we do this
         % \includegraphics{from notes}
     \end{center} \vspace{3.5pt}
 
-    Starting from a root node, each ant has two main informations to decide its path:
+    Starting from a nest node, each ant has two main informations to decide its path:
     \begin{enumerate}[nosep]
         \item \textbf{Pheromone}, defined as: $\tau_{i,j}$. It represents the pheromone from node $i$ to node $j$, also coming from the other ants.
         \item  \textbf{Inverse of the length}, defined as: $\eta = \frac{1}{d_{i, j}}$. A heuristic value, a sort of parameter to define the distance\footnote{The algorithm is inspired by the ants behavior is not an exact replica.}.
     \end{enumerate} \vspace{3.5pt}
+
+    Combining these informations, we can choose the next node in a \textbf{probabilistic} way. We said that this probabilistic choice depends on $\tau$ and $\eta$, and basically,
+    we have a probability of moving from node $i$ to node $j$ equals to: 
+    \begin{equation}
+        p_{i, j} = 
+        \begin{cases}
+            \frac{[\tau_{i,j}]^\alpha [\eta_{i,j}]^\beta}{\sum_{k} [\tau_{i,j}]^\alpha [\eta_{i,j}]^\beta} & \text{if j is consistent} \\
+            0 & \text{otherwise} \\
+        \end{cases}
+    \end{equation}
+    $j$ consistency means that there must be an arc between node $i$ and node $j$; if it is not there then the value related will be $0$. \vspace{3.5pt}
+
+    But, how can we update the value associated with the \textbf{released pheromone}? First of all, suppose one ant that decides to follow this path \vspace{3.5pt}
+    \begin{center}
+        $\langle i, j, n, q\rangle$
+    \end{center} \vspace{3.5pt}
+
+    which, in this particular case, allow us to reach the final solution. At each step done, this ant has left a certain amount of pheromone along the trail. \vspace{3.5pt}
+    
+    By the way, the nest consists of a large number of ants; consequently, several different paths are achieved. Every time a new node is reached, it is released 
+    a certain quantity of pheromone. The released pheromone is updated following this rule: \vspace{3.5pt}
+    \begin{center}
+        $\tau_{i,j} = (1-\rho)\tau_{i,j} + \sum_{k=1}^{m} \Delta \tau_{i,j}^k$
+    \end{center} \vspace{3.5pt}
+
+    where:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item $\rho$ is an \textbf{evaporation coefficient}, used to decresease the previous pheromone value. For instance, suppose that the initial pheromone value between $i$ and $j$ is equal to 100, and the evaporation coefficient is equal to $10\%$; so, in the next round, the total value of pheromone will be $90$, such that the $10\%$ of the previous total value was released in the previous step. 
+        \item The summation ($\sum_{k=1}^{m} \Delta \tau_{i,j}^k$) defines the \textbf{overall pheromone} deposited on that portion of the trail, by the $m$ ants that traverse it. Therefore, we have to sum the pheromone left for each ant that decided to traverse that path. The amount of pheromone deposited is inversionally proportional to the length of the overall path done by ant $k$.
+        \begin{equation}
+            \Delta \tau_{i, j} = 
+            \begin{cases}
+                \frac{1}{L_{i,j}} & \text{if ant k used arc (i, j)} \\
+                0 & \text{otherwise} \\
+            \end{cases}
+        \end{equation}
+        Ants that found the \textbf{shortest path} provide the major contribution to the pheromone released along the trail.
+    \end{itemize}
 \end{example}
