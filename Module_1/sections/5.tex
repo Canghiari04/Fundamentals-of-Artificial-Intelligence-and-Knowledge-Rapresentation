@@ -7,7 +7,17 @@ A simpler definition expresses Swarm Intelligence algorithms as a set of artific
 and independent. So, any agent has its own goals and decision algorithm. \vspace{3.5pt}
 
 The entire swarm, in any kind of algorithm, has this nice feature: we can always examine an emerging behavior that comes from the interactions taken by any single agent\footnote{The \textbf{emerging behavior} does not come from the planning established by the algorithm!}.
-Therefore, the key idea about Swarm Intelligence is to take some individuals, that are soo simple, and put them all together, thus defining a quite complex self-organization. \vspace{3.5pt}
+Therefore, the key idea about Swarm Intelligence is to take some individuals, that are simple entities, and put them all together, thus defining a quite complex self-organization. \vspace{3.5pt}
+
+These agents can communicate either in a \textbf{direct} and \textbf{indirect} way. The last one way is performed by \textbf{stimmergy}, in other words, changing the environment 
+they can communicate each other. \vspace{3.5pt}
+
+These methods are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Adaptive}, because they adapt quickly to the changes in the environment.
+    \item \textbf{Robust}, because if some agents stop working, the rest of the swarm still doing its job.  
+\end{itemize}
 
 Each type of self-organization is based on three major ingredients, as follows:
 \begin{itemize}[nosep]
@@ -17,7 +27,8 @@ Each type of self-organization is based on three major ingredients, as follows:
     \item \textbf{Negative feedback}. \\ Suppose we have a \textit{food source}, for us means a solution with a higher fitness score. If the food is already exhausted, so in the neighborhood of the current solution $N(s)$ nothing is left, we move to somewhere else.
 \end{itemize}
 
-We will consider three main algorithms, based on the last intuition defined, which are:
+Swarm Intelligence algorithms are driven by natural phenomena, in particular, by groups of animals that interacting allow us to extrapolate an emerging behavior. We will consider
+three main algorithms, which are:
 \begin{itemize}[nosep]
     \renewcommand{\labelitemi}{-}
     \item Ant Colony Optimization.
