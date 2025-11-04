@@ -1,0 +1,70 @@
+\textbf{Particle Swarm Optimization} is the last Swarm Intelligence algorithm discussed. \textit{PSO}, acronym of Particle Swarm Optimization, is a technique inspired by the 
+behavior of flocks of birds and, in particular, considers the interaction mechanisms between individuals that make up the swarm as the main knowledge. \vspace{3.5pt}
+
+From the interactions we can retrieve an unique emerging behavior: each entity of the swarm follows its neighborhood, staying inside the flock and trying to avoid collisions
+with his neighbors. \vspace{3.5pt}
+
+With these rules it is possible to describe and model the collective move of a flock with no common objective, but for simplicity we suppose that the flock is looking for a 
+food source. Defined the food source, each individual of the swarm has two possibilities:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Individualistic choice}: move away from the group to reach the food.
+    \item \textbf{Social choice}: stay inside the group.
+\end{itemize}
+If more than one entity moves toward the food, the other flock members do the same; this is the so called \textbf{positive feedback}, individuals imitate successfull 
+behaviors changing direction toward promising areas. \vspace{3.5pt}
+
+An important feature of this method is the concept of \textbf{promixity}, in which individuals are influenced by the actions of the other individuals closest to them.  
+Therefore, given that individuals are part of multiple sub-groups, which are the neighborhood of those individuals, the spread of information through the flock is guaranteed. 
+PSO is the unique algorithm seen so far that has a \textbf{common knowledge}. \vspace{3.5pt}
+
+Let's examine PSO algorithm in details.
+\begin{example}[title={Particle Swarm Optimization algorithm}]
+    Summing up, PSO optimizes a problem by setting a population of solutions, and moves these solutions, also called \textbf{particles}, in the search space through 
+    simple mathematical formulas, using \textbf{vectors}. \vspace{3.5pt}
+
+    Given an initial position $x$, a point in a N-dimensional space, it moves the flock to a new solution $x^*$, as shown in the image below. \vspace{3.5pt}
+    \begin{center}
+        % \includegraphics{35/40}
+    \end{center} \vspace{3.5pt}
+    Our main goal is to define the speed of movement; the movement of particles is done if and only if a better solution is discovered, rather than the current one. This 
+    behavior can be expressed as: \vspace{3.5pt}
+    \begin{center}
+        $f: R^n \rightarrow R$.
+    \end{center} \vspace{3.5pt}
+
+    It takes a solution, vector-format like, and produces a fitness value. The algorithm terminates when it finds a solution $a$, such that: \vspace{3.5pt}
+    \begin{center}
+        $f(a) \le f(b)$
+    \end{center} \vspace{3.5pt}
+    for all $b$ in the search space\footnote{It can be seen as a kind of minimization problem.}. \vspace{3.5pt}
+
+    So, given:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item \textbf{S}, number of particles in the population.
+        \item $\mathbf{x_i}$, current position of particle $i$.
+        \item $\mathbf{v_i}$, current speed of particle $i$.
+        \item $\mathbf{p_i}$, best solution found so far by the particle $i$. 
+        \item $\mathbf{g}$, best solution found so far by the entire swarm\footnote{\textbf{g} represents the shared knowledge between entities of the swarm. Remember, PSO is the unique algorithm seen so far that has a common knowledge.}. 
+    \end{itemize} \vspace{3.5pt}
+
+    The initialization phase goes as follows:
+    \begin{enumerate}[nosep]
+        \item Initialize the particle's position with a uniformly distributed random vector.
+        \item Initialize the particle's best known position to its initial position: $p_i \leftarrow x_i$.
+        \item If $f(p_i) < f(g)$ update the swarm's best known position: $g \leftarrow p_i$.
+        \item Initialize the particle's velocity.
+    \end{enumerate} \vspace{3.5pt}
+
+    Until a termination criterion is met, PSO repeats the subsequent actions for each particle of $S$:
+    \begin{enumerate}[nosep]
+        \item Takes random numbers.
+        \item From those random numbers updates the particle's velocity.
+        \item From those random numbers updates the particle's position.
+        \item If $f(x_i) \le f(p_i)$, updates the particle's best position: $p_i \leftarrow x_i$.
+        \item If $f(p_i) \le f(g)$, update the swarm's best known position: $g \leftarrow p_i$.
+    \end{enumerate} \vspace{3.5pt}
+
+    At the end it returns the best found solution $\mathbf{g}$.
+\end{example}

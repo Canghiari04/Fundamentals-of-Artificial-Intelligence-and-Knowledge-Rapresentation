@@ -1,0 +1,26 @@
+\textbf{Artificial honey bee colony} is the second method that tell us something about Swarm Intelligence, even thought it is a little bit less used than \textbf{ant colony} 
+algorithm. However, it represents a perfect example of Swarm Intelligence algorithm that uses \textit{different types} of agents. \vspace{3.5pt}
+
+In this case, the food source is a point in a \textit{n-dimensional space}, which means there is only one solution. In addition, the last statement reveals the algorithm 
+as a population-based method, where we could have a population of solutions but only one can be the best one. There are three main types of bees, which are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Employed bees}: each of them is associated with a specific nectar source. 
+    \item \textbf{Onlooker bees}: the bees in charge of intensifying the search around a nectar source. They choose the most \textbf{promising} food source already discovered by \textbf{employed bees}.
+    \item \textbf{Scout bees}: scouts are instead the \textit{diversification} bees, those that start a new search looking for the best solution. 
+\end{itemize} 
+
+The food or nectar source represents one of the solutions. Each solution has a fitness score equal to its size; larger solutions are considered more promising by agents.
+Like in local search, bee colony algorithm does not guarantee to converge to the best solution, so this algorithm is \textbf{not complete}. \vspace{3.5pt}
+
+The algoritm itself is not too complicated, it can be described in four fondamentals steps, as follows:
+\begin{center}
+    % \includegraphics{24/40}
+\end{center}
+\begin{itemize}
+    \renewcommand{\labelitemi}{}
+    \item 1. \textbf{InitializationPhase()}. \\ Initially, a set of solutions are randomly selected from the food sources by the employed bees. Each solution $X_m$ is composed by $n$ variables $X_{mi}$, and each of them is subject to a lower and upper bound. 
+    \item 2. \textbf{EmployedBeePhase()}. \\ Each employed bee is associated with a food source and evaluates it through a fitness function. Basically, it performs a local search on that food source: starting from the neighborhood $N(s)$, where $s$ is the current solution, it try to maximize or minimize over the landscape.  
+    \item 3. \textbf{OnlookerBee()}. \\ As we said, the most promising nectar sources attract more onlooker bees and they intensify the exploration phase already started from the employed bees. The probability that an onlooker bee join an exploration depends only by the fitness score related to that solution. 
+    \item 4. \textbf{ScoutPhase()}. \\ Once that the food source is exhausted, all the points that belong to the neighborhood $N(s)$ are evaluated, the employed bees become the scout ones and they choose the next point on the landscape randomly. 
+\end{itemize}
