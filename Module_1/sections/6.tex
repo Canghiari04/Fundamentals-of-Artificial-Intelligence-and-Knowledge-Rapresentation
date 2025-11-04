@@ -1,0 +1,20 @@
+In this chapter we cover \textbf{competitive environments}, often known as \textbf{games}, in which the agents' goals are in conflict. In AI are considered games that have the 
+following properties:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Moves are alternate}. \\ Two-player games in which the moves are alternated and players have complementary objective functions.
+    \item \textbf{Perfect knowledge}. \\ Games with perfect knowledge are those games in which players have the same informations.
+\end{itemize} \vspace{3.5pt}
+
+For instance, this kind of algorithms are not applicable for card games, like poker, where dominates an information asymmetry. \vspace{3.5pt}
+
+In this section, games are shown as a part of \textbf{search strategies}; in fact, every match that respects the previously properties can be expressed as a \textbf{search tree},
+also called \textbf{game tree}. The main difference between games and \textit{traditional} search strategies is the impossibility of deciding the entire path that bring us 
+from the root node to the goal node. Despite in traditional algorithms we can determine the whole path, in games this is not possible, since that there are two players taking
+turns and deciding their own moves. \vspace{3.5pt}
+
+Generally, the two players are named \textit{MAX} and \textit{MIN} for reasons that will soon become obvious. \textit{MAX} moves first, and then they take turns moving until the game
+is over. At the end of the game, points are awarded to the winning player and penalties are given to the loser. \vspace{3.5pt}
+
+As we said, until now we've built solutions that start from a root node and end to the leaf nodes, but this approach is not replicable anymore in competitive environments. One 
+possible way is the \textit{backward propagation}, from the leaf nodes we carry up the most convenient choice\footnote{The construction of the solution is carry out from the \textbf{bottom}.}.
