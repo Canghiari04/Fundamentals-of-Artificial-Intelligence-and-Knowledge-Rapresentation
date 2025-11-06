@@ -59,3 +59,6 @@ mother(X,Y):- parent(X,Y), female(X).
 
 % SIAMO ARRIVATI QUI
 
+sibling(X,Y):- parent(Z,X), parent(Z,Y), X \= Y.
+% NO idempotence i cant be sibling of myself
+% 
