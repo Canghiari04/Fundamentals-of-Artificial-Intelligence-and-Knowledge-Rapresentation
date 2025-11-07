@@ -1,20 +1,64 @@
-In this chapter we cover \textbf{competitive environments}, often known as \textbf{games}, in which the agents' goals are in conflict. In AI are considered games that have the 
-following properties:
+In the Swarm Intelligence part we have saw different types of algorithms, in which single entities are in a such way cooperating to reach the same goal state. However, multiagent 
+environments has to account all the moves done by any single agent, either they are cooperating or competing. \vspace{3.5pt}
+
+In this chapter we cover \textbf{competitive environments}, also called \textbf{games}, in which the agents' goals are in conflict. Usually, in AI applications are considered
+games that have the following properties:
 \begin{itemize}[nosep]
     \renewcommand{\labelitemi}{-}
-    \item \textbf{Moves are alternate}. \\ Two-player games in which the moves are alternated and players have complementary objective functions.
-    \item \textbf{Perfect knowledge}. \\ Games with perfect knowledge are those games in which players have the same informations.
-\end{itemize} \vspace{3.5pt}
+    \item \textbf{Two-player games}. \\ Games designed only for two players, in which they take turns and have complementary objective functions.
+    \item \textbf{Perfect Knowledge}. \\ Perfect knowledge means games in which players have the same informations. For instance, the algorithms below are not applicable for card games, where dominates \textit{information asymmetry}. 
+\end{itemize}
 
-For instance, this kind of algorithms are not applicable for card games, like poker, where dominates an information asymmetry. \vspace{3.5pt}
+In this case, games are described as a part of \textit{search strategies}, so any match development can be expressed as a search tree, in which the root is the starting position and 
+the leaves are the final positions. Each node, that composed the tree, is a \textbf{state} of the game and edjes represents all the possible \textbf{actions} coming out from a state. 
+In addition, below each leaf node is reported an \textbf{utility value}, that are simply integer values associated to \textbf{terminal} states.
+\begin{center}
+    % \includegraphics{3/45}
+\end{center}
+The image above shows all the features defined previously. Before moving on, we focus on two more aspects of the illustrated \textbf{game tree}: 
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item The two players are called \textit{MAX player} and \textit{MIN player}, and MAX player always moves first.
+    \item The \textbf{square nodes} are related to MAX player moves, instead the \textbf{circle nodes} define all the possible moves for the MIN player. 
+\end{itemize}
 
-In this section, games are shown as a part of \textbf{search strategies}; in fact, every match that respects the previously properties can be expressed as a \textbf{search tree},
-also called \textbf{game tree}. The main difference between games and \textit{traditional} search strategies is the impossibility of deciding the entire path that bring us 
-from the root node to the goal node. Despite in traditional algorithms we can determine the whole path, in games this is not possible, since that there are two players taking
-turns and deciding their own moves. \vspace{3.5pt}
+In a traditional search problem, the optimal solution is achieved by a sequence of steps, but in games this is not possible. The main difference between games and 
+search strategies is the impossibility to decide the whole trail that bring us from the root node to the goal node; in games there are two players taking turns and selecting
+each time their own moves. \vspace{3.5pt}
 
-Generally, the two players are named \textit{MAX} and \textit{MIN} for reasons that will soon become obvious. \textit{MAX} moves first, and then they take turns moving until the game
-is over. At the end of the game, points are awarded to the winning player and penalties are given to the loser. \vspace{3.5pt}
+Let's see an example for a better understanding.
+\begin{example}
+    i.e. General game tree. 
+    \begin{center}
+        % \includegraphics{general image of game tree, book one}
+    \end{center}
+    The structure of the game tree is quite easy to understand. As we said, the first move is given to the MAX player. MAX player will choose the node with the highest 
+    utility value possible. After that, MIN player moves and chooses the lowest value. \vspace{3.5pt}
 
-As we said, until now we've built solutions that start from a root node and end to the leaf nodes, but this approach is not replicable anymore in competitive environments. One 
-possible way is the \textit{backward propagation}, from the leaf nodes we carry up the most convenient choice\footnote{The construction of the solution is carry out from the \textbf{bottom}.}.
+    Conceptually, we are doing a \textbf{straight-forward propagation}, once a choice is selected we propagate it until a final state is reached. But, it sounds weird: \vspace{3.5pt}
+    \begin{center}
+        \textit{How does any player involved know about the next move taken by its opponent?}
+    \end{center} \vspace{3.5pt}
+
+    Often, in game trees is performed the so called \textbf{backward propagation} method. Generated the data structure, we start from the leaf nodes, or the terminal states, and 
+    then we carry up the initial decision to the root node. Let's apply this observation to the previously game tree. \vspace{3.5pt}
+
+    The utility values applied to the final states are:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $\langle 3, 12, 8\rangle$ for the $1^{st}$ branch
+        \item $\langle 2, 4, 6\rangle$ for the $2^{nd}$ branch
+        \item $\langle 3, 2, 2\rangle$ for the $3^{rd}$ branch
+    \end{itemize} \vspace{3.5pt}
+
+    MIN player chooses for each branch the lowest value, so it carries up to the above nodes: $\langle 3, 2, 2\rangle$. Now it's MAX turn, the utility values
+    are: 
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $\langle 3, 2, 2\rangle$
+    \end{itemize} \vspace{3.5pt}
+
+    It takes the highest value, which is $3$.
+\end{example}
+
+This example shows how the \textbf{Min-Max algorithm} works.

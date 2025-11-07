@@ -1,0 +1,45 @@
+The exponential growth in the number of game states appears to be the biggest problem with the Min-Max algorithm. We have discovered that computers simply play all the possible
+matches, evaluate leaf nodes and then propagate back the initial choice. Additionally, Min-Max revised algorithm shows us that the resulting game tree generates soo many useless moves,
+even though they will never occur in a real scenario. \vspace{3.5pt}
+
+Therefore, the following idea to avoid this bad behavior may be to reduce the size of the tree. The best-known technique is \textbf{Alpha-Beta Pruning}. \vspace{3.5pt}
+
+Consider the two players game used before. \vspace{3.5pt}
+\begin{center}
+    % \includegraphics{image of the book}
+\end{center} \vspace{3.5pt}
+
+The outcome received by the figure is that we can identify the minmax choice without evaluate the other two final states of the node $C$. Another way to express what happens
+can be described through a semplification of Min-Max formula. \vspace{3.5pt}
+
+Let the two unevaluated states of node $C$ have values x and y. Then the utility value of the root node is given by:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{}
+    \item $minmax(root) = max(min(3,12,8), min(2,x,y), min(15, 5, 2))$ 
+    \item $minmax(root) = max(3, 2, 2)$
+    \item $minmax(root) = 3$.
+\end{itemize} \vspace{3.5pt}
+
+In other words, it doesn't matter which are the real values of the unvaluated expressions, MAX will choose always the utility value $3$, such that is the highest number between
+all the possible choices. Starting from some definitions we can generalize the algorithm behavior. 
+\begin{definition}
+    The values in \textbf{MAX} nodes are \textbf{Alpha-values}.
+\end{definition}
+\begin{definition}
+    The values in \textbf{MIN} nodes are \textbf{Beta-values}.
+\end{definition}
+
+Given these assumptions, we summarize Alpha-Beta Pruning method, splitting the cases in base of which player is currently moving. 
+\begin{definition}
+    The game tree is pruned as follows:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item If a \textbf{Alpha-value} is greater than a \textbf{Beta-value} of a descending node: stop the generation of children of the descending node.
+        \item If a \textbf{Beta-value} is smaller than a \textbf{Alpha-value} of a descending node: stop the generation of children of the descending node.
+    \end{itemize}
+\end{definition}
+
+The effectiveness of Alpha-Beta Pruning is highly dependent on the order in which the states are examined. For instance, we could not prune any successors of node $D$ at all
+because the worst successors were generated first. If the third successor of $D$ had been generated first, we would have been able to prune the other two. If this can be done\footnote{When the best nodes are evaluated first.},
+then it turns out that Alpha-Beta requires $O(b^{m/2})$ to pick the best move, instead of $O(b^m)$ for Min-Max. Anyway, in the average case with random distribution of the node
+values, the number of nodes examined becomes about $O(b^{3/4})$.

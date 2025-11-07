@@ -1,0 +1,26 @@
+By the way, there's a revised version of the Min-Max algorithm, based on this assumption: \vspace{3.5pt}
+\begin{center}
+    \textit{Look forward few levels and assess the configuration of a non-terminal node.}
+\end{center} \vspace{3.5pt}
+
+In practice we apply the Min-Max algorithm up to a certain depth. If we develop the whole tree, Min-Max method becomes very inefficient, it grows exponentially according to 
+the depth of the tree. \vspace{3.5pt}
+
+The solution undertaken consists in an \textbf{evaluation funtion} for estimating the quality of a certain node, that can be expressed as: \vspace{3.5pt}
+\begin{center}
+        \begin{equation*}            
+            E(n) =
+            \begin{cases}
+                - 1 & \text{If MIN wins} \\
+                + 1 & \text{If MAX wins} \\
+                0 & \text{If they have the same probability} \\
+            \end{cases}
+        \end{equation*}
+\end{center} \vspace{3.5pt}
+
+Anyway, a huge problem persists: \textit{how do we decide if to expand a node or not?} Well, such that Min-Max revised follows the same concept of \textit{Depth-limited search}, 
+we should expand the game tree until a certain depth $l$ is reached, defined in the starting phase of the computation. \vspace{3.5pt}
+
+However, more tactically moves necessitate evaluatation to a \textbf{higher depth}, continuing the search until the queiscence condition is achieved - the point where the 
+evaluatation function $E(n)$ values stabilize. Additionally, the resulting game tree generates a large number of \textbf{useless moves} which, in a real scenario, would never
+be considered. 

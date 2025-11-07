@@ -1,0 +1,20 @@
+\textbf{Min-Max algorithm} computes the decision from the current state. It uses a simple recursive computation of the \textbf{minmax values} of each successor state, 
+implementing directly the following definition.
+\begin{definition}[title={Min-Max Algorithm}]
+    Given $s$ the current state such that $s \in S$, where $S$ is the set containing all the possible game states. The minmax choice is:
+    \begin{center}
+        \begin{equation*}            
+            minmax(s) =
+            \begin{cases}
+                Utility(s) & \text{If game is over} \\
+                max_{a \in Actions(s)} & \text{If MAX moves} \\
+                min_{a \in Actions(s)} & \text{If MIN moves} \\
+            \end{cases}
+        \end{equation*}
+    \end{center}
+\end{definition}
+
+The algorithm computes a complete \textit{DFS} exploration of the game tree, so it doesn't guarantee \textbf{completeness}, even though is an \textbf{optimal} solution, as we 
+already know. Given $m$ the maximum depth and $b$ the branching factor, the time complexity is $O(b^m)$ and the space complexity is $O(bm)$. \vspace{3.5pt}
+
+For a real game, this complexity is totally impractical, but this method serves as the main basis for more pratictal algorithms.
