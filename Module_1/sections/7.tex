@@ -1,0 +1,78 @@
+\textbf{Automated planning} is an important problem solving activity, which consists in summerizing a sequence of actions performed by an agent that leads from an initial
+state to a given target state. \vspace{3.5pt}
+
+For humans this type of tasks are very easy to perform, but for computers is one of the most difficult. Additionally, we need a set of symbols that allow us to describe
+every single action taken; generally, \textbf{natural language} should be avoided as it is the primary cause of ambiguity. \vspace{3.5pt}
+
+The foundations about automated planning are given by:
+\begin{enumerate}[nosep]
+    \item Initial state.
+    \item State to achieve, also called goal state.
+    \item Set of actions the agent can perform. These actions should not be macro-actions or actions that our agent cannot carry out.
+\end{enumerate} \vspace{3.5pt}
+
+Despite the goal consists to reach a target state, we focus on the steps necessary that could bring us from the initial state to the final one. Before moving on, we have to
+define some basic concepts about automated planning. 
+\begin{definition}
+    An \textbf{automated planner} is an intelligent agent that operates in a certain domain, described by:
+    \begin{enumerate}[nosep]
+        \item A representation of the initial state.
+        \item A representation of the goal state.
+        \item A formal description of the executable actions.
+    \end{enumerate} \vspace{3.5pt}
+
+    The first two points are handled by logic.
+\end{definition}
+\begin{definition}
+    \textbf{Domain theory} defines a formal description about all the executable actions. 
+\end{definition}
+\begin{definition}
+    Each action is identified by a name\footnote{So many times we can perform the same actions with different variables, therefore can be useful call them with a \textbf{class name}.} and modeled through \textbf{pre-conditions} and \textbf{post-conditions}, which are expressed as follows:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item Pre-conditions are the conditions which \textbf{must hold} to ensure that the action can be executed.
+        \item Post-conditions represent the \textbf{effects} of the action in the environment.
+    \end{itemize}
+\end{definition}
+
+Let's consider a trivial example just to fix these concepts.
+\begin{example}
+    i.e. Block world. \vspace{3.5pt}
+    \begin{center}
+        % \includegraphics{done the image of block x and y}
+    \end{center} \vspace{3.5pt}
+
+    The executable actions are:
+    \begin{enumerate}[nosep]
+        \item \textbf{Stack(x,y)} \\ Pre-conditions: holding(x), clear(y) \\ Post-conditions: handempty, clear(x), on(x,y)
+        \item \textbf{Unstack(x,y)} \\ Pre-conditions: handempty, clear(x), on(x,y) \\ Post-conditions: holding(x), clear(y)
+        \item \textbf{Pick-up(x)}\footnote{Different from \textbf{Stack}, \textbf{Pick-up} grabs a block on the table that it is not on any other block.} \\ Pre-conditions: handempty, ontable(x), clear(x) \\ Post-conditions: holding(x)
+        \item \textbf{Put-down(x)} \\ Pre-conditions: holding(x) \\ Post-conditions: ontable(x), clear(x), handempty
+    \end{enumerate} \vspace{3.5pt}
+
+    From a logic point of view, all the inner functions are \textbf{predicates}, by these properties we can describe all the possible situations. As the example 
+    shows, predicates are generally used for pre-conditions and post-conditions of the actions.
+\end{example}
+
+When an action is performed all the pre-conditions become false, all the post-conditions become true and all the untouched conditions should be unchanged. In logic this
+is called \textbf{frame problem}; everything that is untouched by an action should be unchanged, moved to the next node. \vspace{3.5pt}
+
+Our goal is to discover a resolution process, a list of actions that take us to the final state, and it is done by an intelligent agent, which embeds an algorithm. As usual,
+the embedding algorithm has some features, as:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Completeness}. \\ A planner or an agent is \textbf{complete} if it always finds a plan when it exists.
+    \item \textbf{Correctness}. \\ A planner or an agent is \textbf{correct} when the solution found leads from the initial state to the goal.
+\end{itemize}
+
+In addition, it's possible to divide planners according to the type of strategies used for the planning, which are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Offline planners}. \\ Offline planners, also called \textbf{generative planners}, work on representations of the world, they draw up plans and then computed them.
+    \item \textbf{Online planners}. \\ Online planners, also named \textbf{reactive planners}, work in the world, making changes about the current environment. 
+\end{itemize}
+The main difference between these strategies is that plans made by generative agents are \textbf{reversible}, they do not change the current environment. Therefore, plans 
+designed by these planners could be linked to search processes, we may find out a list of actions or a sequence of steps that allow us to reach the final goal\footnote{They are, in a such way, both \textbf{constructive algorithms}.}. \vspace{3.5pt}
+
+By the way, the execution phase is the implementation of the plan. Often the execution is \textbf{irreversible}, once the previous state is computed it is not backtrackable and is
+\textbf{non-deterministic}, meaning that actions are performed in real-world uncertainty and some unexpected behaviors might happen.
