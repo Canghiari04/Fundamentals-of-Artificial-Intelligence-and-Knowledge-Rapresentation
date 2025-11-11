@@ -1,0 +1,137 @@
+\textbf{Deductive planning} employs logic to represent states, goals and actions, and consequenctly generates a plan that resembles the proof of a theorem. To solve planning problems using logic formulas,
+we just need to add a state in which properties or predicates are true. It is no longer called \textbf{predicate}, but instead is called \textbf{fluent}. \vspace{3.5pt}
+
+The conceptual difference is that a \textbf{fluent's truth} is verified only within the context of the current state, whereas a traditional \textbf{predicate} 
+typically represents a property that is independent of the specific state. \vspace{3.5pt}
+
+Deductive planning employs two main logic formulations, named:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Green formulation}
+    \item \textbf{Kowalsky formulation}
+\end{itemize} \vspace{3.5pt}
+
+We will start by examing the Green logic formulation. 
+\begin{example}
+    i.e. Block world. \vspace{3.5pt}
+    \begin{center}
+        % \includegraphics{20/105}
+    \end{center} \vspace{3.5pt}
+
+    Instead of writing \vspace{3.5pt}
+    \begin{center}
+        $on(a,b), ontable(c)$
+    \end{center} \vspace{3.5pt}
+    we can express the same predicates adding a new term \vspace{3.5pt} 
+    \begin{center}
+        $on(a,b,S), ontable(c,S)$
+    \end{center} \vspace{3.5pt}
+    where $S$ symbolises a \textbf{game state}.
+\end{example}
+
+This example introduces the \textbf{situation} entity. A situation is a state in which something is true. Therefore, the logic fluent $on(b,a,S)$ describes a state $S$ where
+the block $b$ is above the block $a$. In addition, actions can be seen as \textbf{clauses}. 
+\begin{example}
+    i.e. Block world. \vspace{3.5pt}
+    \begin{center}
+        % \includegraphics{20/105}
+    \end{center} \vspace{3.5pt}
+
+    The action $putontable(b)$ is defined as: \vspace{3.5pt}
+    \begin{center}
+        $on(b,a,S), clear(b, S) \rightarrow ontable(b, do(putontable(b), S)), clear(a, do(putontable(b), S))$
+    \end{center} \vspace{3.5pt}
+
+    where:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $1^{st}$ $on(b,a,S),clear(a,S)$ are the pre-conditions.
+        \item $2^{nd}$ $do(putontable(b), S)$\footnote{\textbf{putontable(\dots)} is the union of the previous \textbf{stack(\dots)} and \textbf{putdown(\dots)} predicates.} is the new state achieved by the current action.
+        \item $3^{th}$ $ontable(b, do(putontable(b), S)), clear(a, do(putontable(b), S))$ are the post-conditions.
+    \end{itemize} \vspace{3.5pt}
+\end{example}
+
+Specifically, the last instance is a \textbf{First Order Logic} clause, which we can formalize as a \textbf{general clause}: \vspace{3.5pt}
+\begin{center}
+    \textit{disjunction of negative and positive literals}.
+\end{center} \vspace{3.5pt}
+
+We remember the basic rule of any given literals: \vspace{3.5pt}
+\begin{center}
+    $A \rightarrow B$ can be converted in $\neg A \lor B$
+\end{center} \vspace{3.5pt}
+
+In Green formulation, similar to the Kowalsky formulation, we have a simple mechanism to proof the plan, which is based on the \textbf{resolution process}. To better understand
+this concept, let's consider an example.
+\begin{example}
+    i.e. Resolution process of the fluent  \vspace{3.5pt}
+    \begin{center}
+        $on(a, b, S_1)$
+    \end{center} \vspace{3.5pt}
+    so we are asking if it exists a state $\mathbf{S_1}$ such that the block a is over the block b. Starting from an initial state $S$, we use the resolution process 
+    to formalize if the final goal is reachable. \vspace{3.5pt}
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item $1^{st}$ step: define the domain theory, formal descriptions about all the executable actions. \vspace{3.5pt}
+            \begin{enumerate}[label=A.\arabic*, align=left, nosep]
+                \item $on(a,d,s0)$
+                \item $on(b,e,s0)$
+                \item $on(c,f,s0)$
+                \item $clear(a,s0)$
+                \item $clear(b,s0)$
+                \item $clear(c,s0)$
+                \item $clear(g,s0)$
+                \item $\mathit{diff}(a,b)$
+                \item $\mathit{diff}(a,c)$
+                \item $\mathit{diff}(a,d)$
+                \item \dots
+            \end{enumerate} \vspace{3.5pt}
+
+            Note that $\mathit{diff}(\dots)$ are considered predicates, meaning their truth values are independent from the current state. \vspace{3.5pt}
+
+            The required action $move(x,y,z)$ is expressed in general clause as: \vspace{3.5pt}
+            \begin{center}
+                $on(x,y,S), clear(y,S), clear(z,S), \mathit{diff}(x,z) \rightarrow clear(y, do(move(x,y,z), S)), on(x,y,do(move(x,y,z), S))$
+            \end{center} \vspace{3.5pt}
+
+            and then we can extract the following \textbf{effect axioms}: \vspace{3.5pt}
+            \begin{enumerate}[label=A.\arabic*, align=left, nosep]
+                \setcounter{enumi}{11}
+                \item $\neg on() \lor \neg clear() \lor \neg clear() \lor\neg \mathit{diff}() \lor on(x,y,do(move(x,y,z), S))$
+                \item $\neg on() \lor \neg clear() \lor\neg clear() \lor\neg \mathit{diff}() \lor clear(y, do(move(x,y,z), S))$
+            \end{enumerate} \vspace{3.5pt}
+        \item $2^{nd}$ step: negation of the goal, as required by the resolution process. \vspace{3.5pt} 
+            \begin{center}
+                $\neg on(a,b,S_1)$
+            \end{center}
+        \item $3^{rd}$ step: match the negative literal\footnote{Literals are the elements that build a clause. We remember that clauses are the disjunction of two or more literals.} $\neg on(a,b,S_1)$ by unifying it with positive literals from the domain theory. By substitution of the effect axiom $A.12$, $\neg on(a,b,S_1)$ becomes: \vspace{3.5pt}
+            \begin{center}
+                $\neg on(a,b,S_1) = \neg on(a,Y,S) \lor \neg clear(a,S) \lor \neg clear(b,S) \lor \neg \mathit{diff}(a,b)$
+            \end{center}
+            
+            then, every negative literal is unified with the positive ones defined in the domain theory. Each successful unification results in the elimination of the literal.
+            \begin{itemize}[nosep]
+                \item $\neg on(a,Y,S) \rightarrow A.1$ 
+                \item $\neg clear(a,S) \rightarrow A.4$ 
+                \item $\neg clear(b,S) \rightarrow A.5$ 
+                \item $\neg \mathit{diff}(a,b) \rightarrow A.8$ 
+            \end{itemize} \vspace{3.5pt}
+
+            Once all the negated pre-conditions are solved by the domain theory, we reach the \textbf{empty clause}. The empty clause formalizes the proof of the plan, meaning there is a 
+            state $S_1$ such that the block a is over the block b. \vspace{3.5pt}
+
+            Anyway, if we cannot unify all the negative literals using our domain theory or general clauses, the proof of the plan is not verified: there is no state $S_1$ such 
+            that the block a is over the block b.
+        \item 
+    \end{itemize}
+\end{example}
+
+How does the Green formulation treat the \textbf{frame problem}\footnote{The frame problem is to keep unchanged everything that has not been touched by the actions.}?
+By Green formulation, to describe any action we have to specify all fluents and predicates that would not change after the execution phase. We need a frame axiom for each condition
+that is not changed by each action. \vspace{3.5pt}
+\begin{center}
+    $on(U,V,S) \land \textit{diff}(U,X) \rightarrow on(U,V,do(move(X,Y,Z),S))$ \\
+    $clear(U,S) \land \textit{diff}(U,Z) \rightarrow clear(U,do(move(X,Y,Z),S))$
+\end{center}
+
+For simple problems, this is manageable. But for complex domains, the number of frame axioms to specify every non-change for every action becomes computationally intractable. 
