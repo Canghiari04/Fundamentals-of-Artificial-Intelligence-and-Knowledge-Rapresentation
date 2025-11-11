@@ -66,9 +66,9 @@ this concept, let's consider an example.
 \begin{example}
     i.e. Resolution process of the fluent  \vspace{3.5pt}
     \begin{center}
-        $on(a, b, S_1)$
+        $on(a, b, S_1)$.
     \end{center} \vspace{3.5pt}
-    so we are asking if it exists a state $\mathbf{S_1}$ such that the block a is over the block b. Starting from an initial state $S$, we use the resolution process 
+    So, we are asking if it exists a state $\mathbf{S_1}$ such that the block a is over the block b. Starting from an initial state $S$, we use the resolution process 
     to formalize if the final goal is reachable. \vspace{3.5pt}
     \begin{itemize}
         \renewcommand{\labelitemi}{}
@@ -134,4 +134,44 @@ that is not changed by each action. \vspace{3.5pt}
     $clear(U,S) \land \textit{diff}(U,Z) \rightarrow clear(U,do(move(X,Y,Z),S))$
 \end{center}
 
-For simple problems, this is manageable. But for complex domains, the number of frame axioms to specify every non-change for every action becomes computationally intractable. 
+For simple problems, this is manageable. But for complex domains, the number of frame axioms to specify every non-change for every action becomes computationally intractable. \vspace{3.5pt}
+
+Let's proceed to the Kowalsky logic formulation. \textbf{Kowalsky formulation} is just another version of the First Order Logic for solving planning problems. It resolves 
+the huge problem about the large amount of frame axioms required by Green formulation. It uses three main fluents, which are:
+\begin{itemize}
+    \renewcommand{\labelitemi}{}
+    \item $1^{st}$ $\mathbf{holds(rel,S/A)}$. \\ This fluent describes all the properties $rel$ that are true in a given state $S$ or made true by the execution of an action $A$.
+    \item $2^{nd}$ $\mathbf{poss(S)}$. \\ The predicate $poss(s)$ indicates if a state $S$ is possible, or in other words if it is \textit{reachable}.
+    \item $3^{th}$ $\mathbf{pact(A,S)}$. \\ It defines if it is possible to execute an action $A$ in a state $S$. In logical terms, the pre-conditions of the action $A$ must be true in the state $S$.
+\end{itemize}
+
+If a state $S$ is possible and the pre-conditions of $A$ are satisfied, then it is possible also the following state produced by $S$ and action $A$. The general logic formulae of 
+this is assumption is: \vspace{3.5pt}
+\begin{center}
+    $poss(S) \land pact(A,S) \rightarrow poss(do(A,S))$
+\end{center}
+
+where $do(A,S)$ produce the following state $S'$. \vspace{3.5pt}
+
+The power of this formulation is given by its \textbf{compactness}, we have to determine only one frame axiom per action. Taking into account the previous example, we would have: \vspace{3.5pt}
+\begin{center}
+    $hold(V,S) \land \mathit{diff}(V, clear(Z)) \land \mathit{diff}(V, on(X,Y)) \rightarrow hold(V, do(move(X,Y,Z), S))$. 
+\end{center} \vspace{3.5pt}
+
+The logic assertion formalizes that every relation $V$ different from $clear(Z)$ and $on(X,Y)$ are true, even after the execution of the action $move(X,Y,Z)$.
+\begin{example}
+    i.e. Resolution process of the fluent \vspace{3.5pt}
+    \begin{center}
+        :- $poss(S), holds(on(a,b),S), holds(on(b,g), S)$.
+    \end{center} \vspace{3.5pt}
+
+    We are asking if it is possible a state $S$ such that the block a is over the block b and the block b is over the block g.
+    \begin{itemize}
+        \renewcommand{\labelitemi}{}
+        \item $1^{st}$ step: as before, we start defining the domain theory in First Order Logic. \vspace{3.5pt}
+            \begin{itemize}[nosep]
+                \item \dots
+            \end{itemize} \vspace{3.5pt}
+        \item
+    \end{itemize} 
+\end{example}
