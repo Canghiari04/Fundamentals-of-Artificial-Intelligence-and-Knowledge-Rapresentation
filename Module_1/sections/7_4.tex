@@ -1,0 +1,174 @@
+So far we have seen general purpose planning approaches. Since planning is very complicated, why don't we use specific algorithms for solving them? One possibility is given by
+\textbf{STRIPS linear planner}. \vspace{3.5pt}
+
+STRIPS stands for \textit{Stanford Research Institute Problem Solver}, it is a linear planner that uses \textbf{backward search} to develop a plan. Its main features are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{State representation}. \\ Any state is defined by a set of fluents that are true in that state.
+    \item \textbf{Goal representation}. \\ The goal is a set of fluents that hold in the goal state.
+    \item \textbf{Action representation}. \\ Each action is defined by three different lists, which are: 
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemii}{*}
+        \item \textbf{Pre-conditions}: containing fluents that should be true for applying the move.
+        \item \textbf{Delete}: list of fluents that become false after the move.
+        \item \textbf{Add}: composed of fluents that become true after the move. 
+    \end{itemize}
+\end{itemize}
+
+Everything which is not in the \textbf{Add} and \textbf{Delete list} is unchanged after the execution of the move. Sometimes the Add and Delete list are glued in an 
+\textbf{Effect list} with positive and negative axioms. \vspace{3.5pt}
+
+As we already said, STRIPS is based on backward search and it relies on two data structures: 
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Goal stack}. \\ A FIFO queue, so First In First Out data structure, initialized with the goals to be achieved and proceeding backward.
+    \item \textbf{Current state}. \\ A logic description about the initial state. Unlike the goal stack, it proceeds forward until the goal state is reached.
+\end{itemize} 
+\begin{example}
+    i.e. Resolution of the clause \vspace{3.5pt}
+    \begin{center}
+        $on(c,b) \land on(a,c)$.
+    \end{center} \vspace{3.5pt}
+
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item $1^{st}$ step: describe the \textbf{current state} and initialize the \textbf{goal stack}. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(b), clear(c)$ & $on(c,b) \land on(a,c)$ \\
+                $on(c,a), ontable(a)$ & \\
+                $ontable(b), handempty$ &
+            \end{tabular}
+        \end{center}
+        \item $2^{nd}$ step: divide the goal in subgoals and select one of them from the goal stack. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(b), clear(c)$ & $\mathbf{on(c,b)}$ \\
+                $on(c,a), ontable(a)$ & $on(a,c)$ \\
+                $ontable(b), handempty$ & $on(c,b) \land on(a,c)$
+            \end{tabular}
+        \end{center}
+        \item $3^{th}$ step: check if the selected subgoal is already satisfied by the current state. If it is, delete the subgoal from the goal stack, otherwise perform
+        some actions such that the subgoal can be satisfy. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(b), clear(c)$ & $holding(c) \land clear(b)$ \\
+                $on(c,a), ontable(a)$ & $\mathbf{stack(c,b)}$ \\
+                $ontable(b), handempty$ & $on(a,c)$ \dots
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        None of the $\mathbf{stack(c,b)}$ preconditions are satisfied by the current state, they become the new subgoals to achieve. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(b), clear(c)$ & $clear(b)$ \\
+                $on(c,a), ontable(a)$ & $holding(c)$ \\
+                $ontable(b), handempty$ & $holding(c) \land clear(b)$ \dots
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+
+        The current state tell us that the \textbf{block c} is above the \textbf{block a}, we have to execute the \textbf{unstack(\dots)} action. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(b), clear(c)$ & $clear(c) \land on(c,Y) \land handempty$ \\
+                $on(c,a), ontable(a)$ & $\mathbf{unstack(c,Y)}$ \\
+                $ontable(b), handempty$ & $clear(b)$ \dots
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        As we can see, all the preconditions about the $\mathbf{unstack(c,a)}$ action are alredy satisfied. Remove them from the goal stack and execute the action. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(b), clear(c)$ & $\mathbf{unstack(c,a)}$ \\
+                $on(c,a), ontable(a)$ & $clear(b)$ \\
+                $ontable(b), handempty$ & $holding(c)$ \dots
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        Update the current state after the execution phase, report all the effect of the specific action inside the current state. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $holding(c)$ & $clear(b)$ \\
+                $clear(a), clear(b)$ & $holding(c)$ \\
+                $ontable(a), ontable(b)$ & $holding(c) \land clear(b)$ \dots
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        The last step allow us to pop out some subgoals from the stack. Every time we have to check a goal conjuction any subgoals that composed it must be verified.
+        Now we execute the action $\mathbf{stack(c,b)}$, deleting the pre-conditions and adding the post-conditions inside the current state. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $holding(c)$ & $\mathbf{stack(c,b)}$ \\
+                $clear(a), clear(b)$ & $on(a,c)$ \\
+                $ontable(a), ontable(b)$ & $on(c,b) \land on(a,c)$
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(a), clear(c)$ & $on(a,c)$ \\
+                $ontable(a), ontable(b)$ & $on(c,b) \land on(a,c)$ \\
+                $on(c,b), handempty$ & 
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        Looking at the current state the predicate $\mathbf{on(a,c)}$ is not satisfied, we have to execute the action $\mathbf{stack(a,c)}$. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(a), clear(c)$ & $\mathbf{stack(a,c)}$ \\
+                $ontable(a), ontable(b)$ & $on(c,b) \land on(a,c)$ \\
+                $on(c,b), handempty$ & 
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(a), clear(c)$ & $holding(a) \land clear(c)$ \\
+                $ontable(a), ontable(b)$ & $\mathbf{stack(a,c)}$ \\
+                $on(c,b), handempty$ & $on(c,b) \land on(a,c)$
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        The $\mathbf{holding(a)}$ predicate is not verified, \textbf{pickup(\dots)} allow us to grab any block from the table. \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(a), clear(c)$ &  $\mathbf{pickup(a)}$ \\
+                $ontable(a), ontable(b)$ & $holding(a) \land clear(c)$ \\
+                $on(c,b), handempty$ & $\mathbf{stack(a,c)}$
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(a), clear(c)$ &  $ontable(a) \land clear(a) \land handempty$ \\
+                $ontable(a), ontable(b)$ & $\mathbf{pickup(a)}$ \\
+                $on(c,b), handempty$ & $holding(a) \land clear(c)$
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        All the preconditions of the action $\mathbf{pickup(a)}$ are already verified by the current state, move to the execution phase. Finally, the resulting
+        data structures allow us to perform the last action $\mathbf{stack(a,c)}$. 
+        \vspace{3.5pt} 
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(c)$ &  $holding(a) \land clear(c)$ \\
+                $ontable(b)$ & $\mathbf{stack(a,c)}$ \\
+                $on(c,b), holding(a)$ & $on(b,c) \land on(a,c)$
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        \begin{center}
+            \begin{tabular}{ll}
+                \textbf{State} & \textbf{Goal stack} \\
+                $clear(a)$ & $on(b,c) \land on(a,c)$ \\
+                $ontable(b)$ & \\
+                $on(c,b), on(a,c)$ &
+            \end{tabular}
+        \end{center} \vspace{3.5pt}
+        \item $4^{th}$ step: once the goal stack is empty, stop the running process. It means that we have reached the goal state.
+    \end{itemize} 
+\end{example}
+\dots

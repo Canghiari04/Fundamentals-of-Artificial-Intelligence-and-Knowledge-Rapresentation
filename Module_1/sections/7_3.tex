@@ -91,23 +91,38 @@ this concept, let's consider an example.
 
             The required action $move(x,y,z)$ is expressed in general clause as: \vspace{3.5pt}
             \begin{center}
-                $on(x,y,S), clear(y,S), clear(z,S), \mathit{diff}(x,z) \rightarrow clear(y, do(move(x,y,z), S)), on(x,y,do(move(x,y,z), S))$
+                $on(x,y,S), clear(y,S), clear(z,S), \mathit{diff}(x,z) \rightarrow clear(y, do(move(x,y,z), S)), on(x,z,do(move(x,y,z), S))$
             \end{center} \vspace{3.5pt}
 
             and then we can extract the following \textbf{effect axioms}: \vspace{3.5pt}
             \begin{enumerate}[label=A.\arabic*, align=left, nosep]
                 \setcounter{enumi}{11}
-                \item $\neg on() \lor \neg clear() \lor \neg clear() \lor\neg \mathit{diff}() \lor on(x,y,do(move(x,y,z), S))$
-                \item $\neg on() \lor \neg clear() \lor\neg clear() \lor\neg \mathit{diff}() \lor clear(y, do(move(x,y,z), S))$
+                \item 
+                    \begin{center}
+                        $\neg on(x,y,S) \lor \neg clear(y,S) \lor \neg clear(z,S) \lor\neg \mathit{diff}(x,y)$ \\ $\lor on(x,z,do(move(x,y,z), S))$
+                    \end{center}
+                \item 
+                    \begin{center}
+                        $\neg on(x,y,S) \lor \neg clear(y,S) \lor \neg clear(z,S) \lor\neg \mathit{diff}(x,y)$ \\ $\lor clear(y, do(move(x,y,z), S))$
+                    \end{center}
             \end{enumerate} \vspace{3.5pt}
-        \item $2^{nd}$ step: negation of the goal, as required by the resolution process. \vspace{3.5pt} 
+        \item $2^{nd}$ step: negate the goal state, as required by the resolution process. \vspace{3.5pt} 
             \begin{center}
                 $\neg on(a,b,S_1)$
-            \end{center}
-        \item $3^{rd}$ step: match the negative literal\footnote{Literals are the elements that build a clause. We remember that clauses are the disjunction of two or more literals.} $\neg on(a,b,S_1)$ by unifying it with positive literals from the domain theory. By substitution of the effect axiom $A.12$, $\neg on(a,b,S_1)$ becomes: \vspace{3.5pt}
+            \end{center} \vspace{3.5pt}
+
+            For solving it we have to find out its \textbf{positive complementary}, that is given by the \textit{A.12} effect axiom. \vspace{3.5pt}
             \begin{center}
-                $\neg on(a,b,S_1) = \neg on(a,Y,S) \lor \neg clear(a,S) \lor \neg clear(b,S) \lor \neg \mathit{diff}(a,b)$
-            \end{center}
+                $on(x,z,do(move(x,y,z),S))$
+            \end{center} \vspace{3.5pt}
+        \item $3^{rd}$ step: match the negative literal\footnote{Literals are the elements that build a clause. We remember that clauses are the disjunction of two or more literals.} $\neg on(a,b,S_1)$ by unifying it with positive literal from the domain theory. Replacing the negative literal $\neg on(a,b,S_1)$ in the effect axiom $A.12$, from \vspace{3.5pt}
+            \begin{center}
+                $\neg on(x,y,S) \lor \neg clear(y,S) \lor \neg clear(z,S) \lor\neg \mathit{diff}(x,y)$ \\ $\lor on(x,z,do(move(x,y,z), S))$
+            \end{center} \vspace{3.5pt}
+            it becomes \vspace{3.5pt}        
+            \begin{center}
+                $\neg on(a,Y,S) \lor \neg clear(a,S) \lor \neg clear(b,S) \lor \neg \mathit{diff}(a,b)$ \\ $\lor on(a,b,do(move(a,Y,b), S))$
+            \end{center} \vspace{3.5pt}
             
             then, every negative literal is unified with the positive ones defined in the domain theory. Each successful unification results in the elimination of the literal.
             \begin{itemize}[nosep]
@@ -115,9 +130,10 @@ this concept, let's consider an example.
                 \item $\neg clear(a,S) \rightarrow A.4$ 
                 \item $\neg clear(b,S) \rightarrow A.5$ 
                 \item $\neg \mathit{diff}(a,b) \rightarrow A.8$ 
+                \item $\neg on(a,b,S_1) \rightarrow on(a,b,do(move(x,y,z), S))$
             \end{itemize} \vspace{3.5pt}
 
-            Once all the negated pre-conditions are solved by the domain theory, we reach the \textbf{empty clause}. The empty clause formalizes the proof of the plan, meaning there is a 
+            Once all the negated conditions are solved by the domain theory, we reach the \textbf{empty clause}. The empty clause formalizes the proof of the plan, meaning there is a 
             state $S_1$ such that the block a is over the block b. \vspace{3.5pt}
 
             Anyway, if we cannot unify all the negative literals using our domain theory or general clauses, the proof of the plan is not verified: there is no state $S_1$ such 
@@ -146,7 +162,7 @@ the huge problem about the large amount of frame axioms required by Green formul
 \end{itemize}
 
 If a state $S$ is possible and the pre-conditions of $A$ are satisfied, then it is possible also the following state produced by $S$ and action $A$. The general logic formulae of 
-this is assumption is: \vspace{3.5pt}
+this assumption is: \vspace{3.5pt}
 \begin{center}
     $poss(S) \land pact(A,S) \rightarrow poss(do(A,S))$
 \end{center}
@@ -165,13 +181,60 @@ The logic assertion formalizes that every relation $V$ different from $clear(Z)$
         :- $poss(S), holds(on(a,b),S), holds(on(b,g), S)$.
     \end{center} \vspace{3.5pt}
 
-    We are asking if it is possible a state $S$ such that the block a is over the block b and the block b is over the block g.
+    We are asking if it is possible a state $S$ such that the block a is over the block b and the block b is over the block g. We consider the action $move(x,y,z)$, which is
+    a generalization of the simpler predicates: \textbf{stack(\dots)} and \textbf{unstack(\dots)}. The Kowalsky formulation requires a different approach than Green
+    formulation. Therefore, it is often useful to take into account all the pre-conditions and post-conditions of the action being considered. \vspace{3.5pt}
+
+    A particular data structure is generally used, consisting of three different lists, which are: \textit{add list}, \textit{delete list} and \textit{frame list}. The add 
+    list contains all the post-conditions, the delete list contains all the pre-conditions and the frame list contains all the relations that remain true after the execution
+    of the action. For the action $move(x,y,z)$, the structure would be: \vspace{3.5pt}
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $move(x,y,z)$
+        \item Pre-conditions: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $on(x,y)$
+                \item $clear(x)$
+                \item $clear(y)$
+            \end{itemize}
+        \item Post-conditions, also called effects: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $clear(y)$
+                \item $on(x,z)$
+            \end{itemize}
+    \end{itemize} \vspace{7pt}
     \begin{itemize}
         \renewcommand{\labelitemi}{}
-        \item $1^{st}$ step: as before, we start defining the domain theory in First Order Logic. \vspace{3.5pt}
+        \item $1^{st}$ step: as before, define the initial state in First Order Logic. \vspace{3.5pt}
             \begin{itemize}[nosep]
-                \item \dots
-            \end{itemize} \vspace{3.5pt}
-        \item
+                \item $poss(S_0)$
+                \item $holds(on(c,f),S_0)$
+                \item $holds(on(a,d),S_0)$ 
+                \item $holds(on(b,e),S_0)$ 
+                \item $holds(clear(g),S_0)$ 
+                \item $holds(clear(f),S_0)$ 
+                \item $holds(clear(d),S_0)$ 
+                \item $holds(clear(e),S_0)$
+            \end{itemize} \vspace{3.5pt} 
+        \item $2^{nd}$ step: define the effect of the action, in other words the fluents that hold after the execution phase.
+        \begin{center}
+            $holds(clear(y), do(move(x,y,z), S))$ \\ 
+            $holds(on(x,y), do(move(x,y,z), S))$
+        \end{center}
+        \item $3^{rd}$ step: define the clause about the pre-conditions, determing which are the relations removed by the execution phase. 
+        \begin{center}
+            $pact(move(x,y,z), S)$ :- \\ $holds(on(x,y), S) \land holds(clear(X), S) \land holds(clear(y), S)$ 
+        \end{center}
+        \item $4^{th}$ step: define the frame conditions, describing the fluents that remain unchanged after the action's execution.
+        \begin{center}
+            $holds(V, do(move(x,y,z), S))$ :- \\ $holds(V, S) \land \textit{diff}(V, on(x,y)) \land \textit{diff}(V, clear(x)) \land \textit{diff}(V, clear(x))$ 
+        \end{center}
+        \item $5^{th}$ step: define the state \textbf{reachability} axioms.
+        \begin{center}
+            $poss(S_0)$ \\
+            $poss(do(move(x,y,z), S))$ :- $poss(S) \land pact(move(x,y,z), S)$
+        \end{center}
     \end{itemize} 
 \end{example}
