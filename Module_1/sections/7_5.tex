@@ -1,0 +1,174 @@
+To overcome the limitations of linear planners that explore the \textbf{state space}, the field shifts to \textbf{non-linear planners}, specifically \textbf{Partial Order 
+Planning}, which instead operate within the 
+\textbf{plan space}. \vspace{3.5pt}
+
+A non-linear planner treats a plan as an object that is gradually refined. It has two main charateristics, which are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Search space}. \\ Each node of the tree search represents a \textbf{partial plan}, and the operators are \textbf{plan refinement moves}.
+    \item \textbf{Least commitment planning}. \\ The planner avoids imposing decisions and orderings that are not strictly necessary. This strategy allow us to reduce the amount of backtracking actions required by linear planners.
+\end{itemize}
+
+A plan, defined by this type of planners, is represented as:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item A set of \textbf{actions}.
+    \item A set of \textbf{casual links}.
+    \item A set of \textbf{partial orderings} between the actions. For example, taking two actions $A$ and $B$, the order $A < B$, means that the action $A$ comes before the action $B$.
+\end{itemize}
+
+Each plan starts with two fake actions, described as follows:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{}
+    \item $1^{st}$ \textbf{Start action}. \\ It is an action \textbf{without preconditions} and its effects match the initial state. Therefore, it relies only to the \textbf{initial state}.
+    \item $2^{nd}$ \textbf{Stop action}. \\ Unlike the start one, the stop action is an action \textbf{without postconditions} and its preconditions match the goal state. Therefore, it relies only to the \textbf{goal state}.
+    \item $3^{rd}$ \textbf{Ordering}. \\ From these two actions we can derive a general rule: \textit{start action} $<$ \textit{stop action}. In other words, in any plan designed by a non-linear planner the start action comes before the stop action.
+\end{itemize}
+
+The chore mechanisms for managing goal interaction in POP involves \textbf{casual links} and the resolution of \textbf{threats}.
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Casual links}. \\ A casual link, denoted $\langle S_i, C, S_j\rangle$, is a triple indicating that the action $S_i$ defines the condition $C$ required as precondition for the action $S_j$. In addition, a casual link stores the causal relations between actions: it traces why a given operator has been introduced in the plan.
+    \item \textbf{Threats}. \\ An action, $S_k$, is a \textbf{threat} to a casual link $\langle S_i, C, S_j\rangle$ if $S_k$ has an effect that negates the condition $C$, and no existing ordering constraint prevents $S_k$ from being executed between $S_i$ and $S_j$.
+\end{itemize}
+
+Threats must be resolved to ensure the established condition $C$ remains true when the actions $S_j$ is executed. The two primary strategies are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Demotion}: imposing the ordering $S_k < S_i$, ensures the destructive action $S_k$ occurs \textbf{before} the casual link.
+    \item \textbf{Promotion}: imposing the ordering $S_j < S_k$, ensures the destructive action $S_k$ occurs \textbf{after} the casual link.
+\end{itemize}
+\begin{example}
+    i.e. Purchasing schedule. \vspace{3.5pt}
+
+    Given an initial state \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{l}
+            \textbf{Initial state} \\
+            $sells(sm, banana), sells(sm, milk)$ \\
+            $sells(HWS, drill)$ \\
+            $at(home)$ 
+        \end{tabular}
+    \end{center} \vspace{3.5pt}
+    define a plan that bring us to the following goal state \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{l}
+            \textbf{Goal state} \\
+            $have(milk), have(banana)$ \\
+            $have(drill)$ \\
+            $at(home)$
+        \end{tabular}
+    \end{center} \vspace{7pt}
+    The executable actions are: \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{ll}
+            \textbf{Go(x,y)} & \textbf{Buy(s, y)} \\
+            Precond: $at(x)$ & Precond: $at(s), sells(s,y)$ \\
+            Effect: $at(y), \neg at(x)$\footnote{This effect list is represented as the conjuction of the add and delete list.} & Effect: $have(y)$ \\
+        \end{tabular}
+    \end{center} \vspace{7pt}
+
+    \begin{center}
+        % \includegraphics{53}
+    \end{center} \vspace{3.5pt}
+
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $1^{st}$ step: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{-}
+                \item Select a precondition from the goal state to be fulfilled: $have(drill)$.
+                \item Select an action that has the precondition $have(drill)$ as an postcondition: $buy(s,y)$.
+                \item Represent the plan refinement: 
+                    \begin{itemize}[nosep]
+                        \renewcommand{\labelitemiii}{-}
+                        \item Link the variable $y$ with the term $drill$.
+                        \item Impose ordering constraint: $start < buy(s,drill) < stop$.
+                        \item Insert the casual link $\langle buy(x,drill), have(drill), stop \rangle$.
+                    \end{itemize}
+            \end{itemize}
+        \item $2^{nd}$ step: 
+        \begin{itemize}[nosep]
+            \renewcommand{\labelitemii}{-}
+            \item Same process in the first step for $have(milk)$.
+            \item Same process in the first step for $have(banana)$.
+        \end{itemize}
+        \begin{center}
+            % \includegraphics{55}
+        \end{center}
+        \item $3^{rd}$ step:  
+        \begin{itemize}[nosep]
+            \renewcommand{\labelitemii}{-}
+            \item Select a precondition from the $buy(s,drill)$ state to be fulfilled: $sells(s,drill)$.
+            \item Select an action that has the precondition $sells(s,drill)$ as postcondition: $start$.
+            \item Represent the plan refinement: 
+                \begin{itemize}[nosep]
+                    \renewcommand{\labelitemiii}{-}
+                    \item Link the variable $s$ with the term $HWS$.
+                    \item Impose ordering constraint: $start < buy(HWS,drill) < stop$.
+                    \item Insert the casual link $\langle start, sells(HWS, drill), buy(HWS, drill) \rangle$.
+                \end{itemize}
+        \end{itemize}
+        \item $4^{th}$ step:
+        \begin{itemize}[nosep]
+            \renewcommand{\labelitemii}{-}
+            \item Same process in the third step for $sells(s,milk)$.
+            \item Same process in the third step for $sells(s,banana)$.
+        \end{itemize}
+        \begin{center}
+            % \includegraphics{56}
+        \end{center}
+        \item $5^{th}$ step:  
+        \begin{itemize}[nosep]
+            \renewcommand{\labelitemii}{-}
+            \item Select a precondition not yet satisfied: $at(HWS)$.
+            \item Select an action that has the precondition $at(HWS)$ as postcondition: $go(x,HWS)$.
+            \item Represent the plan refinement: 
+                \begin{itemize}[nosep]
+                    \renewcommand{\labelitemiii}{-}
+                    \item Impose ordering constraint: \\ $start < go(x,HWS) < buy(HWS, drill)$.
+                    \item Insert the casual link $\langle start, at(x), go(x, HWS) \rangle$.
+                \end{itemize}
+        \end{itemize}
+        \item $6^{th}$ step:  
+        \begin{itemize}[nosep]
+            \renewcommand{\labelitemii}{-}
+            \item Select a precondition not yet satisfied: $at(x)$.
+            \item Select an action that has the precondition $at(x)$ as postcondition: $start$.
+            \item Represent the plan refinement: 
+                \begin{itemize}[nosep]
+                    \renewcommand{\labelitemiii}{-}
+                    \item Link the variable $x$ to $home$.
+                    \item Redefine the order constraint: $start < go(home,HWS) < buy(HWS, drill)$.
+                    \item Redefine the casual link $\langle start, at(home), go(home, HWS) \rangle$.
+                \end{itemize}
+        \end{itemize}
+        \item $7^{th}$ step:
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{-}
+                \item Same process in the fifth and sixth step for $at(sm)$.
+            \end{itemize}
+        \begin{center}
+            % \includegraphics{57}
+        \end{center}
+    \end{itemize}
+    After few steps, one huge problem comes out: the planner cannot perform at the same time the procedure $go(home,HWS)$ and $go(home,sm)$ from the start action. Demotion and
+    promotion in this case are not enough to solve the problem, any constraint ordering does not work. \vspace{3.5pt}
+
+    Instead of going back at $home$ between stores, we take as advantage the \textbf{current position}. The planner decides to satisfy the precondition $at(sm)$ not from the
+    \textbf{start action}, but \textbf{after} the procedure $go(home,HWS)$. At the end, we have a constraint ordering as follows: $buy(HWS, drill) < go(HWS, sm)$. \vspace{3.5pt}
+    \begin{center}
+        %\includegraphics{58}
+    \end{center}
+
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $8^{st}$ step: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{-}
+                \item Solve the preconditions $at(home)$ of the stop action.
+                \item The only way to do this is to put the action $go(x,home)$ before the stop action.
+            \end{itemize}
+    \end{itemize}
+\end{example}
+The eighth step is named the \textbf{white knight}, a refinement strategy which inserts a new operator in the plan between two conflict actions\footnote{We remember that two actions are in conflict when the effect of any procedure $S_i$ negate the preconditions of any procedure $S_j$.}.

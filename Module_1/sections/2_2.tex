@@ -8,10 +8,10 @@ in the uniform-cost search strategy the \textit{test} is applied to a node when 
 
 Let's consider an example for better understanding. 
 \begin{example}
-    i.e. Reach Bucharest from Sibiu.
+    i.e. Reach Bucharest from Sibiu. \vspace{3.5pt}
     \begin{center}
-        % \includegraphics{103/1152}
-    \end{center}
+        \includegraphics[width=0.5\textwidth]{img/img1.png}
+    \end{center} \vspace{3.5pt}
     The successors of Sibiu are Rimnicu Vilcea and Fagaras, with costs 80 and 99, respectively. Rimnicu Vilcea is the node selected for the expansion, the cost of which is lower than Faragas.
     Therefore, the fringe now contains Faragas and Pitesti, costing $80 + 97 = 177$. The least-cost node is now Fagaras, so it is expanded, adding Bucharest at a cost of $99 + 211 = 310$.
     Now a goal node has been generated, but uniform-cost search keeps going\footnote{We remember that uniform-cost search applies the goal test only when a node is selected, not generated.},

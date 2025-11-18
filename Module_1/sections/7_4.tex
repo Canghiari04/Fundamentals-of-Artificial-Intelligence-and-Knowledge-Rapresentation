@@ -171,4 +171,30 @@ As we already said, STRIPS is based on backward search and it relies on two data
         \item $4^{th}$ step: once the goal stack is empty, stop the running process. It means that we have reached the goal state.
     \end{itemize} 
 \end{example}
-\dots
+As we saw in the example, STRIPS solves one goal at the time and then moves on to the next one. In any case, this approach is influenced by one main problem: if the chosen order
+of the goal stack is wrong, a necessary action to reach the next goal may destroy the results of the previous goal.
+\begin{example}
+    i.e. Resolution of the clause \vspace{3.5pt}
+    \begin{center}
+        $on(c,b) \land on(a,c)$.
+    \end{center} \vspace{3.5pt}
+
+    In the previous example we chose the following order:\vspace{3.5pt}
+    \begin{center}
+        \begin{tabular}{ll}
+            \textbf{State} & \textbf{Goal stack} \\
+            $clear(b), clear(c)$ &  $on(c,b)$ \\
+            $on(c,a), ontable(a)$ & $on(a,c)$ \\
+            $ontable(b), handempty$ & $on(c,b) \land on(a,c)$
+        \end{tabular}
+    \end{center} \vspace{3.5pt}
+    the goal $on(c,b)$ comes before the goal $on(a,c)$. If the planner chooses the order where $on(a,c)$ comes before $on(b,c)$, the plan might proceeds as follows:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item A sequence of actions $\langle unstack(c,a), putdown(c), pickup(a), stack(a,b)\rangle$ is executed to satisfy the first goal, $on(a,c)$.
+        \item The planner then attempts to satisfy the second goal, $on(c,b)$. Since the block $c$ is now under $a$, the required actions to move $c$ would inevitably destroy the first goal $on(a,c)$, which was just achieved.
+    \end{itemize} \vspace{3.5pt}
+
+    Consequently, the planning process must perform backtracking, reinserting the failed subgoal into the goal stack and forcing the exploration of an entirely new planning 
+    strategy. This highlights the inefficiency of sequential planning when faced with goal dependencies.
+\end{example}

@@ -7,8 +7,8 @@ While BFS uses a FIFO queue, DFS uses a LIFO queue, the most recently generated 
 memory cost: DFS checks new generated states against those on the path from the root to the current node. This avoids infinite loops, but does not guarantees the proliferation
 of redudant paths. \vspace{3.5pt}
 \begin{center}
-    % \includegraphics{95/1152}
-\end{center}
+    \includegraphics[width=0.8\textwidth]{img/img2.png}
+\end{center} \vspace{3.5pt}
 
 Compared to BFS, depth-first search has one major advantage, the space complexity; for any search tree, it needs to store only a single path from the root to a leaf node. Given 
 a branch factor $b$ and a maximum depth $m$, DFS requires storage of only $O(bm)$ nodes. Even if the space complexity seems to be linear, in the worst case the time complexity
