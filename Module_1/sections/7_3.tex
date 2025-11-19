@@ -229,7 +229,7 @@ The logic assertion formalizes that every relation $V$ different from $clear(Z)$
         \end{center}
         \item $4^{th}$ step: define the frame conditions, describing the fluents that remain unchanged after the action's execution.
         \begin{center}
-            $holds(V, do(move(x,y,z), S))$ :- \\ $holds(V, S) \land \textit{diff}(V, on(x,y)) \land \textit{diff}(V, clear(x)) \land \textit{diff}(V, clear(x))$ 
+            $holds(V, do(move(x,y,z), S))$ :- \\ $holds(V, S) \land \textit{diff}(V, on(x,y)) \land \textit{diff}(V, clear(x)) \land \textit{diff}(V, clear(y))$ 
         \end{center}
         \item $5^{th}$ step: define the state \textbf{reachability} axioms.
         \begin{center}

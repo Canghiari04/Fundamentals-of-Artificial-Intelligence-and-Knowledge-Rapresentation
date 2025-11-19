@@ -62,9 +62,9 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
     The executable actions are: \vspace{7pt}
     \begin{center}
         \begin{tabular}{ll}
-            \textbf{Go(x,y)} & \textbf{Buy(s, y)} \\
-            Precond: $at(x)$ & Precond: $at(s), sells(s,y)$ \\
-            Effect: $at(y), \neg at(x)$\footnote{This effect list is represented as the conjuction of the add and delete list.} & Effect: $have(y)$ \\
+            \textbf{Go(X,Y)} & \textbf{Buy(S,Y)} \\
+            Precond: $at(X)$ & Precond: $at(S), sells(S,Y)$ \\
+            Effect: $at(Y), \neg at(X)$\footnote{This effect list is represented as the conjuction of the add and delete list.} & Effect: $have(Y)$ \\
         \end{tabular}
     \end{center} \vspace{7pt}
 
@@ -78,13 +78,13 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
             \begin{itemize}[nosep]
                 \renewcommand{\labelitemii}{-}
                 \item Select a precondition from the goal state to be fulfilled: $have(drill)$.
-                \item Select an action that has the precondition $have(drill)$ as an postcondition: $buy(s,y)$.
+                \item Select an action that has the precondition $have(drill)$ as postcondition: $buy(S,Y)$.
                 \item Represent the plan refinement: 
                     \begin{itemize}[nosep]
                         \renewcommand{\labelitemiii}{-}
-                        \item Link the variable $y$ with the term $drill$.
-                        \item Impose ordering constraint: $start < buy(s,drill) < stop$.
-                        \item Insert the casual link $\langle buy(x,drill), have(drill), stop \rangle$.
+                        \item Link the variable $Y$ with the term $drill$.
+                        \item Impose ordering constraint: $start < buy(S,drill) < stop$.
+                        \item Insert the casual link $\langle buy(S,drill), have(drill), stop \rangle$.
                     \end{itemize}
             \end{itemize}
         \item $2^{nd}$ step: 
@@ -99,8 +99,8 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
         \item $3^{rd}$ step:  
         \begin{itemize}[nosep]
             \renewcommand{\labelitemii}{-}
-            \item Select a precondition from the $buy(s,drill)$ state to be fulfilled: $sells(s,drill)$.
-            \item Select an action that has the precondition $sells(s,drill)$ as postcondition: $start$.
+            \item Select a precondition from the $buy(S,drill)$ state to be fulfilled: $sells(S,drill)$.
+            \item Select an action that has the precondition $sells(S,drill)$ as postcondition: $start$.
             \item Represent the plan refinement: 
                 \begin{itemize}[nosep]
                     \renewcommand{\labelitemiii}{-}
@@ -112,8 +112,8 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
         \item $4^{th}$ step:
         \begin{itemize}[nosep]
             \renewcommand{\labelitemii}{-}
-            \item Same process in the third step for $sells(s,milk)$.
-            \item Same process in the third step for $sells(s,banana)$.
+            \item Same process in the third step for $sells(S,milk)$.
+            \item Same process in the third step for $sells(S,banana)$.
         \end{itemize}
         \begin{center}
             % \includegraphics{56}
@@ -122,24 +122,24 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
         \begin{itemize}[nosep]
             \renewcommand{\labelitemii}{-}
             \item Select a precondition not yet satisfied: $at(HWS)$.
-            \item Select an action that has the precondition $at(HWS)$ as postcondition: $go(x,HWS)$.
+            \item Select an action that has the precondition $at(HWS)$ as postcondition: $go(X,HWS)$.
             \item Represent the plan refinement: 
                 \begin{itemize}[nosep]
                     \renewcommand{\labelitemiii}{-}
-                    \item Impose ordering constraint: \\ $start < go(x,HWS) < buy(HWS, drill)$.
-                    \item Insert the casual link $\langle start, at(x), go(x, HWS) \rangle$.
+                    \item Impose ordering constraint: \\ $start < go(X,HWS) < buy(HWS, drill)$.
+                    \item Insert the casual link $\langle start, at(X), go(X, HWS) \rangle$.
                 \end{itemize}
         \end{itemize}
         \item $6^{th}$ step:  
         \begin{itemize}[nosep]
             \renewcommand{\labelitemii}{-}
-            \item Select a precondition not yet satisfied: $at(x)$.
-            \item Select an action that has the precondition $at(x)$ as postcondition: $start$.
+            \item Select a precondition not yet satisfied: $at(X)$.
+            \item Select an action that has the precondition $at(X)$ as postcondition: $start$.
             \item Represent the plan refinement: 
                 \begin{itemize}[nosep]
                     \renewcommand{\labelitemiii}{-}
-                    \item Link the variable $x$ to $home$.
-                    \item Redefine the order constraint: $start < go(home,HWS) < buy(HWS, drill)$.
+                    \item Link the variable $X$ to $home$.
+                    \item Redefine the ordering constraint: $start < go(home,HWS) < buy(HWS, drill)$.
                     \item Redefine the casual link $\langle start, at(home), go(home, HWS) \rangle$.
                 \end{itemize}
         \end{itemize}
@@ -167,8 +167,139 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
             \begin{itemize}[nosep]
                 \renewcommand{\labelitemii}{-}
                 \item Solve the preconditions $at(home)$ of the stop action.
-                \item The only way to do this is to put the action $go(x,home)$ before the stop action.
+                \item The only way to do this is to put the action $go(X,home)$ before the stop action.
             \end{itemize}
     \end{itemize}
 \end{example}
 The eighth step is named the \textbf{white knight}, a refinement strategy which inserts a new operator in the plan between two conflict actions\footnote{We remember that two actions are in conflict when the effect of any procedure $S_i$ negate the preconditions of any procedure $S_j$.}.
+
+Let's examine an other example.
+\begin{example}
+    i.e. Sussman anomaly. \vspace{3.5pt}
+
+    Given an initial state \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{l}
+            \textbf{Initial state} \\
+            $ontable(a), ontable(b)$ \\
+            $clear(b), clear(c)$ \\
+            $on(c,a)$ 
+        \end{tabular}
+    \end{center} \vspace{3.5pt}
+    define a plan that reach the goal state \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{l}
+            \textbf{Goal state} \\
+            $on(b,c) \land on(c,a)$
+        \end{tabular}
+    \end{center}
+    The executable actions are: \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{l}
+            \textbf{Putdown(X)} \\
+            Precond: $holding(X)$ \\
+            Effect: $handempty, clear(X), ontable(X), \neg \text{Precond}$
+        \end{tabular} \vspace{7pt}
+
+        \begin{tabular}{l}
+            \textbf{Stack(X,Y)} \\
+            Precond: $holding(X), clear(Y)$ \\
+            Effect: $handempty, on(X,Y), clear(X), \neg \text{Precond}$\footnote{To save space, we did not list every precondition that was denied by the action.}
+        \end{tabular} \vspace{7pt}
+
+        \begin{tabular}{l}
+            \textbf{Pickup(X)} \\
+            Precond: $handempty, clear(X), ontable(X)$ \\
+            Effect: $holding(X), \neg \text{Precond}$
+        \end{tabular} \vspace{7pt}
+
+        \begin{tabular}{l}
+            \textbf{Unstack(X,Y)} \\
+            Precond: $handempty, on(X,Y), clear(Y)$ \\
+            Effect: $holding(X), clear(Y), \neg \text{Precond}$
+        \end{tabular} \vspace{7pt}
+    \end{center} \vspace{3.5pt}
+
+    Here we are attempting to solve the \textbf{Sussman anomaly} by POP. As usual, we have to define the initial empty plan, containing two fake actions: the start action and
+    the stop action. \vspace{3.5pt}
+    
+    \begin{center}
+        % \includegraphics{}
+    \end{center} \vspace{3.5pt}
+
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $1^{st}$ step: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{-}
+                \item Select a precondition from the goal state to be fulfilled: $on(b,c)$.
+                \item Select an action that has the precondition $on(b,c)$ as postcondition: $stack(b,c)$.
+                \item Represent the plan refinement: 
+                    \begin{itemize}[nosep]
+                        \renewcommand{\labelitemiii}{-}
+                        \item Impose ordering constraint: $start < stack(b,c) < stop$.
+                        \item Insert the casual link $\langle stack(b,c), on(b,c), stop \rangle$.
+                    \end{itemize}
+            \end{itemize} \vspace{3.5pt}
+
+            \begin{center}
+                % \includegraphics{}
+            \end{center} \vspace{3.5pt}
+        \item $2^{nd}$ step: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{-}
+                \item Same process in the first step for $on(c,a)$.
+            \end{itemize}
+        \item $3^{rd}$ step: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{-}
+                \item Select a precondition from the $stack(c,b)$ state to be fulfilled: $holding(b)$.
+                \item Select an action that has the preconditions $holding(b)$ as postcondition: $pickup(b)$ or $unstack(b,Y)$.
+                \item Since the initial state defines the block $b$ is on the table, we should perform the $pickup(X)$ action.
+                \item Represent the plan refinement:
+                    \begin{itemize}[nosep]
+                        \renewcommand{\labelitemiii}{-}
+                        \item Impose ordering constraint: $start < pickup(b) < stack(b,c)$.
+                        \item Insert the casual link $\langle pickup(b), holding(b), stack(b,c) \rangle$.
+                    \end{itemize}
+            \end{itemize} \vspace{3.5pt}
+
+            \begin{center}
+                % \includegraphics{}
+            \end{center} \vspace{3.5pt}
+            All the $pickup(b)$ preconditions are already satisfied by the $\text{start action}$. Therefore, we have to insert the casual link from the start action to 
+            the pickup(\dots) action. In addition, as we can see, the precondition $clear(c)$ of the action $stack(b,c)$ is already satisfied by the knowledge base given
+            by the start action. \vspace{3.5pt}
+        \item $4^{th}$ step:
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{-}
+                \item Exactly the same procedure described in the previous step happens for $stack(a,c)$ predicate.
+            \end{itemize} \vspace{3.5pt}
+
+            \begin{center}
+                % \includegraphics{}
+            \end{center} \vspace{3.5pt}
+    \end{itemize}
+
+    By this initial formalization, some \textbf{threats} are already coming out, which are:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item Performing the action $pickup(b)$ negates the $handempty$ precondition necessary for the predicate $pickup(a)$. This problem can be easily solved by imposing a \textbf{promotion} ordering constraint. The action $pickup(a)$ must be executed after the predicate $stack(b,c)$, in other words $stack(b,c) < pickup(a)$.
+        \item If the first subgoal $on(b,c)$ is reached, then it's impossible to execute the action $stack(a,b)$ given this initial state. Any ordering constraint cannot solve this situation.
+    \end{itemize}
+
+    Following this ordering constraint, the planner must perform backtracking, forcing the exploration of a new planning strategy and, consequently, losing computational 
+    efficiency. The unique solution in this case is to think outside the main scheme, reasoning about how all the different actions can be linked together. \vspace{3.5pt}
+
+    The main intuition is: before performing $stack(b,c)$ action we have to \textbf{unstack}\footnote{Unstack action is a white knight strategy, we are inserting a new action inside the initial plan.}
+    the block $c$ over the block $a$. Holding the block $c$, the next move will put it down on the table. Finally, the $handempty$ condition will be true, allowing us
+    to execute all the \textbf{stack(\dots)} predicates. The final ordering scheme is shown below. \vspace{3.5pt}
+
+    \begin{center}
+        $start < unstack(c,a) < putdown(c) < pickup(b) < ...$ \\ $... < stack(b,c) < pickup(a) < stack(a,b) < stop$ \vspace{7pt}
+
+        % \includegraphics{}
+    \end{center} \vspace{3.5pt}
+
+    \dots
+\end{example}
