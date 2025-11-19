@@ -69,7 +69,7 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
     \end{center} \vspace{7pt}
 
     \begin{center}
-        % \includegraphics{53}
+        \includegraphics[width=0.65\textwidth]{img/img17.png}
     \end{center} \vspace{3.5pt}
 
     \begin{itemize}[nosep]
@@ -92,10 +92,11 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
             \renewcommand{\labelitemii}{-}
             \item Same process in the first step for $have(milk)$.
             \item Same process in the first step for $have(banana)$.
-        \end{itemize}
+        \end{itemize} \vspace{3.5pt}
+
         \begin{center}
-            % \includegraphics{55}
-        \end{center}
+            \includegraphics[width=0.7\textwidth]{img/img18.png}
+        \end{center} \vspace{3.5pt}
         \item $3^{rd}$ step:  
         \begin{itemize}[nosep]
             \renewcommand{\labelitemii}{-}
@@ -106,7 +107,7 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
                     \renewcommand{\labelitemiii}{-}
                     \item Link the variable $s$ with the term $HWS$.
                     \item Impose ordering constraint: $start < buy(HWS,drill) < stop$.
-                    \item Insert the casual link $\langle start, sells(HWS, drill), buy(HWS, drill) \rangle$.
+                    \item Insert the casual link \\ $\langle start, sells(HWS, drill), buy(HWS, drill) \rangle$.
                 \end{itemize}
         \end{itemize}
         \item $4^{th}$ step:
@@ -114,10 +115,11 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
             \renewcommand{\labelitemii}{-}
             \item Same process in the third step for $sells(S,milk)$.
             \item Same process in the third step for $sells(S,banana)$.
-        \end{itemize}
+        \end{itemize} \vspace{3.5pt}
+
         \begin{center}
-            % \includegraphics{56}
-        \end{center}
+            \includegraphics[width=0.7\textwidth]{img/img19.png}
+        \end{center} \vspace{3.5pt}
         \item $5^{th}$ step:  
         \begin{itemize}[nosep]
             \renewcommand{\labelitemii}{-}
@@ -147,20 +149,21 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
             \begin{itemize}[nosep]
                 \renewcommand{\labelitemii}{-}
                 \item Same process in the fifth and sixth step for $at(sm)$.
-            \end{itemize}
-        \begin{center}
-            % \includegraphics{57}
-        \end{center}
+            \end{itemize} \vspace{3.5pt}
+
+            \begin{center}
+                \includegraphics[width=0.7\textwidth]{img/img20.png}
+            \end{center} \vspace{3.5pt}
     \end{itemize}
     After few steps, one huge problem comes out: the planner cannot perform at the same time the procedure $go(home,HWS)$ and $go(home,sm)$ from the start action. Demotion and
     promotion in this case are not enough to solve the problem, any constraint ordering does not work. \vspace{3.5pt}
 
     Instead of going back at $home$ between stores, we take as advantage the \textbf{current position}. The planner decides to satisfy the precondition $at(sm)$ not from the
     \textbf{start action}, but \textbf{after} the procedure $go(home,HWS)$. At the end, we have a constraint ordering as follows: $buy(HWS, drill) < go(HWS, sm)$. \vspace{3.5pt}
-    \begin{center}
-        %\includegraphics{58}
-    \end{center}
 
+    \begin{center}
+        \includegraphics[width=0.55\textwidth]{img/img21.png}
+    \end{center} \vspace{3.5pt}
     \begin{itemize}[nosep]
         \renewcommand{\labelitemi}{}
         \item $8^{st}$ step: 
@@ -169,7 +172,11 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
                 \item Solve the preconditions $at(home)$ of the stop action.
                 \item The only way to do this is to put the action $go(X,home)$ before the stop action.
             \end{itemize}
-    \end{itemize}
+    \end{itemize} \vspace{3.5pt}
+
+    \begin{center}
+        \includegraphics[width=0.45\textwidth]{img/img22.png}
+    \end{center} \vspace{3.5pt}
 \end{example}
 The eighth step is named the \textbf{white knight}, a refinement strategy which inserts a new operator in the plan between two conflict actions\footnote{We remember that two actions are in conflict when the effect of any procedure $S_i$ negate the preconditions of any procedure $S_j$.}.
 
@@ -300,6 +307,5 @@ Let's examine an other example.
 
         % \includegraphics{}
     \end{center} \vspace{3.5pt}
-
-    \dots
 \end{example}
+\dots
