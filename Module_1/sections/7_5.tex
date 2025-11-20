@@ -66,7 +66,7 @@ Threats must be resolved to ensure the established condition $C$ remains true wh
             Precond: $at(X)$ & Precond: $at(S), sells(S,Y)$ \\
             Effect: $at(Y), \neg at(X)$\footnote{This effect list is represented as the conjuction of the add and delete list.} & Effect: $have(Y)$ \\
         \end{tabular}
-    \end{center} \vspace{7pt}
+    \end{center} \vspace{21pt}
 
     \begin{center}
         \includegraphics[width=0.65\textwidth]{img/img17.png}
@@ -193,7 +193,7 @@ Let's examine an other example.
             $on(c,a)$ 
         \end{tabular}
     \end{center} \vspace{3.5pt}
-    define a plan that reach the goal state \vspace{7pt}
+    define a plan that reaches the goal state \vspace{7pt}
     \begin{center}
         \begin{tabular}{l}
             \textbf{Goal state} \\
@@ -227,11 +227,11 @@ Let's examine an other example.
         \end{tabular} \vspace{7pt}
     \end{center} \vspace{3.5pt}
 
-    Here we are attempting to solve the \textbf{Sussman anomaly} by POP. As usual, we have to define the initial empty plan, containing two fake actions: the start action and
+    Here we are trying to solve the \textbf{Sussman anomaly} using POP. As usual, we have to define the initial empty plan, containing two fake actions: the start action and
     the stop action. \vspace{3.5pt}
     
     \begin{center}
-        % \includegraphics{}
+        \includegraphics[width=0.5\textwidth]{img/img23.png}
     \end{center} \vspace{3.5pt}
 
     \begin{itemize}[nosep]
@@ -247,21 +247,21 @@ Let's examine an other example.
                         \item Impose ordering constraint: $start < stack(b,c) < stop$.
                         \item Insert the casual link $\langle stack(b,c), on(b,c), stop \rangle$.
                     \end{itemize}
-            \end{itemize} \vspace{3.5pt}
-
-            \begin{center}
-                % \includegraphics{}
-            \end{center} \vspace{3.5pt}
+            \end{itemize}
         \item $2^{nd}$ step: 
             \begin{itemize}[nosep]
                 \renewcommand{\labelitemii}{-}
                 \item Same process in the first step for $on(c,a)$.
-            \end{itemize}
+            \end{itemize} \vspace{3.5pt}
+
+            \begin{center}
+                \includegraphics[width=0.7\textwidth]{img/img24.png}
+            \end{center} \vspace{3.5pt}
         \item $3^{rd}$ step: 
             \begin{itemize}[nosep]
                 \renewcommand{\labelitemii}{-}
                 \item Select a precondition from the $stack(c,b)$ state to be fulfilled: $holding(b)$.
-                \item Select an action that has the preconditions $holding(b)$ as postcondition: $pickup(b)$ or $unstack(b,Y)$.
+                \item Select an action that has the precondition $holding(b)$ as postcondition: $pickup(b)$ or $unstack(b,Y)$.
                 \item Since the initial state defines the block $b$ is on the table, we should perform the $pickup(X)$ action.
                 \item Represent the plan refinement:
                     \begin{itemize}[nosep]
@@ -269,22 +269,18 @@ Let's examine an other example.
                         \item Impose ordering constraint: $start < pickup(b) < stack(b,c)$.
                         \item Insert the casual link $\langle pickup(b), holding(b), stack(b,c) \rangle$.
                     \end{itemize}
-            \end{itemize} \vspace{3.5pt}
-
-            \begin{center}
-                % \includegraphics{}
-            \end{center} \vspace{3.5pt}
+            \end{itemize}
             All the $pickup(b)$ preconditions are already satisfied by the $\text{start action}$. Therefore, we have to insert the casual link from the start action to 
             the pickup(\dots) action. In addition, as we can see, the precondition $clear(c)$ of the action $stack(b,c)$ is already satisfied by the knowledge base given
             by the start action. \vspace{3.5pt}
         \item $4^{th}$ step:
             \begin{itemize}[nosep]
                 \renewcommand{\labelitemii}{-}
-                \item Exactly the same procedure described in the previous step happens for $stack(a,c)$ predicate.
+                \item Exactly the same procedure described in the previous step occurs for $stack(a,c)$ predicate.
             \end{itemize} \vspace{3.5pt}
 
             \begin{center}
-                % \includegraphics{}
+                \includegraphics[width=0.8\textwidth]{img/img25.png}
             \end{center} \vspace{3.5pt}
     \end{itemize}
 
@@ -305,7 +301,7 @@ Let's examine an other example.
     \begin{center}
         $start < unstack(c,a) < putdown(c) < pickup(b) < ...$ \\ $... < stack(b,c) < pickup(a) < stack(a,b) < stop$ \vspace{7pt}
 
-        % \includegraphics{}
+        \includegraphics[width=0.8\textwidth]{img/img26.png}
     \end{center} \vspace{3.5pt}
 \end{example}
 \dots
