@@ -287,7 +287,7 @@ Let's examine an other example.
     By this initial formalization, some \textbf{threats} are already coming out, which are:
     \begin{itemize}[nosep]
         \renewcommand{\labelitemi}{-}
-        \item Performing the action $pickup(b)$ negates the $handempty$ precondition necessary for the predicate $pickup(a)$. This problem can be easily solved by imposing a \textbf{promotion} ordering constraint. The action $pickup(a)$ must be executed after the predicate $stack(b,c)$, in other words $stack(b,c) < pickup(a)$.
+        \item Performing the action $pickup(b)$ negates the $handempty$ precondition necessary for the predicate $pickup(a)$. This problem can be easily solved by enforcing a \textbf{promotion} ordering constraint. The action $pickup(a)$ must be executed after the predicate $stack(b,c)$, in other words $stack(b,c) < pickup(a)$.
         \item If the first subgoal $on(b,c)$ is reached, then it's impossible to execute the action $stack(a,b)$ given this initial state. Any ordering constraint cannot solve this situation.
     \end{itemize}
 
@@ -301,7 +301,7 @@ Let's examine an other example.
     \begin{center}
         $start < unstack(c,a) < putdown(c) < pickup(b) < ...$ \\ $... < stack(b,c) < pickup(a) < stack(a,b) < stop$ \vspace{7pt}
 
-        \includegraphics[width=0.8\textwidth]{img/img26.png}
+        \includegraphics[width=0.75\textwidth]{img/img26.png}
     \end{center} \vspace{3.5pt}
 \end{example}
 \dots
