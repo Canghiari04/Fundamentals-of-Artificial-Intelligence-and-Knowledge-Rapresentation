@@ -1,0 +1,84 @@
+\textbf{Graph planning} is one of the most efficient type of complete and correct generative planning. It explicity introduces the concept of \textbf{time}, specifically \textbf{when} an
+action is executed. This technique constructs a data structure called \textbf{planning graph}; the graph is extended at each step of the search process.
+It has some crucial features:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Shortest plan}. \\ Graphplan returns the shortest possible plan (the optimal one) from an initial state to a target state, or it indicates an inconsistency.
+    \item \textbf{Closed world assumption}. \\ Graphplan uses the closed world assumption falling into the category of off-line planners.
+    \item \textbf{Combining linear and non-linear planning.} \\ Graphplan inherits the \textbf{early commitment} feature from \textbf{linear planners} and the ability to create \textbf{partially ordered} sets of actions from \textbf{non-linear planners}.
+\end{itemize}
+
+As we saw in the STRIPS linear planning method, all the actions are defined by three different lists:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Preconditions}: containing fluents that must be true for applying the action.
+    \item \textbf{Delete}: fluents that become false after the execution phase.
+    \item \textbf{Add}: fluents that become true after the execution. 
+\end{itemize}
+
+Sometimes the Add and Delete list are glued in the \textbf{Effect list}, which contains positive and negative literals. A particular characteristic of graph planning is that \textbf{objects}
+have a \textbf{type}. For example, if we perform a general action $a$ to transition from state $X$ to state $Y$, $\langle X, a, Y \rangle$, the executed action 
+will also describe the type of the object being manipulated in the new state. \vspace{3.5pt}
+
+As we already know, the main issue in planning problems is the \textbf{frame problem}: \vspace{3.5pt}
+\begin{center}
+    \textit{Everything is untouched should hold in the next state}.
+\end{center}
+
+How does the graph planning strategy treat the frame problem? It uses a new type of action called the \textbf{no-op} (no-operation) action, that does not change the state. Let's consider an example
+for better understanding.
+\begin{example}
+    i.e. Planning graph. \vspace{3.5pt}
+
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{img/img27.png}
+    \end{center}
+
+    The image above represents a \textbf{directed leveled graph}, divided into distinct levels. Adjacent levels are connected by \textbf{arcs}, and each of them contains a certain number
+    of \textbf{nodes}. \vspace{3.5pt}
+
+    Each level has its own meaning, and based on this example, we can observe the following structure:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item \textit{Level 0} corresponds to the initial state.
+        \item \textit{Level 1} contains all actions whose preconditions are met by the propositions in \textit{level 0}.
+        \item \textit{Level 2} contains all postconditions of the actions in \textit{level 1}.
+        \item \dots
+    \end{itemize} \vspace{3.5pt}
+
+    The graph is further divided into two types of levels:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item \textbf{Propositional level}: nodes representing propositions, e.g. \textit{level 0}.
+        \item \textbf{Action level}: nodes representing actions, e.g. \textit{level 1}.
+    \end{itemize} \vspace{3.5pt}
+
+    Arcs are also divided into categories:
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{-}
+        \item \textbf{Add arcs}: connect the action level to the propositional level.
+        \item \textbf{Delete arcs}: as add arcs, connect the action level to the propositional level.
+        \item \textbf{Preconditions arcs}: connect the propositional level to the action level.
+    \end{itemize}
+\end{example}
+
+During the construction of the planning graph, various inconsistencies are idenfied, both for actions and propositions. Generally, actions and
+propositions are \textbf{mutually exclusive}, therefore they cannot coexist together in a plan. However, a key feature of this method is that mutex actions or propositions
+may initially appear in the same level of the planning graph. We must identify these inconsistencies and then apply a set of incompatibility rules. \vspace{3.5pt}
+
+Two propositions are mutually exclusive if:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item One proposition is the negation of the other.
+    \item All the possible pairs of actions that could achieve them are mutually exclusive.
+\end{itemize} \vspace{3.5pt}
+
+For any two actions, there are three major types of inconsistencies:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{-}
+    \item \textbf{Interference}: one action deletes a precondition of the other.
+    \item \textbf{Inconsistent effects}: one action negates the effect of another, e.g. the \textit{dash line} represented in the previous figure.
+    \item \textbf{Competing needs}: two actions that have mutually exclusive preconditions.
+\end{itemize} 
+
+Once the principal incompatibilities have been identified \dots

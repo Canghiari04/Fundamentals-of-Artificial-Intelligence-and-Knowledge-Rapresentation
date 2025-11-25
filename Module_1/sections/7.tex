@@ -43,10 +43,10 @@ Let's consider a trivial example just to fix these concepts.
 
     The executable actions are:
     \begin{enumerate}[nosep]
-        \item \textbf{Stack(x,y)} \\ Pre-conditions: holding(x), clear(y) \\ Post-conditions: handempty, clear(x), on(x,y)
-        \item \textbf{Unstack(x,y)} \\ Pre-conditions: handempty, clear(x), on(x,y) \\ Post-conditions: holding(x), clear(y)
-        \item \textbf{Pick-up(x)}\footnote{Different from \textbf{Stack}, \textbf{Pick-up} grabs a block on the table that it is not on any other block.} \\ Pre-conditions: handempty, ontable(x), clear(x) \\ Post-conditions: holding(x)
-        \item \textbf{Put-down(x)} \\ Pre-conditions: holding(x) \\ Post-conditions: ontable(x), clear(x), handempty
+        \item \textbf{Stack(X,Y)} \\ Pre-conditions: holding(X), clear(Y) \\ Post-conditions: handempty, clear(X), on(X,Y)
+        \item \textbf{Unstack(X,Y)} \\ Pre-conditions: handempty, clear(X), on(X,Y) \\ Post-conditions: holding(X), clear(Y)
+        \item \textbf{Pick-up(X)}\footnote{Different from \textbf{Stack}, \textbf{Pick-up} grabs a block on the table that it is not on any other block.} \\ Pre-conditions: handempty, ontable(X), clear(X) \\ Post-conditions: holding(X)
+        \item \textbf{Put-down(X)} \\ Pre-conditions: holding(X) \\ Post-conditions: ontable(X), clear(X), handempty
     \end{enumerate} \vspace{3.5pt}
 
     From a logic point of view, all the inner functions are \textbf{predicates}, by these properties we can describe all the possible situations. As the example 
