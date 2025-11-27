@@ -179,4 +179,18 @@ Once the principal incompatibilities have been identified, it's crucial to under
 
 Once the planning graph is built, we have to extract a \textbf{valid plan}, a connected and consistent subgraph of the planning graph\footnote{The \textbf{correctness} of
 the valid plan chosen it's not guaranteed.}. The construction of the valid plan is done \textbf{backward}, in a opposite way according to the construction of 
-the \textbf{planning graph}.
+the \textbf{planning graph}. \vspace{3.5pt}
+
+Additionally, it's possible to take in account some useful theorems that allow us to judge if the valid plan retrieved by the planning graph it's at least partially correct.
+
+\begin{definition}[title = $1^{st}$ Theorem]
+    If there is a \textbf{valid plan} then it is a \textbf{subgraph} of the planning graph.
+\end{definition}
+
+\begin{definition}[title = $2^{nd}$ Theorem]
+    In a planning graph two actions are \textbf{mutually exclusive} in a time step if a valid plan that contains both \textbf{does not exist}.
+\end{definition}
+
+\begin{definition}[title = $3^{rd}$ Theorem]
+    In a planning graph two propositions are mutually exclusive in a time step if they are inconsistent, one of them \textbf{denies} the occurrence of the other\footnote{Given the block world, we cannot perform two \textbf{stack(\dots)} actions at the same time.}.
+\end{definition}
