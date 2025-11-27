@@ -81,4 +81,102 @@ For any two actions, there are three major types of inconsistencies:
     \item \textbf{Competing needs}: two actions that have mutually exclusive preconditions.
 \end{itemize} 
 
-Once the principal incompatibilities have been identified \dots
+Once the principal incompatibilities have been identified, it's crucial to understand how the plannig graph is built. The process is composed by three main steps, which are:
+\begin{itemize}[nosep]
+    \renewcommand{\labelitemi}{}
+    \item $1^{st}$. All the propositions cointained in the initial state are inserted in the \textbf{first propositional level}.
+    \item $2^{nd}$. Create the \textbf{action level}: 
+        \item \begin{itemize}[nosep]
+            \renewcommand{\labelitemii}{}
+            \item $2.1$ For every way to unify the previous propositions with the preconditions of the given operators, insert an \textbf{action node} in the subsequent \textbf{action level} if and only if two propositions are not labeled as \textbf{mutually exclusive}.
+            \item $2.2$ For every proposition in the previous level add a \textbf{no-op} (no operation) node in the same \textbf{action level}.
+            \item $2.3$ Check if the action nodes do not interfere each other, otherwise mark them as \textbf{mutually exclusive}.
+        \end{itemize}
+    \item $3^{th}$. Create the \textbf{propositional level}:
+        \begin{itemize}[nosep]
+            \renewcommand{\labelitemii}{}
+            \item $3.1$ For each action node in the previous level, add a proposition node for every predicate described in the add and delete list of the operator. Propositions in the add list are linked by a \textbf{solid line}, instead the prepositions in the delete list are linked by a \textbf{dash line}.
+            \item $3.2$ Do the same process for the no-op actions. Generally they are connected with a \textbf{solid line}.
+            \item $3.3$ Mark as \textbf{mutually exclusive} two propositions such that all the ways to achieve the first are incompatible with all the ways to reach the second.
+        \end{itemize}
+\end{itemize}
+\begin{example}
+    i.e. Cart world. \vspace{7pt}
+
+    We have a cart R and two loads A and B that are in the starting position L and must be moved to the target positions P\footnote{Here we can observe one of the peculiarities of the planning graph: all the objects taken into consideration are \textbf{typed}.}. \vspace{3.5pt}
+
+    Given an initial state \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{l}
+            \textbf{Initial state} \\
+            $at(A,L), at(L,B)$ \\
+            $at(R,L), hasFuel(R)$
+        \end{tabular}
+    \end{center} \vspace{3.5pt}
+    define a plan that reaches the goal state \vspace{7pt}
+    \begin{center}
+        \begin{tabular}{l}
+            \textbf{Goal state} \\
+            $at(A,P) \land at(B,P)$
+        \end{tabular}
+    \end{center} \vspace{7pt}
+
+    The executable actions are:     
+    \begin{itemize}[nosep]
+        \renewcommand{\labelitemi}{}
+        \item $move(R,Pos_X,Pos_Y)$
+        \item Pre-conditions: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $at(R,Pos_X), \textit{diff}(Pos_X,Pos_Y), hasFuel(R)$
+            \end{itemize}
+        \item Post-conditions: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $at(R,Pos_Y), \neg at(R,Pos_X), \neg hasFuel(R)$
+            \end{itemize} \vspace{7pt}
+
+        \item $load(Object, Pos)$
+        \item Pre-conditions: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $at(R,Pos), at(Object,Pos)$
+            \end{itemize}
+        \item Post-conditions: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $in(R,Object), \neg at(R,Pos), \neg at(Object,Pos)$
+            \end{itemize} \vspace{7pt}
+
+        \item $unload(Object, Pos)$
+        \item Pre-conditions: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $in(R,Object), at(R,Pos)$
+            \end{itemize}
+        \item Post-conditions: 
+            \begin{itemize}[nosep]
+                \renewcommand{\labelitemii}{}
+                \item $at(Object,Pos), \neg in(R,Object)$
+            \end{itemize} \vspace{7pt}
+    \end{itemize} \vspace{7pt}
+
+    $1^{st}$ step: define the first propositional level, including all the propositions in the given initial state. \vspace{3.5pt}
+        \begin{center}
+            \includegraphics[width=0.15\textwidth]{img/img28.png} 
+        \end{center} \vspace{3.5pt}
+
+    $2^{nd}$ step: create the action level, containing all the possible actions, according to the previous propositions, and the no-op nodes. \vspace{3.5pt}
+        \begin{center}
+            \includegraphics[width=0.25\textwidth]{img/img29.png} 
+        \end{center} \vspace{3.5pt}
+
+    $3^{th}$ step: describe in a new propositional level all the actions' preconditions and bring forward all the no-op nodes. \vspace{3.5pt}
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{img/img30.png} 
+        \end{center}
+\end{example}
+
+Once the planning graph is built, we have to extract a \textbf{valid plan}, a connected and consistent subgraph of the planning graph\footnote{The \textbf{correctness} of
+the valid plan chosen it's not guaranteed.}. The construction of the valid plan is done \textbf{backward}, in a opposite way according to the construction of 
+the \textbf{planning graph}.
